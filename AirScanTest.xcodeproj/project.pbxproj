@@ -7,19 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A35D746289AAD370040F810 /* CapabilitiesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A35D745289AAD370040F810 /* CapabilitiesParser.swift */; };
+		4A645D63289AB4D900BE11CB /* SelectSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A645D62289AB4D900BE11CB /* SelectSettings.swift */; };
+		4A645D67289ABCD500BE11CB /* DiscoverDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A645D66289ABCD500BE11CB /* DiscoverDevices.swift */; };
+		4A74B119289E5A8200BCB17F /* DocumentBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B118289E5A8200BCB17F /* DocumentBrowser.swift */; };
+		4A74B11B289E5FBC00BCB17F /* DocumentPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B11A289E5FBC00BCB17F /* DocumentPreview.swift */; };
+		4A74B11D289E602800BCB17F /* PDFKitRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B11C289E602800BCB17F /* PDFKitRepresentedView.swift */; };
+		4A74B11F289E81ED00BCB17F /* ActivityViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B11E289E81ED00BCB17F /* ActivityViewHandler.swift */; };
+		4A74B121289E94F500BCB17F /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B120289E94F500BCB17F /* LoadingOverlay.swift */; };
+		4ACE995928800EAC00D2587B /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE995828800EAC00D2587B /* Test.swift */; };
+		4AEB90AC289BAD0500C82476 /* LocalNetworkDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB90AB289BAD0500C82476 /* LocalNetworkDiscovery.swift */; };
 		4AF0F6842880011C00088399 /* AirScanTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF0F6832880011C00088399 /* AirScanTestApp.swift */; };
 		4AF0F6862880011C00088399 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF0F6852880011C00088399 /* ContentView.swift */; };
 		4AF0F6882880011C00088399 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AF0F6872880011C00088399 /* Assets.xcassets */; };
 		4AF0F68C2880011C00088399 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AF0F68B2880011C00088399 /* Preview Assets.xcassets */; };
+		4AF472E1289BDF9300DD7C5C /* PrinterListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF472E0289BDF9300DD7C5C /* PrinterListItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A35D745289AAD370040F810 /* CapabilitiesParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesParser.swift; sourceTree = "<group>"; };
+		4A645D62289AB4D900BE11CB /* SelectSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSettings.swift; sourceTree = "<group>"; };
+		4A645D66289ABCD500BE11CB /* DiscoverDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverDevices.swift; sourceTree = "<group>"; };
+		4A645D68289AC05400BE11CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4A74B118289E5A8200BCB17F /* DocumentBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentBrowser.swift; sourceTree = "<group>"; };
+		4A74B11A289E5FBC00BCB17F /* DocumentPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPreview.swift; sourceTree = "<group>"; };
+		4A74B11C289E602800BCB17F /* PDFKitRepresentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFKitRepresentedView.swift; sourceTree = "<group>"; };
+		4A74B11E289E81ED00BCB17F /* ActivityViewHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewHandler.swift; sourceTree = "<group>"; };
+		4A74B120289E94F500BCB17F /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
+		4ACE995828800EAC00D2587B /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		4AEB90AB289BAD0500C82476 /* LocalNetworkDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNetworkDiscovery.swift; sourceTree = "<group>"; };
 		4AF0F6802880011C00088399 /* AirScanTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirScanTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AF0F6832880011C00088399 /* AirScanTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirScanTestApp.swift; sourceTree = "<group>"; };
 		4AF0F6852880011C00088399 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4AF0F6872880011C00088399 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4AF0F6892880011C00088399 /* AirScanTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AirScanTest.entitlements; sourceTree = "<group>"; };
 		4AF0F68B2880011C00088399 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4AF472E0289BDF9300DD7C5C /* PrinterListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrinterListItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +75,20 @@
 		4AF0F6822880011C00088399 /* AirScanTest */ = {
 			isa = PBXGroup;
 			children = (
+				4A645D68289AC05400BE11CB /* Info.plist */,
 				4AF0F6832880011C00088399 /* AirScanTestApp.swift */,
+				4A74B118289E5A8200BCB17F /* DocumentBrowser.swift */,
+				4A74B11A289E5FBC00BCB17F /* DocumentPreview.swift */,
+				4A645D62289AB4D900BE11CB /* SelectSettings.swift */,
+				4A645D66289ABCD500BE11CB /* DiscoverDevices.swift */,
+				4A74B11C289E602800BCB17F /* PDFKitRepresentedView.swift */,
+				4AF472E0289BDF9300DD7C5C /* PrinterListItem.swift */,
+				4AEB90AB289BAD0500C82476 /* LocalNetworkDiscovery.swift */,
+				4A74B11E289E81ED00BCB17F /* ActivityViewHandler.swift */,
 				4AF0F6852880011C00088399 /* ContentView.swift */,
+				4A74B120289E94F500BCB17F /* LoadingOverlay.swift */,
+				4ACE995828800EAC00D2587B /* Test.swift */,
+				4A35D745289AAD370040F810 /* CapabilitiesParser.swift */,
 				4AF0F6872880011C00088399 /* Assets.xcassets */,
 				4AF0F6892880011C00088399 /* AirScanTest.entitlements */,
 				4AF0F68A2880011C00088399 /* Preview Content */,
@@ -139,8 +174,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A645D63289AB4D900BE11CB /* SelectSettings.swift in Sources */,
+				4A645D67289ABCD500BE11CB /* DiscoverDevices.swift in Sources */,
+				4A74B11F289E81ED00BCB17F /* ActivityViewHandler.swift in Sources */,
+				4A74B119289E5A8200BCB17F /* DocumentBrowser.swift in Sources */,
+				4A74B121289E94F500BCB17F /* LoadingOverlay.swift in Sources */,
+				4A35D746289AAD370040F810 /* CapabilitiesParser.swift in Sources */,
+				4ACE995928800EAC00D2587B /* Test.swift in Sources */,
+				4A74B11B289E5FBC00BCB17F /* DocumentPreview.swift in Sources */,
+				4AEB90AC289BAD0500C82476 /* LocalNetworkDiscovery.swift in Sources */,
 				4AF0F6862880011C00088399 /* ContentView.swift in Sources */,
+				4A74B11D289E602800BCB17F /* PDFKitRepresentedView.swift in Sources */,
 				4AF0F6842880011C00088399 /* AirScanTestApp.swift in Sources */,
+				4AF472E1289BDF9300DD7C5C /* PrinterListItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,10 +315,12 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AirScanTest/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = TestDescription;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -301,10 +349,12 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AirScanTest/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = TestDescription;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";

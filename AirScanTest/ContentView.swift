@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    let queue = DispatchQueue(label: "scanqueue", qos: .userInitiated)
+    @State var scanning: Bool = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView {
+            DiscoverDevices(scanning: $scanning).tabItem {
+                Label("Scan", systemImage: "scanner")
+            }
+            DocumentBrowser().tabItem{
+                Label("Documents", systemImage: "doc.on.doc")
+            }
         }
+        .disabled(scanning)
     }
 }
 
