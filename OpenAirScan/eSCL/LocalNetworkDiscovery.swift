@@ -40,6 +40,7 @@ class ScannerRepresentation {
         // URL to a small image of the device
         if recordDict["representation"] != nil {
             if recordDict["representation"]!.starts(with: "http") {
+                // Because of the self signed certificate, the image has to be loaded via http to prevent certificate errors in AsyncImage
                 self.iconUrl = URL(string: recordDict["representation"]!.replacingOccurrences(of: "https:", with: "http:"))
             }
             else {

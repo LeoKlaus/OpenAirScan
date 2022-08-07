@@ -197,7 +197,7 @@ struct SelectSettings: View {
                         print("scan initiated")
                     }.padding()
                         .foregroundColor(.white)
-                        .background(.blue)
+                        .background(Color.accentColor)
                         .clipShape(Capsule())
                 }
                 if scanning {
