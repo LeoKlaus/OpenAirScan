@@ -41,22 +41,22 @@ With my implementation, the procedure is as follows:
 ### 1. Discovering devices
 
 Create an instance of Browser() and a Dictionary to contain the results:
-''' Swift
+```swift
 let browser = Browser()
 // The string contains the hostname of the device, which should be sufficient to uniquely identify it.
 @State var discoveredDevices: [String:ScannerRepresentation] = [:]
 // As the discovery runs asynchronously, it's easiest to just pass the dictionary as binding
 browser.setDevices(scanners: $discoveredDevices)
-'''
+```
 Now you just have to start the browser to discover devices:
-''' Swift
+```swift
 browser.start()
-'''
+```
 
 ### 2. Querying capabilities and status of a device
 
 Create an instance of eSCLScanner() and use the methods getCapabilities() and getStatus():
-''' Swift
+```swift
 // Assuming your scanner has the IP 192.168.1.123
 let scannerRep = discoveredDevices["192.168.1.123"]
 let scanner = esclScanner(ip: scannerRep.hostname)
@@ -72,16 +72,16 @@ print(capabilities.sourceCapabilities["Adf"]?.discreteResolutions)
 
 // Status is now most likely "idle"
 let status = scanner.getStatus(uri: "https://"+scanner.hostname+"/"+scanner.root+"/ScannerStatus")
-'''
+```
 
 ### 3. POSTing a scan request and 4. GETting your results
 
-The current implementation just automatically calls the GET request in the same method, so you can simply create a request by calling sendPostRequest() and passing your desired options. 
-''' Swift
+The current implementation just automatically calls the GET request in the same method, so you can simply create a request by calling sendPostRequest() and passing your desired options.
+```swift
 let (pdfData, responseCode) = scanner.sendPostRequest(uri: "/\(scannerRep.root)/ScanJobs", resolution: "300", format: "application/pdf", version: capabilities.version, source: "Platen", width: 2480, height: 3508)
 // Now you can do with that data whatever you like. In most cases, it's probably a good idea to store the data on disk.
 // For that exact case, there's another method called sendPostRequestAndSaveFile(), which takes the same parameters but returns a URL to the file on disk instead of the data.
 // The file is saved to the root of the documents directory of the app by default, a custom path can be specified using the filePath parameter though.
-'''
+```
 
 If you're stuck, feel free to create an Issue.
