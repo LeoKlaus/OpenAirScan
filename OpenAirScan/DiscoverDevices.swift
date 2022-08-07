@@ -22,7 +22,9 @@ struct DiscoverDevices: View {
         // Delay of 7.5 seconds (1 second = 1_000_000_000 nanoseconds)
         try? await Task.sleep(nanoseconds: 7_500_000_000)
         loadingTooLong = true
-        print("loading took too long, displaying help text")
+        if printerDict.count == 0 {
+            print("loading took too long, displaying help text")
+        }
     }
     
     var body: some View {
@@ -71,10 +73,11 @@ struct DiscoverDevices: View {
                             }
                         }
                     }
-                    .refreshable {
-                        let browser = Browser(printers: $printerDict)
-                        browser.start()
-                    }
+                    // This shouldn't need to be refreshable as the browser keeps scanning
+                    //.refreshable {
+                    //    let browser = Browser(printers: $printerDict)
+                    //    browser.start()
+                    //}
                 }
             }
             .onAppear(perform: {

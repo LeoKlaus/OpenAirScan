@@ -109,7 +109,7 @@ class esclScanner: NSObject, URLSessionDelegate {
         return (path, responseCode)
     }
     
-    func sendPostRequest(uri: String, resolution: String = "300", colorMode: String = "RGB24", format: String = "application/pdf", version: String = "2.5", source: String = "Platen", width: String = "2550", height: String = "3510", XOffset: String = "0", YOffset: String = "0", intent: String = "Document") -> URL? {
+    func sendPostRequest(uri: String, resolution: String = "300", colorMode: String = "RGB24", format: String = "application/pdf", version: String = "2.5", source: String = "Platen", width: Int = 2550, height: Int = 3510, XOffset: String = "0", YOffset: String = "0", intent: String = "Document") -> URL? {
         print("sendControllerPostRequest")
         var urlRequest = URLRequest(url: URL(string: self.baseURI+uri)!)
         
