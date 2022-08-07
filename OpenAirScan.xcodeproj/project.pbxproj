@@ -36,7 +36,7 @@
 		4A74B120289E94F500BCB17F /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		4ACE995828800EAC00D2587B /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		4AEB90AB289BAD0500C82476 /* LocalNetworkDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNetworkDiscovery.swift; sourceTree = "<group>"; };
-		4AF0F6802880011C00088399 /* AirScanTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirScanTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AF0F6802880011C00088399 /* OpenAirScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAirScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AF0F6832880011C00088399 /* AirScanTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirScanTestApp.swift; sourceTree = "<group>"; };
 		4AF0F6852880011C00088399 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4AF0F6872880011C00088399 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 		4AF0F6772880011C00088399 = {
 			isa = PBXGroup;
 			children = (
-				4AF0F6822880011C00088399 /* AirScanTest */,
+				4AF0F6822880011C00088399 /* OpenAirScan */,
 				4AF0F6812880011C00088399 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -67,12 +67,12 @@
 		4AF0F6812880011C00088399 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4AF0F6802880011C00088399 /* AirScanTest.app */,
+				4AF0F6802880011C00088399 /* OpenAirScan.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4AF0F6822880011C00088399 /* AirScanTest */ = {
+		4AF0F6822880011C00088399 /* OpenAirScan */ = {
 			isa = PBXGroup;
 			children = (
 				4A645D68289AC05400BE11CB /* Info.plist */,
@@ -93,7 +93,7 @@
 				4AF0F6892880011C00088399 /* AirScanTest.entitlements */,
 				4AF0F68A2880011C00088399 /* Preview Content */,
 			);
-			path = AirScanTest;
+			path = OpenAirScan;
 			sourceTree = "<group>";
 		};
 		4AF0F68A2880011C00088399 /* Preview Content */ = {
@@ -107,9 +107,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4AF0F67F2880011C00088399 /* AirScanTest */ = {
+		4AF0F67F2880011C00088399 /* OpenAirScan */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4AF0F68F2880011C00088399 /* Build configuration list for PBXNativeTarget "AirScanTest" */;
+			buildConfigurationList = 4AF0F68F2880011C00088399 /* Build configuration list for PBXNativeTarget "OpenAirScan" */;
 			buildPhases = (
 				4AF0F67C2880011C00088399 /* Sources */,
 				4AF0F67D2880011C00088399 /* Frameworks */,
@@ -119,9 +119,9 @@
 			);
 			dependencies = (
 			);
-			name = AirScanTest;
+			name = OpenAirScan;
 			productName = AirScanTest;
-			productReference = 4AF0F6802880011C00088399 /* AirScanTest.app */;
+			productReference = 4AF0F6802880011C00088399 /* OpenAirScan.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -139,7 +139,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4AF0F67B2880011C00088399 /* Build configuration list for PBXProject "AirScanTest" */;
+			buildConfigurationList = 4AF0F67B2880011C00088399 /* Build configuration list for PBXProject "OpenAirScan" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -152,7 +152,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4AF0F67F2880011C00088399 /* AirScanTest */,
+				4AF0F67F2880011C00088399 /* OpenAirScan */,
 			);
 		};
 /* End PBXProject section */
@@ -373,7 +373,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4AF0F67B2880011C00088399 /* Build configuration list for PBXProject "AirScanTest" */ = {
+		4AF0F67B2880011C00088399 /* Build configuration list for PBXProject "OpenAirScan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4AF0F68D2880011C00088399 /* Debug */,
@@ -382,7 +382,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4AF0F68F2880011C00088399 /* Build configuration list for PBXNativeTarget "AirScanTest" */ = {
+		4AF0F68F2880011C00088399 /* Build configuration list for PBXNativeTarget "OpenAirScan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4AF0F6902880011C00088399 /* Debug */,
