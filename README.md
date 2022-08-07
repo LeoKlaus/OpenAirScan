@@ -12,15 +12,15 @@ I plan to submit this to the AppStore at one point, but currently you need to ha
 You should be able to just clone and compile the project to any modern iOS device (with some minor changes, the app should also work on Macs).
 After opening the App, it will automatically start searching for devices supporting eSCL via Bonjour (it does need the local network permission for that) and display a list of results:
 
-![View of the main screen of the example app](images/simulator_screenshot_E96DFFE6-6BBF-4EEC-B6E5-9AA0680713B1.png)
+![View of the main screen of the example app](images/1.png)
 
 Tapping a device will lead you to the settings page where you can choose parameters like Source, Resolution and File Format:
 
-![View of the settings page for a device in the example app](images/simulator_screenshot_31129F3E-9A7F-4A0F-9CF0-72D55623653B.png)
+![View of the settings page for a device in the example app](images/2.png)
 
 Pressing "Start scan!" will... start the scan. When the scanner is finished, a success message is displayed and the scanned image is available in the "Documents" tab:
 
-![View of the documents tab in the example app](images/simulator_screenshot_D7EF810B-03FF-4A9B-99C8-D909160CD363.png)
+![View of the documents tab in the example app](images/3.png)
 
 From there, you can use the default share sheet to do whatever you like with the document. You can also swipe left on a document in the list to delete it.
 
