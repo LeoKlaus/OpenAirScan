@@ -3,8 +3,6 @@
 I needed a Swift implementation of the eSCL protocol for another project and I now want to open source this.
 This repo contains an entire XCode project with a small example application using the protocol. 
 If you're only interested in the actual API, all files for that are in the folder "eSCL".
-I have not yet decided on a license for this, so please ask me first if you want to use or adapt my code.
-
 
 ## Using the example application
 
