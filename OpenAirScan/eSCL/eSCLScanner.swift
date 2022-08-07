@@ -76,8 +76,47 @@ class esclScanner: NSObject, URLSessionDelegate {
      - Returns:A string with the scanners current status
      */
     func getStatus(uri: String) -> String {
-        // TODO: Implement this
-        return ""
+        
+        var status = ""
+        
+        var urlRequest = URLRequest(url: URL(string: self.baseURI + uri)!)
+        
+        urlRequest.httpMethod = "GET"
+        
+        let configuration = URLSessionConfiguration.default
+        
+        let session = URLSession(configuration: configuration, delegate: self, delegateQueue: OperationQueue.init())
+        
+        let sem = DispatchSemaphore.init(value: 0)
+        let task = session.dataTask(with: urlRequest) { (data, response, error) in
+            defer { sem.signal() }
+            guard
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {
+                print("error", error ?? URLError(.badServerResponse))
+                return
+            }
+            
+            guard(200 ... 299) ~= response.statusCode else {
+                print("Statuscode should be 2xx but is \(response.statusCode)")
+                return
+            }
+            
+            let parser = StatusParser(data: data)
+            let success:Bool = parser.parse()
+            if success {
+                print("parse success")
+                status = parser.status
+            } else {
+                print("parse failure!")
+            }
+        }
+        
+        task.resume()
+        sem.wait()
+        return status
     }
     
     /**
@@ -148,7 +187,7 @@ class esclScanner: NSObject, URLSessionDelegate {
         return (path, responseCode)
     }
     /**
-     This method sends a POST request to the scanner (this is what actually initiates the scan). And stores the resulting file on disk. The body of the request is generated using the following parameters:
+     This method sends a POST request to the scanner (this is what actually initiates the scan). And returns the results as binary data. The body of the request is generated using the following parameters:
      - Parameter uri: A string containing the relative path to the "ScanJobs"-Page of the scanner. This should be "/eSCL/ScanJobs" for most devices.
      - Parameter resolution: A string containing the desired resolution in DPI. This could be easily changed to take an integer instead, but for my purposes, a String was easier to handle.
      - Parameter colorMode: A string containing the desired color mode. For most scanners, the available options here are "BlackAndWhite1", "Grayscale8" and "RGB24".
@@ -160,9 +199,9 @@ class esclScanner: NSObject, URLSessionDelegate {
      - Parameter XOffset: Offset on the X-Axis. It is necessary to set this for some scanners.
      - Parameter YOffset: Offset on the Y-Axis.
      - Parameter intent: This helps the scanner auto-determine settings for the scan. Technically, version and intent should suffice for a valid request. To my understanding, the defaults set by an intent are ignored as soon as values are provided.
-     - Returns: A tuple containing the URL to the created file and the response code of the last request (which should be 200).
+     - Returns: A tuple containing the binary data of the file and the response code of the last request (which should be 200).
      */
-    func sendPostRequest(uri: String, resolution: String = "300", colorMode: String = "RGB24", format: String = "application/pdf", version: String = "2.5", source: String = "Platen", width: Int = 2480, height: Int = 3508, XOffset: String = "0", YOffset: String = "0", intent: String = "Document") -> (URL?, Int) {
+    func sendPostRequest(uri: String, resolution: String = "300", colorMode: String = "RGB24", format: String = "application/pdf", version: String = "2.5", source: String = "Platen", width: Int = 2480, height: Int = 3508, XOffset: String = "0", YOffset: String = "0", intent: String = "Document") -> (Data, Int) {
         print("sendControllerPostRequest")
         var urlRequest = URLRequest(url: URL(string: self.baseURI+uri)!)
         
@@ -211,7 +250,7 @@ class esclScanner: NSObject, URLSessionDelegate {
         let configuration = URLSessionConfiguration.default
         
         let session = URLSession(configuration: configuration, delegate: self, delegateQueue: OperationQueue.init())
-        var path: URL?
+        var imgData: Data = Data()
         let sem = DispatchSemaphore.init(value: 0)
         print("preparing task..")
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
@@ -240,7 +279,7 @@ class esclScanner: NSObject, URLSessionDelegate {
             
             while responseCode != 200 {
                 sleep(2)
-                (path, responseCode) = self.sendGetRequestAndSaveFile(uri: self.responseURL, format: format)
+                (imgData, responseCode) = self.sendGetRequest(uri: self.responseURL)
                 print(responseCode)
             }
             // My scanner wont return to the idle status without an additional request after the successful one.
@@ -249,6 +288,44 @@ class esclScanner: NSObject, URLSessionDelegate {
         
         task.resume()
         sem.wait()
+        
+        return (imgData, responseCode)
+    }
+    
+    /**
+     This method sends a POST request to the scanner (this is what actually initiates the scan). And stores the resulting file on disk. The body of the request is generated using the following parameters:
+     - Parameter uri: A string containing the relative path to the "ScanJobs"-Page of the scanner. This should be "/eSCL/ScanJobs" for most devices.
+     - Parameter resolution: A string containing the desired resolution in DPI. This could be easily changed to take an integer instead, but for my purposes, a String was easier to handle.
+     - Parameter colorMode: A string containing the desired color mode. For most scanners, the available options here are "BlackAndWhite1", "Grayscale8" and "RGB24".
+     - Parameter format: The mimetype of the file the scanner should produce. My scanners only support "application/pdf" and "image/jpg".
+     - Parameter version: The version of the eSCL protocol to be used.
+     - Parameter source: The source to use for the scan. This can either be "Platen" (that's flatbed), "Adf" or "Camera".
+     - Parameter width: Width of the desired output in pixels at 300 DPI. This can be converted to inches by dividing by 300, to centimeters by dividing by 118.
+     - Parameter height: Height of the desired output in pixels at 300 DPI.
+     - Parameter XOffset: Offset on the X-Axis. It is necessary to set this for some scanners.
+     - Parameter YOffset: Offset on the Y-Axis.
+     - Parameter intent: This helps the scanner auto-determine settings for the scan. Technically, version and intent should suffice for a valid request. To my understanding, the defaults set by an intent are ignored as soon as values are provided.
+     - Parameter filePath: Path at which the file should be stored.
+     - Returns: A tuple containing the URL to the created file and the response code of the last request (which should be 200).
+     */
+    func sendPostRequestAndSaveFile(uri: String, resolution: String = "300", colorMode: String = "RGB24", format: String = "application/pdf", version: String = "2.5", source: String = "Platen", width: Int = 2480, height: Int = 3508, XOffset: String = "0", YOffset: String = "0", intent: String = "Document", filePath: URL? = nil) -> (URL?, Int) {
+        let path: URL
+        if filePath == nil {
+            let fileExtension = (format == "application/pdf") ? ".pdf" : ".jpeg"
+            
+            // This is just used for determinining a file name
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "YY-MM-dd-HH-mm-ss"
+            let filename = "scan-" + dateFormatter.string(from: Date.now) + fileExtension
+            
+            path = FileManager.default.urls(for: .documentDirectory,
+                                                in: .userDomainMask)[0].appendingPathComponent(filename)
+        } else {
+            path = filePath!
+        }
+        let (data, responseCode) = self.sendPostRequest(uri: uri, resolution: resolution, colorMode: colorMode, format: format, version: version, source: source, width: width, height: height, XOffset: XOffset, YOffset: YOffset, intent: intent)
+        
+        try? data.write(to: path)
         
         return (path, responseCode)
     }

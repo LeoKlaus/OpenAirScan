@@ -15,6 +15,10 @@
 		4A74B11D289E602800BCB17F /* PDFKitRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B11C289E602800BCB17F /* PDFKitRepresentedView.swift */; };
 		4A74B11F289E81ED00BCB17F /* ActivityViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B11E289E81ED00BCB17F /* ActivityViewHandler.swift */; };
 		4A74B121289E94F500BCB17F /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B120289E94F500BCB17F /* LoadingOverlay.swift */; };
+		4AB17CB8289FFF6B00CBBF73 /* StatusParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB17CB7289FFF6B00CBBF73 /* StatusParser.swift */; };
+		4AB17CBC28A002A700CBBF73 /* simulator_screenshot_E96DFFE6-6BBF-4EEC-B6E5-9AA0680713B1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CBB28A002A700CBBF73 /* simulator_screenshot_E96DFFE6-6BBF-4EEC-B6E5-9AA0680713B1.png */; };
+		4AB17CC028A0037A00CBBF73 /* simulator_screenshot_31129F3E-9A7F-4A0F-9CF0-72D55623653B.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CBF28A0037A00CBBF73 /* simulator_screenshot_31129F3E-9A7F-4A0F-9CF0-72D55623653B.png */; };
+		4AB17CC228A003FE00CBBF73 /* simulator_screenshot_D7EF810B-03FF-4A9B-99C8-D909160CD363.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CC128A003FE00CBBF73 /* simulator_screenshot_D7EF810B-03FF-4A9B-99C8-D909160CD363.png */; };
 		4ACE995928800EAC00D2587B /* eSCLScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE995828800EAC00D2587B /* eSCLScanner.swift */; };
 		4AEB90AC289BAD0500C82476 /* LocalNetworkDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB90AB289BAD0500C82476 /* LocalNetworkDiscovery.swift */; };
 		4AF0F6842880011C00088399 /* OpenAirScanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF0F6832880011C00088399 /* OpenAirScanApp.swift */; };
@@ -34,6 +38,11 @@
 		4A74B11C289E602800BCB17F /* PDFKitRepresentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFKitRepresentedView.swift; sourceTree = "<group>"; };
 		4A74B11E289E81ED00BCB17F /* ActivityViewHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewHandler.swift; sourceTree = "<group>"; };
 		4A74B120289E94F500BCB17F /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
+		4AB17CB7289FFF6B00CBBF73 /* StatusParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusParser.swift; sourceTree = "<group>"; };
+		4AB17CB928A0011800CBBF73 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4AB17CBB28A002A700CBBF73 /* simulator_screenshot_E96DFFE6-6BBF-4EEC-B6E5-9AA0680713B1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "simulator_screenshot_E96DFFE6-6BBF-4EEC-B6E5-9AA0680713B1.png"; sourceTree = "<group>"; };
+		4AB17CBF28A0037A00CBBF73 /* simulator_screenshot_31129F3E-9A7F-4A0F-9CF0-72D55623653B.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "simulator_screenshot_31129F3E-9A7F-4A0F-9CF0-72D55623653B.png"; sourceTree = "<group>"; };
+		4AB17CC128A003FE00CBBF73 /* simulator_screenshot_D7EF810B-03FF-4A9B-99C8-D909160CD363.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "simulator_screenshot_D7EF810B-03FF-4A9B-99C8-D909160CD363.png"; sourceTree = "<group>"; };
 		4ACE995828800EAC00D2587B /* eSCLScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eSCLScanner.swift; sourceTree = "<group>"; };
 		4AEB90AB289BAD0500C82476 /* LocalNetworkDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNetworkDiscovery.swift; sourceTree = "<group>"; };
 		4AF0F6802880011C00088399 /* OpenAirScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAirScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,6 +83,7 @@
 				4ACE995828800EAC00D2587B /* eSCLScanner.swift */,
 				4AEB90AB289BAD0500C82476 /* LocalNetworkDiscovery.swift */,
 				4A35D745289AAD370040F810 /* CapabilitiesParser.swift */,
+				4AB17CB7289FFF6B00CBBF73 /* StatusParser.swift */,
 			);
 			path = eSCL;
 			sourceTree = "<group>";
@@ -89,9 +99,21 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		4AB17CBA28A0029700CBBF73 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				4AB17CBF28A0037A00CBBF73 /* simulator_screenshot_31129F3E-9A7F-4A0F-9CF0-72D55623653B.png */,
+				4AB17CBB28A002A700CBBF73 /* simulator_screenshot_E96DFFE6-6BBF-4EEC-B6E5-9AA0680713B1.png */,
+				4AB17CC128A003FE00CBBF73 /* simulator_screenshot_D7EF810B-03FF-4A9B-99C8-D909160CD363.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		4AF0F6772880011C00088399 = {
 			isa = PBXGroup;
 			children = (
+				4AB17CB928A0011800CBBF73 /* README.md */,
+				4AB17CBA28A0029700CBBF73 /* images */,
 				4AF0F6822880011C00088399 /* OpenAirScan */,
 				4AF0F6812880011C00088399 /* Products */,
 			);
@@ -186,8 +208,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AB17CBC28A002A700CBBF73 /* simulator_screenshot_E96DFFE6-6BBF-4EEC-B6E5-9AA0680713B1.png in Resources */,
 				4AF0F68C2880011C00088399 /* Preview Assets.xcassets in Resources */,
+				4AB17CC228A003FE00CBBF73 /* simulator_screenshot_D7EF810B-03FF-4A9B-99C8-D909160CD363.png in Resources */,
 				4AF0F6882880011C00088399 /* Assets.xcassets in Resources */,
+				4AB17CC028A0037A00CBBF73 /* simulator_screenshot_31129F3E-9A7F-4A0F-9CF0-72D55623653B.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +233,7 @@
 				4A74B11B289E5FBC00BCB17F /* DocumentPreview.swift in Sources */,
 				4AEB90AC289BAD0500C82476 /* LocalNetworkDiscovery.swift in Sources */,
 				4AF0F6862880011C00088399 /* ContentView.swift in Sources */,
+				4AB17CB8289FFF6B00CBBF73 /* StatusParser.swift in Sources */,
 				4A74B11D289E602800BCB17F /* PDFKitRepresentedView.swift in Sources */,
 				4AF0F6842880011C00088399 /* OpenAirScanApp.swift in Sources */,
 				4AF472E1289BDF9300DD7C5C /* ScannerListItem.swift in Sources */,
@@ -343,7 +369,7 @@
 				INFOPLIST_FILE = OpenAirScan/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OpenAirScan;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = TestDescription;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Access to your local network is required for scanner discovery.";
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -380,7 +406,7 @@
 				INFOPLIST_FILE = OpenAirScan/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OpenAirScan;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSLocalNetworkUsageDescription = TestDescription;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Access to your local network is required for scanner discovery.";
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

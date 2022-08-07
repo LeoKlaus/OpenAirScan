@@ -109,7 +109,6 @@ struct SelectSettings: View {
                 .transition(.move(edge: .top))
         }
         
-        NavigationView {
             ZStack {
                 VStack {
                     HStack {
@@ -186,7 +185,7 @@ struct SelectSettings: View {
                     Button("Start scan!") {
                         scanning = true
                         queue.async {
-                            let (path, responseCode) = esclScanner(ip: scannerRep.hostname).sendPostRequest(uri: "/\(scannerRep.root)/ScanJobs", resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
+                            let (path, responseCode) = esclScanner(ip: scannerRep.hostname).sendPostRequestAndSaveFile(uri: "/\(scannerRep.root)/ScanJobs", resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
                             print("scan finished! File saved at:")
                             print(path)
                             print(responseCode)
@@ -200,10 +199,11 @@ struct SelectSettings: View {
                         .background(Color.accentColor)
                         .clipShape(Capsule())
                 }
+                .frame(maxWidth: 400)
                 if scanning {
                     LoadingOverlay()
                 }
-            }
+            
         }
         .disabled(scanning)
         .navigationTitle(capabilities.makeAndModel)
