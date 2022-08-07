@@ -8,29 +8,34 @@
 import SwiftUI
 import Network
 
+/// This view displays a list of all discovered devices. 
 struct DiscoverDevices: View {
     
-    @State var printerDict: [String: PrinterRepresentation] = [:]
+    @State var scannerDict: [String: ScannerRepresentation] = [:]
     @State var loadingTooLong: Bool = false
     
     @State var customHostname: String = ""
     @State var customRoot: String = "eSCL"
     
     @Binding var scanning: Bool
+    let browser = Browser()
     
     private func delayText() async {
-        // Delay of 7.5 seconds (1 second = 1_000_000_000 nanoseconds)
         try? await Task.sleep(nanoseconds: 7_500_000_000)
         loadingTooLong = true
-        if printerDict.count == 0 {
+        if scannerDict.count == 0 {
             print("loading took too long, displaying help text")
         }
+    }
+    
+    init(scanning: Binding<Bool>) {
+        self._scanning = scanning
     }
     
     var body: some View {
         NavigationView {
             VStack {
-                if printerDict.count == 0 {
+                if scannerDict.count == 0 {
                     if loadingTooLong {
                         ScrollView {
                             Text("No devices found :(")
@@ -58,7 +63,7 @@ struct DiscoverDevices: View {
                                     .textInputAutocapitalization(.never)
                                     .textFieldStyle(.roundedBorder)
                                 Button("Add custom scanner") {
-                                    self.printerDict[customHostname] = PrinterRepresentation(hostname: customHostname, root: customRoot)
+                                    self.scannerDict[customHostname] = ScannerRepresentation(hostname: customHostname, root: customRoot)
                                 }
                             }.padding()
                         }
@@ -67,9 +72,9 @@ struct DiscoverDevices: View {
                     }
                 } else {
                     List {
-                        ForEach(Array(printerDict.values), id: \.hostname) { printer in
-                            NavigationLink(destination: SelectSettings(printer: printer, scanning: $scanning)) {
-                                PrinterListItem(printer: printer)
+                        ForEach(Array(scannerDict.values), id: \.hostname) { printer in
+                            NavigationLink(destination: SelectSettings(scanner: printer, scanning: $scanning)) {
+                                ScannerListItem(scanners: printer)
                             }
                         }
                     }
@@ -81,7 +86,7 @@ struct DiscoverDevices: View {
                 }
             }
             .onAppear(perform: {
-                let browser = Browser(printers: $printerDict)
+                browser.setDevices(scanners: $scannerDict)
                 browser.start()
                 Task {
                     await delayText()

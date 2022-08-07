@@ -7,14 +7,17 @@
 
 import SwiftUI
 
+/// This view displays all documents stored in storage. It is not relevant for the eSCL implementation.
 struct DocumentBrowser: View {
     
+    // List of documents on disk
     @State var documents: [URL]
     
     init() {
         self.documents = []
     }
     
+    // Reload file list from storage
     func refresh() {
         do {
             let documentDirectory = try FileManager.default.url(
@@ -28,21 +31,19 @@ struct DocumentBrowser: View {
                     includingPropertiesForKeys: nil,
                     options: .skipsHiddenFiles
                 )
-            
         } catch {
             print(error)
         }
     }
     
+    // Delete a file from storage
     func deleteFile(at offsets: IndexSet) {
         do {
             try FileManager.default.removeItem(at: documents[offsets.first!])
         } catch let error as NSError {
             print("Error: \(error.domain)")
         }
-        
         self.documents.remove(at: offsets.first!)
-        
     }
     
     var body: some View {
@@ -53,7 +54,6 @@ struct DocumentBrowser: View {
                         Text("There are no scans yet.")
                     }
                     ForEach(self.documents, id: \.self) { document in
-                        
                         NavigationLink(document.lastPathComponent, destination: {
                             DocumentPreview(docUrl: document)
                         })

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// This view displays a single document from a storage url. It is not relevant for the eSCL implementation.
 struct DocumentPreview: View {
     
     let data: Data
@@ -47,8 +48,6 @@ struct DocumentPreview: View {
                 }
             }
             .sheet(isPresented: $showShareSheet, content: {
-                // For some reason inexplicable to me, this leads to the app crashing when opening the share sheet in the simulator with debugging connected. Opening the share sheet on a physical device works as expected, even with the debugger connected, so does opening it in the simulator when the debugger is not connected. I'm assuming this is a bug in xcode 14 and I won't put any effort into fixing this for now.
-                // Confirmed its working in xcode 13.4 with its simulator
                 ActivityViewHandler(itemsToShare: [self.docUrl])
             })
     }

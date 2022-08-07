@@ -2,28 +2,42 @@ import Foundation
 import Network
 import SwiftUI
 
-class PrinterRepresentation {
+/**
+ An object storing the attributes of a single scanner.
+ */
+class ScannerRepresentation {
     var hostname: String
     var location: String?
     var model: String?
     var iconUrl: URL?
     var root: String
     
+    /**
+     This initialiser is only meant for manually adding devices if Bonjour doesn't work or isn't avaiable.
+     - Parameter hostname: String containing the hostname/ip of the scanner.
+     - Parameter root: The path to the eSCL root of the device. This should be  "eSCL" for most devices.
+     */
     init(hostname: String, root: String) {
         self.hostname = hostname
         self.root = root
     }
     
+    /**
+     The main initialiser. This takes a TXT-Record from the Bonjour discovery and retrieves all necessary data.
+     -  Parameter txtRecord: An NWTXTRecord returned by an eSCL-Compliant scanner.
+     */
     init(txtRecord: NWTXTRecord) {
         let recordDict = txtRecord.dictionary
-        self.hostname = URL(string: recordDict["adminurl"] ?? "")!.host() ?? ""
-        
+        self.hostname = URL(string: recordDict["adminurl"] ?? "")!.host!
+        // Location
         if recordDict["note"] != nil {
             self.location = recordDict["note"]
         }
+        // Make and model
         if recordDict["ty"] != nil {
             self.model = recordDict["ty"]
         }
+        // URL to a small image of the device
         if recordDict["representation"] != nil {
             if recordDict["representation"]!.starts(with: "http") {
                 self.iconUrl = URL(string: recordDict["representation"]!.replacingOccurrences(of: "https:", with: "http:"))
@@ -32,10 +46,12 @@ class PrinterRepresentation {
                 self.iconUrl = URL(string: "http://" + self.hostname + recordDict["representation"]!)
             }
         }
-        self.root = recordDict["rs"] ?? ""
+        // eSCL root of the device
+        self.root = recordDict["rs"]!
     }
     
-    func printPrinter() {
+    /// Prints all stored information of the device
+    func printScanner() {
         print("Host: \(self.hostname)")
         print("Location: \(self.location)")
         print("Model: \(self.model)")
@@ -44,19 +60,37 @@ class PrinterRepresentation {
     }
 }
 
+/**
+ Object that can handle Bonjour requests.
+ */
 class Browser {
-
+    
     let browser: NWBrowser
-    var printers: Binding<[String:PrinterRepresentation]>
+    /// A dictionary in the format [hostname:ScannerRepresentation] of discovered devices.
+    var scanners: Binding<[String:ScannerRepresentation]>?
 
-    init(printers: Binding<[String:PrinterRepresentation]>) {
+    /**
+     Create a new browser without a binding dictionary. Calling start() on this won't do anything.
+     */
+    init() {
         let parameters = NWParameters()
         parameters.includePeerToPeer = true
 
         browser = NWBrowser(for: .bonjourWithTXTRecord(type: "_uscan._tcp", domain: nil), using: parameters)
-        self.printers = printers
+        self.scanners = nil
+    }
+    
+    /**
+     Method to pass a binding dictionary to the browser. This isn't done in the main init to prevent issues with initiation in other classes.
+     - Parameter scanners: A binding dictionary in the format [hostname:ScannerRepresentation] of discovered devices.
+     */
+    func setDevices(scanners: Binding<[String:ScannerRepresentation]>) {
+        self.scanners = scanners
     }
 
+    /**
+     Method to start discovery of devices via Bonjour.
+     */
     func start() {
         browser.stateUpdateHandler = { newState in
             print("browser.stateUpdateHandler \(newState)")
@@ -69,10 +103,9 @@ class Browser {
                     
                 case .bonjour(let record):
                     print("Record: \(record.dictionary)")
-                    //self.printers.append(PrinterRepresentation(txtRecord: record))
-                    //self.printers.wrappedValue.append(PrinterRepresentation(txtRecord: record))
-                    let printer = PrinterRepresentation(txtRecord: record)
-                    self.printers[printer.hostname].wrappedValue = printer
+                    // Generate a ScannerRepresentation object containing all information the scanner provided.
+                    let scanner = ScannerRepresentation(txtRecord: record)
+                    self.scanners![scanner.hostname].wrappedValue = scanner
                     
                 case .none:
                     print("Record: none")

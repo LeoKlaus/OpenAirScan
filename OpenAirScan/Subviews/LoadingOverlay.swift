@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/// Simple overlay displaying a loading indicator
 struct LoadingOverlay: View {
     
     @State private var text = ""

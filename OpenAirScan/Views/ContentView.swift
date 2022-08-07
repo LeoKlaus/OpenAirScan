@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     
-    let queue = DispatchQueue(label: "scanqueue", qos: .userInitiated)
     @State var scanning: Bool = false
     
     var body: some View {

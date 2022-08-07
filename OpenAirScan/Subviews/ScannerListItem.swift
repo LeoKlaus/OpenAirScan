@@ -7,14 +7,15 @@
 
 import SwiftUI
 
-struct PrinterListItem: View {
+/// View for a single scanner item in a list
+struct ScannerListItem: View {
     
-    let printer: PrinterRepresentation
+    let scanners: ScannerRepresentation
     
     var body: some View {
         HStack {
             AsyncImage(
-                url: printer.iconUrl,
+                url: scanners.iconUrl,
                             content: { image in
                                 image.resizable()
                                      .aspectRatio(contentMode: .fit)
@@ -26,9 +27,9 @@ struct PrinterListItem: View {
                             }
                         )
             VStack {
-                Text(printer.model ?? "Unknown Model")
+                Text(scanners.model ?? "Unknown Model")
                     .font(.headline)
-                Text(printer.location ?? "Unknown Location")
+                Text(scanners.location ?? "Unknown Location")
             }
         }
     }

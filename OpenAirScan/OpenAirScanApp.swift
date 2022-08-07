@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct AirScanTestApp: App {
+struct OpenAirScanApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

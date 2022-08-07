@@ -7,13 +7,14 @@
 
 import SwiftUI
 
+/// This view allows a user to select settings for the scan. It is not relevant for the eSCL implementation but can give insights on how to form a request.
 struct SelectSettings: View {
     
-    let printer: PrinterRepresentation
+    let scannerRep: ScannerRepresentation
     let capabilities: Scanner
     let queue = DispatchQueue(label: "scanqueue", qos: .userInitiated)
     
-    
+    // State variables for user selections
     @State var selectedSource: String
     @State var selectedColorMode: String
     @State var selectedResolution: String
@@ -22,11 +23,14 @@ struct SelectSettings: View {
     @State var paperHeight: Int
     @State var paperWidth: Int
     @State var selectedIntent: String
-    @State var showSuccess: Bool = false
-    @State var showError: Bool = false
-    
+    // State variables for messages
+    @State var showMessage: Bool = false
+    @State var responseCode: Int = 0
+    // This is used to block UI interaction while scanning
     @Binding var scanning: Bool
     
+    // These are used to make the selections easier to understand
+    // There's probably a much better way to do this but I won't spend too much time on this
     let humanReadableSource: [String:String] = [
         "platen":   "Flatbed",
         "adf":      "Document Feeder",
@@ -58,9 +62,9 @@ struct SelectSettings: View {
         "Custom": [1000, 2000]
     ]
     
-    init(printer: PrinterRepresentation, scanning: Binding<Bool>) {
-        self.printer = printer
-        self.capabilities = esclScanner(ip: printer.hostname).getCapabilities(uri: "https://"+printer.hostname+"/"+printer.root+"/ScannerCapabilities")
+    init(scanner: ScannerRepresentation, scanning: Binding<Bool>) {
+        self.scannerRep = scanner
+        self.capabilities = esclScanner(ip: scanner.hostname).getCapabilities(uri: "https://"+scanner.hostname+"/"+scanner.root+"/ScannerCapabilities")
         self._scanning = scanning
         self.selectedSource = capabilities.sourceCapabilities.keys.first ?? "Error fetching sources"
         let temp = capabilities.sourceCapabilities.keys.first ?? "Error"
@@ -73,31 +77,33 @@ struct SelectSettings: View {
         self.paperHeight = 3508
     }
     
+    // This is only used to delay the dismissal of messages
     @Sendable private func delayText() async {
-            try? await Task.sleep(nanoseconds: 3_000_000_000)
+            try? await Task.sleep(nanoseconds: 5_000_000_000)
             withAnimation {
-                showSuccess = false
-                showError = false
+                showMessage = false
             }
         }
     
-    var body: some View {
-        
-        if showSuccess {
-            Text("Scan saved!")
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.green)
-                .foregroundColor(Color.white)
-                .task(delayText)
-                .transition(.move(edge: .top))
+    func generateMessage() -> String {
+        if self.responseCode == 200 {
+            return "Scan saved!"
         }
-        if showError {
-            Text("Encountered an error while scanning.")
-                .multilineTextAlignment(.center)
+        else if self.responseCode == 503 {
+            return "Scan failed: The scanner is busy!"
+        }
+        else if self.responseCode == 409 {
+            return "Scan failed: Malformed request!\nYou likely tried to mix parameters that can't be mixed."
+        }
+        return "Encountered an unknown error!"
+    }
+    
+    var body: some View {
+        if showMessage {
+            Text(self.generateMessage())
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.red)
+                .background(self.responseCode == 200 ? Color.green : Color.red)
                 .foregroundColor(Color.white)
                 .task(delayText)
                 .transition(.move(edge: .top))
@@ -115,7 +121,6 @@ struct SelectSettings: View {
                             }
                         }
                     }.padding(.horizontal)
-                    //Spacer()
                     HStack {
                         Text("Colormode:")
                         Spacer()
@@ -125,7 +130,6 @@ struct SelectSettings: View {
                             }
                         }
                     }.padding(.horizontal)
-                    //Spacer()
                     HStack {
                         Text("Resolution (DPI):")
                         Spacer()
@@ -135,7 +139,6 @@ struct SelectSettings: View {
                             }
                         }
                     }.padding(.horizontal)
-                    //Spacer()
                     HStack {
                         Text("File format:")
                         Spacer()
@@ -152,7 +155,7 @@ struct SelectSettings: View {
                             ForEach(paperSizes, id: \.self) {
                                 Text($0)
                             }
-                        }
+                        } // This is a bit hacky
                         .onChange(of: selectedPaperFormat) { tag in
                             self.paperWidth = humanReadablePaperSizes[selectedPaperFormat]![0]
                             self.paperHeight = humanReadablePaperSizes[selectedPaperFormat]![1]
@@ -178,29 +181,18 @@ struct SelectSettings: View {
                         }
                     }.padding(.horizontal)
                     
-                    //if lastScanURL == nil {
-                        Spacer()
-                    //} else {
-                    //    DocumentPreview(docUrl: lastScanURL!)
-                    //}
+                    Spacer()
                     
                     Button("Start scan!") {
                         scanning = true
                         queue.async {
-                            let path = esclScanner(ip: printer.hostname).sendPostRequest(uri: "/\(printer.root)/ScanJobs", resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
+                            let (path, responseCode) = esclScanner(ip: scannerRep.hostname).sendPostRequest(uri: "/\(scannerRep.root)/ScanJobs", resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
                             print("scan finished! File saved at:")
                             print(path)
-                            //self.lastScanURL = path
+                            print(responseCode)
+                            self.responseCode = responseCode
                             scanning = false
-                            if path != nil {
-                                withAnimation {
-                                    showSuccess = true
-                                }
-                            } else {
-                                withAnimation {
-                                    showError = true
-                                }
-                            }
+                            showMessage = true
                         }
                         print("scan initiated")
                     }.padding()
