@@ -65,7 +65,7 @@ struct SelectSettings: View {
     
     init(scanner: ScannerRepresentation, scanning: Binding<Bool>) {
         self.scannerRep = scanner
-        self.capabilities = esclScanner(ip: scanner.hostname).getCapabilities(uri: "https://"+scanner.hostname+"/"+scanner.root+"/ScannerCapabilities")
+        self.capabilities = esclScanner(ip: scanner.hostname, root: scanner.root).getCapabilities()
         self._scanning = scanning
         self.selectedSource = capabilities.sourceCapabilities.keys.first ?? "Error fetching sources"
         let temp = capabilities.sourceCapabilities.keys.first ?? "Error"
@@ -186,11 +186,9 @@ struct SelectSettings: View {
                     Button("Start scan!") {
                         scanning = true
                         queue.async {
-                            let (path, responseCode) = esclScanner(ip: scannerRep.hostname).sendPostRequestAndSaveFile(uri: "/\(scannerRep.root)/ScanJobs", resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
-                            print("scan finished! File saved at:")
-                            print(path)
-                            print(responseCode)
-                            self.responseCode = responseCode
+                            //let (path, responseCode) = esclScanner(ip: scannerRep.hostname).sendPostRequestAndSaveFile(uri: "/\(scannerRep.root)/ScanJobs", resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
+                            _ = esclScanner(ip: scannerRep.hostname, root: scannerRep.root).scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
+                            self.responseCode = 200
                             scanning = false
                             showMessage = true
                         }
