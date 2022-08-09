@@ -82,14 +82,6 @@ let (responseURL, postResponseCode) = scanner.sendPostRequest(resolution: "300",
 // postResponseCode should be 201 (CREATED). If it isn't, there's likely an invalid mix of options and the scanner returned 409 (CONFLICT)
 ```
 
-There's also a method scanDocument(), which takes the same parameters as sendPostRequest() but executes both the POST and GET requests. It returns the binary data of the scanned image and the latest responseCode (which should be 200):
-```swift
-let (imageData, responseCode) = scanner.scanDocument(resolution: "300", format: "application/pdf", version: capabilities.version, source: "Platen", width: 2480, height: 3508)
-// Now you can do with that data whatever you like. In most cases, it's probably a good idea to store the data on disk.
-// For that exact case, there's another method scanDocumentAndSaveFile(), which takes the same parameters as sendPostRequest() but returns a URL to the file on disk instead of the data.
-// The file is saved to the root of the documents directory of the app by default, a custom path can be specified using the filePath parameter though.
-```
-
 ### 4. GETting your results
 
 Use the method sendGetRequest to retrieve your image:
@@ -97,5 +89,12 @@ Use the method sendGetRequest to retrieve your image:
 let (imageData, getResponseCode) = scanner.sendGetRequest(uri: responseURL)
 ```
 
+There's also a method scanDocument(), which takes the same parameters as sendPostRequest() but executes both the POST and GET requests. It returns the binary data of the scanned image and the latest responseCode (which should be 200):
+```swift
+let (imageData, responseCode) = scanner.scanDocument(resolution: "300", format: "application/pdf", version: capabilities.version, source: "Platen", width: 2480, height: 3508)
+// Now you can do with that data whatever you like. In most cases, it's probably a good idea to store the data on disk.
+// For that exact case, there's another method scanDocumentAndSaveFile(), which takes the same parameters as sendPostRequest() but returns a URL to the file on disk instead of the data.
+// The file is saved to the root of the documents directory of the app by default, a custom path can be specified using the filePath parameter though.
+```
 
 If you're stuck, feel free to create an Issue.
