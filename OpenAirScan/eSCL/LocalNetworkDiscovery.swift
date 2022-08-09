@@ -111,7 +111,6 @@ class Browser {
                 switch device.metadata {
                     
                 case .bonjour(let record):
-                    print("Record: \(record.dictionary)")
                     // Generate a ScannerRepresentation object containing all information the scanner provided.
                     let scanner = ScannerRepresentation(txtRecord: record)
                     self.scanners![scanner.hostname].wrappedValue = scanner

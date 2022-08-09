@@ -20,6 +20,14 @@ class esclScanner: NSObject, URLSessionDelegate {
         self.baseURI = "https://\(ip)/\(root)/"
     }
 
+    enum ScannerStatus {
+        case Idle
+        case Processing
+        case Testing
+        case Stopped
+        case Down
+    }
+    
     /**
      This method retrieves the capabilities of a scanner.
      - Returns:A "scanner" object with all parsed capabilities. Currently, not all available capabilities are stored or parsed. For an exact overview of what is parsed or stored, see the declerations of the Scanner struct or CapabilityParser.
@@ -49,14 +57,12 @@ class esclScanner: NSObject, URLSessionDelegate {
             }
             
             guard(200 ... 299) ~= response.statusCode else {
-                print("Statuscode should be 2xx but is \(response.statusCode)")
                 return
             }
             
             let parser = CapabilityParser(data: data)
             let success:Bool = parser.parse()
             if success {
-                print("success")
                 capabilities = parser.scanner
             } else {
                 print("parse failure!")
@@ -72,9 +78,9 @@ class esclScanner: NSObject, URLSessionDelegate {
      This method query the scanners status.
      - Returns:A string with the scanners current status
      */
-    func getStatus() -> String {
+    func getStatus() -> ScannerStatus {
         
-        var status = ""
+        var status = ScannerStatus.Down
         
         var urlRequest = URLRequest(url: URL(string: self.baseURI + "ScannerStatus")!)
         
@@ -83,7 +89,7 @@ class esclScanner: NSObject, URLSessionDelegate {
         let configuration = URLSessionConfiguration.default
         
         let session = URLSession(configuration: configuration, delegate: self, delegateQueue: OperationQueue.init())
-        
+
         let sem = DispatchSemaphore.init(value: 0)
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
             defer { sem.signal() }
@@ -104,7 +110,22 @@ class esclScanner: NSObject, URLSessionDelegate {
             let parser = StatusParser(data: data)
             let success:Bool = parser.parse()
             if success {
-                status = parser.status
+                //status = parser.status
+                if parser.status == "Idle" {
+                    status = ScannerStatus.Idle
+                }
+                else if parser.status == "Processing" {
+                    status = ScannerStatus.Processing
+                }
+                else if parser.status == "Testing" {
+                    status = ScannerStatus.Testing
+                }
+                else if parser.status == "Stopped" {
+                    status = ScannerStatus.Stopped
+                }
+                else {
+                    status = ScannerStatus.Down
+                }
             } else {
                 print("Encountered an error while parsing status response")
             }
@@ -146,8 +167,7 @@ class esclScanner: NSObject, URLSessionDelegate {
             }
             responseCode = response.statusCode
             guard(200 ... 299) ~= response.statusCode else {
-                print("Statuscode should be 2xx but is \(response.statusCode)")
-                //print("response = \(response)")
+                print("Get request returned status \(response.statusCode)")
                 return
             }
             
@@ -174,7 +194,7 @@ class esclScanner: NSObject, URLSessionDelegate {
      - Returns: A tuple containing the the URL to the scan and the response code of the last request (which should be 200).
      */
     func sendPostRequest(resolution: String = "300", colorMode: String = "RGB24", format: String = "application/pdf", version: String = "2.5", source: String = "Platen", width: Int = 2480, height: Int = 3508, XOffset: String = "0", YOffset: String = "0", intent: String = "Document") -> (String, Int) {
-        print("sendControllerPostRequest")
+
         var urlRequest = URLRequest(url: URL(string: self.baseURI+"ScanJobs")!)
         
         var responseCode: Int = 0
@@ -217,19 +237,17 @@ class esclScanner: NSObject, URLSessionDelegate {
       <scan:YResolution>\(resolution)</scan:YResolution>
     </scan:ScanSettings>
     """
-        print("body: \(body)")
-        print("url: \(self.baseURI+"ScanJobs/")")
+        
         urlRequest.httpBody = body.data(using: .utf8)
         
         let configuration = URLSessionConfiguration.default
         
         let session = URLSession(configuration: configuration, delegate: self, delegateQueue: OperationQueue.init())
-        var imgData: Data = Data()
+        
         let sem = DispatchSemaphore.init(value: 0)
-        print("preparing task..")
+        
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
             defer { sem.signal() }
-            print("test")
             guard
                 let response = response as? HTTPURLResponse,
                 error == nil
@@ -239,8 +257,7 @@ class esclScanner: NSObject, URLSessionDelegate {
             }
             
             guard(200 ... 299) ~= response.statusCode else {
-                print("Statuscode should be 2xx but is \(response.statusCode)")
-                print("response = \(response)")
+                print("POST request returned stauts \(response.statusCode)")
                 responseCode = response.statusCode
                 return
             }
@@ -248,6 +265,7 @@ class esclScanner: NSObject, URLSessionDelegate {
             // The scanner returns the url to the document under the "Location" header. One of the devices I tested with returned the location with "http" as the protocol even though eSCL requires HTTPS
             // So apparantly, these things can't be trusted
             responseURL = (response.allHeaderFields["Location"] as! String).replacingOccurrences(of: "http:", with: "https:") + "/NextDocument"
+            responseCode = response.statusCode
             print("Location: \(responseURL)")
         }
         
@@ -269,27 +287,34 @@ class esclScanner: NSObject, URLSessionDelegate {
      - Parameter XOffset: Offset on the X-Axis. It is necessary to set this for some scanners.
      - Parameter YOffset: Offset on the Y-Axis.
      - Parameter intent: This helps the scanner auto-determine settings for the scan. Technically, version and intent should suffice for a valid request. To my understanding, the defaults set by an intent are ignored as soon as values are provided.
-     - Returns: Binary Data of the scanned image
+     - Returns: A tuple containing the Binary Data of the scanned image and the last http response code
      */
-    func scanDocument(resolution: String = "300", colorMode: String = "RGB24", format: String = "application/pdf", version: String = "2.5", source: String = "Platen", width: Int = 2480, height: Int = 3508, XOffset: String = "0", YOffset: String = "0", intent: String = "Document") -> Data {
-        
-        if self.getStatus() == "idle" {
-            print("Scanner is ready!")
-        } else {
-            print("Scanner busy")
-        }
-        
-        let (url, _) = self.sendPostRequest(resolution: resolution, colorMode: colorMode, format: format, version: version, source: source, width: width, height: height, intent: intent)
+    func scanDocument(resolution: String = "300", colorMode: String = "RGB24", format: String = "application/pdf", version: String = "2.5", source: String = "Platen", width: Int = 2480, height: Int = 3508, XOffset: String = "0", YOffset: String = "0", intent: String = "Document") -> (Data,Int) {
         
         var data = Data()
+        
+        if getStatus() == ScannerStatus.Idle {
+            print("Scanner is not idle but \(getStatus())")
+            return (data, 503)
+        }
+        
+        let (url, postResponse) = self.sendPostRequest(resolution: resolution, colorMode: colorMode, format: format, version: version, source: source, width: width, height: height, intent: intent)
+        
+        if postResponse != 201 {
+            print("Scanner didn't accept the job. \(postResponse)")
+            return (data, postResponse)
+        }
+        
         var responseCode = 0
         while responseCode != 200 {
             sleep(2)
             (data, responseCode) = self.sendGetRequest(uri: url)
             print(responseCode)
         }
+        // My scanners won't reach idle after completing a scan without this
         _ = self.sendGetRequest(uri: url)
-        return data
+        
+        return (data, responseCode)
     }
     
     /**
@@ -305,17 +330,22 @@ class esclScanner: NSObject, URLSessionDelegate {
      - Parameter YOffset: Offset on the Y-Axis.
      - Parameter intent: This helps the scanner auto-determine settings for the scan. Technically, version and intent should suffice for a valid request. To my understanding, the defaults set by an intent are ignored as soon as values are provided.
      - Parameter filePath: Path at which the file should be stored. If not specified, the file will be stored in the document root under the name "scan-YY-MM-dd-HH-mm-ss.fileExtension"
-     - Returns: URL to the file created
+     - Returns: A tuple containing the URL to the file created and the last http response code
      */
-    func scanDocumentAndSaveFile(resolution: String = "300", colorMode: String = "RGB24", format: String = "application/pdf", version: String, source: String = "Platen", width: Int = 2480, height: Int = 3508, XOffset: Int = 0, YOffset: Int = 0, intent: String = "Document", filePath: URL? = nil) -> URL? {
+    func scanDocumentAndSaveFile(resolution: String = "300", colorMode: String = "RGB24", format: String = "application/pdf", version: String, source: String = "Platen", width: Int = 2480, height: Int = 3508, XOffset: Int = 0, YOffset: Int = 0, intent: String = "Document", filePath: URL? = nil) -> (URL?, Int) {
         
-        if self.getStatus() == "Idle" {
-            print("Scanner is ready!")
-        } else {
-            print("Scanner busy")
+        let status = self.getStatus()
+        if status != ScannerStatus.Idle {
+            print("Scanner is not idle but \(status)")
+            return (nil, 503)
         }
         
-        let (url, _) = self.sendPostRequest(resolution: resolution, colorMode: colorMode, format: format, version: version, source: source, width: width, height: height, intent: intent)
+        let (url, postResponse) = self.sendPostRequest(resolution: resolution, colorMode: colorMode, format: format, version: version, source: source, width: width, height: height, intent: intent)
+        
+        if postResponse != 201 {
+            print("Scanner didn't accept the job. \(postResponse)")
+            return (nil, postResponse)
+        }
         
         var data = Data()
         var responseCode = 0
@@ -324,7 +354,9 @@ class esclScanner: NSObject, URLSessionDelegate {
             (data, responseCode) = self.sendGetRequest(uri: url)
             print(responseCode)
         }
+        // My scanners won't reach idle after completing a scan without this
         _ = self.sendGetRequest(uri: url)
+        
         var path: URL
         if filePath == nil {
             let fileExtension = (format == "application/pdf") ? ".pdf" : ".jpeg"
@@ -342,7 +374,7 @@ class esclScanner: NSObject, URLSessionDelegate {
         
         try? data.write(to: path)
         
-        return path
+        return (path, responseCode)
     }
     
     // It is necessary to build a custom URLSession for this as the self signed certificates the scanners use are obviously not trusted by default.

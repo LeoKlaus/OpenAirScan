@@ -90,13 +90,16 @@ struct SelectSettings: View {
         if self.responseCode == 200 {
             return "Scan saved!"
         }
-        else if self.responseCode == 503 {
-            return "Scan failed: The scanner is busy!"
+        else if self.responseCode == 408 {
+            return "Scan failed: Timed out while waiting for the document"
         }
         else if self.responseCode == 409 {
             return "Scan failed: Malformed request!\nYou likely tried to mix parameters that can't be mixed."
         }
-        return "Encountered an unknown error!"
+        else if self.responseCode == 503 {
+            return "Scan failed: The scanner is busy!"
+        }
+        return "Encountered an unknown error! \(self.responseCode)"
     }
     
     var body: some View {
@@ -186,13 +189,11 @@ struct SelectSettings: View {
                     Button("Start scan!") {
                         scanning = true
                         queue.async {
-                            //let (path, responseCode) = esclScanner(ip: scannerRep.hostname).sendPostRequestAndSaveFile(uri: "/\(scannerRep.root)/ScanJobs", resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
-                            _ = esclScanner(ip: scannerRep.hostname, root: scannerRep.root).scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
-                            self.responseCode = 200
+                            (_, self.responseCode) = esclScanner(ip: scannerRep.hostname, root: scannerRep.root).scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
+                            
                             scanning = false
                             showMessage = true
                         }
-                        print("scan initiated")
                     }.padding()
                         .foregroundColor(.white)
                         .background(Color.accentColor)
