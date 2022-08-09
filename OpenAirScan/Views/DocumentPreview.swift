@@ -1,8 +1,9 @@
 //
 //  DocumentPreview.swift
-//  AirScanTest
+//  OpenAirScan
 //
 //  Created by Leo Wehrfritz on 06.08.22.
+//  Licensed under the MIT License
 //
 
 import SwiftUI

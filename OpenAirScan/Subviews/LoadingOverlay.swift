@@ -1,9 +1,9 @@
 //
 //  LoadingOverlay.swift
-//  Paperless-App
+//  OpenAirScan
 //
 //  Created by Leo Wehrfritz on 02.07.22.
-//  Copyright © 2022 me.wehrfritz. All rights reserved.
+//  Licensed under the MIT License
 //
 
 import SwiftUI

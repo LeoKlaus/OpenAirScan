@@ -1,8 +1,9 @@
 //
-//  PrinterListItem.swift
-//  AirScanTest
+//  ScannerListItem.swift
+//  OpenAirScan
 //
 //  Created by Leo Wehrfritz on 04.08.22.
+//  Licensed under the MIT License
 //
 
 import SwiftUI

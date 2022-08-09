@@ -3,6 +3,7 @@
 //  OpenAirScan
 //
 //  Created by Leo Wehrfritz on 07.08.22.
+//  Licensed under the MIT License
 //
 
 import Foundation

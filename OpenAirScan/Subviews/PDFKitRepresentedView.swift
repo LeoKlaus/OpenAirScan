@@ -1,6 +1,9 @@
 //
-// Created by Leo Wehrfritz on 04.06.22.
-// Copyright (c) 2022 Leo Wehrfritz. All rights reserved.
+//  PDFKitRepresentedView.swift
+//  OpenAirScan
+//
+//  Created by Leo Wehrfritz on 04.06.22.
+//  Licensed under the MIT License
 //
 
 import PDFKit
