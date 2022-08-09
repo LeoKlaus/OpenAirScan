@@ -56,11 +56,11 @@ browser.start()
 
 Create an instance of eSCLScanner() and use the methods getCapabilities() and getStatus():
 ```swift
-// Assuming your scanner has the IP 192.168.1.123
+// Assuming your scanner has the IP 192.168.1.123 (you could obviously iterate over discoveredDevices to get all scanners)
 let scannerRep = discoveredDevices["192.168.1.123"]
-let scanner = esclScanner(ip: scannerRep.hostname)
+let scanner = esclScanner(ip: scannerRep.hostname, root: scannerRep.root)
 
-let capabilities = scanner.getCapabilities(uri: "https://"+scannerRep.hostname+"/"+scannerRep.root+"/ScannerCapabilities")
+let capabilities = scanner.getCapabilities()
 // You can now browse your scanners capabilities:
 print(capabilities.sourceCapabilities.keys)
 // This will print an array containing all source supported by your scanner, for example:
@@ -69,18 +69,33 @@ print(capabilities.sourceCapabilities["Adf"]?.discreteResolutions)
 // Would list all resolutions supported by your scanners ADF, for example:
 // ["100", "200", "300", "600"]
 
-// Status is now most likely "idle"
-let status = scanner.getStatus(uri: "https://"+scanner.hostname+"/"+scanner.root+"/ScannerStatus")
+// Status is now most likely "Idle"
+let status = scanner.getStatus()
 ```
 
-### 3. POSTing a scan request and 4. GETting your results
+### 3. POSTing a scan request
 
-The current implementation just automatically calls the GET request in the same method, so you can simply create a request by calling sendPostRequest() and passing your desired options.
+Use the sendPostRequest method to create a POST request:
 ```swift
-let (pdfData, responseCode) = scanner.sendPostRequest(uri: "/\(scannerRep.root)/ScanJobs", resolution: "300", format: "application/pdf", version: capabilities.version, source: "Platen", width: 2480, height: 3508)
+let (responseURL, postResponseCode) = scanner.sendPostRequest(resolution: "300", format: "application/pdf", version: capabilities.version, source: "Platen", width: 2480, height: 3508)
+// responseURL contains the URL to the document on the scanner, this is where you will derict your GET request to.
+// postResponseCode should be 201 (CREATED). If it isn't, there's likely an invalid mix of options and the scanner returned 409 (CONFLICT)
+```
+
+There's also a method scanDocument(), which takes the same parameters as sendPostRequest() but executes both the POST and GET requests. It returns the binary data of the scanned image and the latest responseCode (which should be 200):
+```swift
+let (imageData, responseCode) = scanner.scanDocument(resolution: "300", format: "application/pdf", version: capabilities.version, source: "Platen", width: 2480, height: 3508)
 // Now you can do with that data whatever you like. In most cases, it's probably a good idea to store the data on disk.
-// For that exact case, there's another method called sendPostRequestAndSaveFile(), which takes the same parameters but returns a URL to the file on disk instead of the data.
+// For that exact case, there's another method scanDocumentAndSaveFile(), which takes the same parameters as sendPostRequest() but returns a URL to the file on disk instead of the data.
 // The file is saved to the root of the documents directory of the app by default, a custom path can be specified using the filePath parameter though.
 ```
+
+### 4. GETting your results
+
+Use the method sendGetRequest to retrieve your image:
+```swift
+let (imageData, getResponseCode) = scanner.sendGetRequest(uri: responseURL)
+```
+
 
 If you're stuck, feel free to create an Issue.
