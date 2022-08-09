@@ -1,9 +1,9 @@
 //
-//  ShareButton.swift
-//  Paperless-App
+//  ActivityViewHandler.swift
+//  OpenAirScan
 //
 //  Created by Leo Wehrfritz on 08.06.22.
-//  Copyright © 2022 me.wehrfritz. All rights reserved.
+//  Licensed under the MIT License
 //
 
 import Foundation

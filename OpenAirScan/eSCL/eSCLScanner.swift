@@ -1,8 +1,9 @@
 //
-//  Test.swift
-//  AirScanTest
+//  eSCLScanner.swift
+//  OpenAirScan
 //
 //  Created by Leo Wehrfritz on 14.07.22.
+//  Licensed under the MIT License
 //
 
 import Foundation

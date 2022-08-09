@@ -1,8 +1,9 @@
 //
 //  DiscoverDevices.swift
-//  AirScanTest
+//  OpenAirScan
 //
 //  Created by Leo Wehrfritz on 03.08.22.
+//  Licensed under the MIT License
 //
 
 import SwiftUI
