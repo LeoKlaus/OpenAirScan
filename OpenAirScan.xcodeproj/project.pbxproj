@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4A35D746289AAD370040F810 /* CapabilitiesParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A35D745289AAD370040F810 /* CapabilitiesParser.swift */; };
 		4A645D63289AB4D900BE11CB /* SelectSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A645D62289AB4D900BE11CB /* SelectSettings.swift */; };
 		4A645D67289ABCD500BE11CB /* DiscoverDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A645D66289ABCD500BE11CB /* DiscoverDevices.swift */; };
 		4A74B119289E5A8200BCB17F /* DocumentBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B118289E5A8200BCB17F /* DocumentBrowser.swift */; };
@@ -15,13 +14,11 @@
 		4A74B11D289E602800BCB17F /* PDFKitRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B11C289E602800BCB17F /* PDFKitRepresentedView.swift */; };
 		4A74B11F289E81ED00BCB17F /* ActivityViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B11E289E81ED00BCB17F /* ActivityViewHandler.swift */; };
 		4A74B121289E94F500BCB17F /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B120289E94F500BCB17F /* LoadingOverlay.swift */; };
-		4AB17CB8289FFF6B00CBBF73 /* StatusParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB17CB7289FFF6B00CBBF73 /* StatusParser.swift */; };
 		4AB17CCC28A015C100CBBF73 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CC928A015C100CBBF73 /* 1.png */; };
 		4AB17CCD28A015C100CBBF73 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCA28A015C100CBBF73 /* 3.png */; };
 		4AB17CCE28A015C100CBBF73 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCB28A015C100CBBF73 /* 2.png */; };
 		4AB17CD028A0191C00CBBF73 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCF28A0191C00CBBF73 /* LICENSE */; };
-		4ACE995928800EAC00D2587B /* eSCLScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACE995828800EAC00D2587B /* eSCLScanner.swift */; };
-		4AEB90AC289BAD0500C82476 /* LocalNetworkDiscovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB90AB289BAD0500C82476 /* LocalNetworkDiscovery.swift */; };
+		4AB7BB9128A539A30051A291 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4AB7BB9028A539A30051A291 /* SwiftESCL */; };
 		4AF0F6842880011C00088399 /* OpenAirScanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF0F6832880011C00088399 /* OpenAirScanApp.swift */; };
 		4AF0F6862880011C00088399 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF0F6852880011C00088399 /* ContentView.swift */; };
 		4AF0F6882880011C00088399 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AF0F6872880011C00088399 /* Assets.xcassets */; };
@@ -30,7 +27,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4A35D745289AAD370040F810 /* CapabilitiesParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilitiesParser.swift; sourceTree = "<group>"; };
 		4A645D62289AB4D900BE11CB /* SelectSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSettings.swift; sourceTree = "<group>"; };
 		4A645D66289ABCD500BE11CB /* DiscoverDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverDevices.swift; sourceTree = "<group>"; };
 		4A645D68289AC05400BE11CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -39,14 +35,11 @@
 		4A74B11C289E602800BCB17F /* PDFKitRepresentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFKitRepresentedView.swift; sourceTree = "<group>"; };
 		4A74B11E289E81ED00BCB17F /* ActivityViewHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewHandler.swift; sourceTree = "<group>"; };
 		4A74B120289E94F500BCB17F /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
-		4AB17CB7289FFF6B00CBBF73 /* StatusParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusParser.swift; sourceTree = "<group>"; };
 		4AB17CB928A0011800CBBF73 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4AB17CC928A015C100CBBF73 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		4AB17CCA28A015C100CBBF73 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 		4AB17CCB28A015C100CBBF73 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		4AB17CCF28A0191C00CBBF73 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		4ACE995828800EAC00D2587B /* eSCLScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eSCLScanner.swift; sourceTree = "<group>"; };
-		4AEB90AB289BAD0500C82476 /* LocalNetworkDiscovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNetworkDiscovery.swift; sourceTree = "<group>"; };
 		4AF0F6802880011C00088399 /* OpenAirScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAirScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AF0F6832880011C00088399 /* OpenAirScanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAirScanApp.swift; sourceTree = "<group>"; };
 		4AF0F6852880011C00088399 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -61,12 +54,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AB7BB9128A539A30051A291 /* SwiftESCL in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A86A76528A2812E0081F082 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		4AB17CB4289FDFD400CBBF73 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -77,17 +78,6 @@
 				4A74B11A289E5FBC00BCB17F /* DocumentPreview.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		4AB17CB5289FDFDB00CBBF73 /* eSCL */ = {
-			isa = PBXGroup;
-			children = (
-				4ACE995828800EAC00D2587B /* eSCLScanner.swift */,
-				4AEB90AB289BAD0500C82476 /* LocalNetworkDiscovery.swift */,
-				4A35D745289AAD370040F810 /* CapabilitiesParser.swift */,
-				4AB17CB7289FFF6B00CBBF73 /* StatusParser.swift */,
-			);
-			path = eSCL;
 			sourceTree = "<group>";
 		};
 		4AB17CB6289FDFE800CBBF73 /* Subviews */ = {
@@ -114,6 +104,7 @@
 		4AF0F6772880011C00088399 = {
 			isa = PBXGroup;
 			children = (
+				4A86A76528A2812E0081F082 /* Packages */,
 				4AB17CB928A0011800CBBF73 /* README.md */,
 				4AB17CCF28A0191C00CBBF73 /* LICENSE */,
 				4AB17CBA28A0029700CBBF73 /* images */,
@@ -136,7 +127,6 @@
 				4A645D68289AC05400BE11CB /* Info.plist */,
 				4AF0F6832880011C00088399 /* OpenAirScanApp.swift */,
 				4AB17CB4289FDFD400CBBF73 /* Views */,
-				4AB17CB5289FDFDB00CBBF73 /* eSCL */,
 				4AB17CB6289FDFE800CBBF73 /* Subviews */,
 				4AF0F6872880011C00088399 /* Assets.xcassets */,
 				4AF0F6892880011C00088399 /* AirScanTest.entitlements */,
@@ -169,6 +159,9 @@
 			dependencies = (
 			);
 			name = OpenAirScan;
+			packageProductDependencies = (
+				4AB7BB9028A539A30051A291 /* SwiftESCL */,
+			);
 			productName = AirScanTest;
 			productReference = 4AF0F6802880011C00088399 /* OpenAirScan.app */;
 			productType = "com.apple.product-type.application";
@@ -197,6 +190,9 @@
 				Base,
 			);
 			mainGroup = 4AF0F6772880011C00088399;
+			packageReferences = (
+				4AB7BB8F28A539A30051A291 /* XCRemoteSwiftPackageReference "SwiftESCL" */,
+			);
 			productRefGroup = 4AF0F6812880011C00088399 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -232,12 +228,8 @@
 				4A74B11F289E81ED00BCB17F /* ActivityViewHandler.swift in Sources */,
 				4A74B119289E5A8200BCB17F /* DocumentBrowser.swift in Sources */,
 				4A74B121289E94F500BCB17F /* LoadingOverlay.swift in Sources */,
-				4A35D746289AAD370040F810 /* CapabilitiesParser.swift in Sources */,
-				4ACE995928800EAC00D2587B /* eSCLScanner.swift in Sources */,
 				4A74B11B289E5FBC00BCB17F /* DocumentPreview.swift in Sources */,
-				4AEB90AC289BAD0500C82476 /* LocalNetworkDiscovery.swift in Sources */,
 				4AF0F6862880011C00088399 /* ContentView.swift in Sources */,
-				4AB17CB8289FFF6B00CBBF73 /* StatusParser.swift in Sources */,
 				4A74B11D289E602800BCB17F /* PDFKitRepresentedView.swift in Sources */,
 				4AF0F6842880011C00088399 /* OpenAirScanApp.swift in Sources */,
 				4AF472E1289BDF9300DD7C5C /* ScannerListItem.swift in Sources */,
@@ -381,7 +373,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.wehrfritz.OpenAirScan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -418,7 +410,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 12.4;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.wehrfritz.OpenAirScan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -452,6 +444,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4AB7BB8F28A539A30051A291 /* XCRemoteSwiftPackageReference "SwiftESCL" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LeoKlaus/SwiftESCL";
+			requirement = {
+				branch = 1.5.1;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4AB7BB9028A539A30051A291 /* SwiftESCL */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4AB7BB8F28A539A30051A291 /* XCRemoteSwiftPackageReference "SwiftESCL" */;
+			productName = SwiftESCL;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4AF0F6782880011C00088399 /* Project object */;
 }

@@ -7,6 +7,9 @@
 //
 
 import SwiftUI
+import class SwiftESCL.ScannerRepresentation
+import struct SwiftESCL.Scanner
+import class SwiftESCL.esclScanner
 
 /// This view allows a user to select settings for the scan. It is not relevant for the eSCL implementation but can give insights on how to form a request.
 struct SelectSettings: View {
@@ -14,11 +17,12 @@ struct SelectSettings: View {
     let scannerRep: ScannerRepresentation
     let capabilities: Scanner
     let queue = DispatchQueue(label: "scanqueue", qos: .userInitiated)
+    let scanner: esclScanner
     
     // State variables for user selections
     @State var selectedSource: String
     @State var selectedColorMode: String
-    @State var selectedResolution: String
+    @State var selectedResolution: Int
     @State var selectedFileFormat: String
     @State var selectedPaperFormat: String
     @State var paperHeight: Int
@@ -65,12 +69,13 @@ struct SelectSettings: View {
     
     init(scanner: ScannerRepresentation, scanning: Binding<Bool>) {
         self.scannerRep = scanner
-        self.capabilities = esclScanner(ip: scanner.hostname, root: scanner.root).getCapabilities()
+        self.scanner = esclScanner(ip: scanner.hostname, root: scanner.root)
+        self.capabilities = self.scanner.scanner
         self._scanning = scanning
         self.selectedSource = capabilities.sourceCapabilities.keys.first ?? "Error fetching sources"
         let temp = capabilities.sourceCapabilities.keys.first ?? "Error"
         self.selectedColorMode = capabilities.sourceCapabilities[temp]?.colorModes.first ?? "Error fetching color modes"
-        self.selectedResolution = capabilities.sourceCapabilities[temp]?.discreteResolutions.first ?? "Error fetching resolutions"
+        self.selectedResolution = capabilities.sourceCapabilities[temp]?.supportedResolutions.first ?? 0
         self.selectedFileFormat = capabilities.sourceCapabilities[temp]?.documentFormats.first ?? "Error fetching formats"
         self.selectedIntent = capabilities.sourceCapabilities[temp]?.supportedIntents.first ?? "Error fetching intents"
         self.selectedPaperFormat = "DIN A4"
@@ -137,8 +142,8 @@ struct SelectSettings: View {
                         Text("Resolution (DPI):")
                         Spacer()
                         Picker("Please choose a resolution", selection: $selectedResolution) {
-                            ForEach(capabilities.sourceCapabilities[selectedSource]?.discreteResolutions ?? [], id: \.self) {
-                                Text($0)
+                            ForEach(capabilities.sourceCapabilities[selectedSource]?.supportedResolutions ?? [], id: \.self) {
+                                Text(String($0))
                             }
                         }
                     }.padding(.horizontal)
@@ -189,7 +194,7 @@ struct SelectSettings: View {
                     Button("Start scan!") {
                         scanning = true
                         queue.async {
-                            (_, self.responseCode) = esclScanner(ip: scannerRep.hostname, root: scannerRep.root).scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, version: capabilities.version, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
+                            (_, self.responseCode) = self.scanner.scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
                             
                             scanning = false
                             showMessage = true

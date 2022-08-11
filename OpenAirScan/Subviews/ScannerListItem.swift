@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import class SwiftESCL.ScannerRepresentation
 
 /// View for a single scanner item in a list
 struct ScannerListItem: View {

@@ -8,6 +8,8 @@
 
 import SwiftUI
 import Network
+import class SwiftESCL.Browser
+import class SwiftESCL.ScannerRepresentation
 
 /// This view displays a list of all discovered devices. 
 struct DiscoverDevices: View {
