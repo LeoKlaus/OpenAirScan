@@ -10,6 +10,7 @@ import SwiftUI
 import Network
 import class SwiftESCL.Browser
 import class SwiftESCL.ScannerRepresentation
+import class SwiftESCL.esclScanner
 
 /// This view displays a list of all discovered devices. 
 struct DiscoverDevices: View {
@@ -75,9 +76,12 @@ struct DiscoverDevices: View {
                     }
                 } else {
                     List {
-                        ForEach(Array(scannerDict.values), id: \.hostname) { printer in
-                            NavigationLink(destination: SelectSettings(scanner: printer, scanning: $scanning)) {
-                                ScannerListItem(scanners: printer)
+                        ForEach(Array(scannerDict.values), id: \.hostname) { scanner in
+                            //NavigationLink(destination: SelectSettings(scanner: esclScanner(ip: scanner.hostname, root: scanner.root), scanning: $scanning)) {
+                            //    ScannerListItem(scanners: scanner)
+                            //}
+                            NavigationLink(destination: QuickScan(scanner: esclScanner(ip: scanner.hostname, root: scanner.root), scanning: $scanning)) {
+                                ScannerListItem(scanners: scanner)
                             }
                         }
                     }

@@ -19,6 +19,7 @@
 		4AB17CCE28A015C100CBBF73 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCB28A015C100CBBF73 /* 2.png */; };
 		4AB17CD028A0191C00CBBF73 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCF28A0191C00CBBF73 /* LICENSE */; };
 		4AB7BB9128A539A30051A291 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4AB7BB9028A539A30051A291 /* SwiftESCL */; };
+		4AB7BB9328A6357D0051A291 /* QuickScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7BB9228A6357D0051A291 /* QuickScan.swift */; };
 		4AF0F6842880011C00088399 /* OpenAirScanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF0F6832880011C00088399 /* OpenAirScanApp.swift */; };
 		4AF0F6862880011C00088399 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF0F6852880011C00088399 /* ContentView.swift */; };
 		4AF0F6882880011C00088399 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AF0F6872880011C00088399 /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 		4AB17CCA28A015C100CBBF73 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 		4AB17CCB28A015C100CBBF73 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		4AB17CCF28A0191C00CBBF73 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		4AB7BB9228A6357D0051A291 /* QuickScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickScan.swift; sourceTree = "<group>"; };
 		4AF0F6802880011C00088399 /* OpenAirScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAirScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AF0F6832880011C00088399 /* OpenAirScanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAirScanApp.swift; sourceTree = "<group>"; };
 		4AF0F6852880011C00088399 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				4AF0F6852880011C00088399 /* ContentView.swift */,
 				4A645D66289ABCD500BE11CB /* DiscoverDevices.swift */,
 				4A645D62289AB4D900BE11CB /* SelectSettings.swift */,
+				4AB7BB9228A6357D0051A291 /* QuickScan.swift */,
 				4A74B118289E5A8200BCB17F /* DocumentBrowser.swift */,
 				4A74B11A289E5FBC00BCB17F /* DocumentPreview.swift */,
 			);
@@ -232,6 +235,7 @@
 				4AF0F6862880011C00088399 /* ContentView.swift in Sources */,
 				4A74B11D289E602800BCB17F /* PDFKitRepresentedView.swift in Sources */,
 				4AF0F6842880011C00088399 /* OpenAirScanApp.swift in Sources */,
+				4AB7BB9328A6357D0051A291 /* QuickScan.swift in Sources */,
 				4AF472E1289BDF9300DD7C5C /* ScannerListItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

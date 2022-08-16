@@ -7,14 +7,14 @@
 //
 
 import SwiftUI
-import class SwiftESCL.ScannerRepresentation
+//import class SwiftESCL.ScannerRepresentation
 import struct SwiftESCL.Scanner
 import class SwiftESCL.esclScanner
 
 /// This view allows a user to select settings for the scan. It is not relevant for the eSCL implementation but can give insights on how to form a request.
 struct SelectSettings: View {
     
-    let scannerRep: ScannerRepresentation
+    //let scannerRep: ScannerRepresentation
     let capabilities: Scanner
     let queue = DispatchQueue(label: "scanqueue", qos: .userInitiated)
     let scanner: esclScanner
@@ -67,9 +67,8 @@ struct SelectSettings: View {
         "Custom": [1000, 2000]
     ]
     
-    init(scanner: ScannerRepresentation, scanning: Binding<Bool>) {
-        self.scannerRep = scanner
-        self.scanner = esclScanner(ip: scanner.hostname, root: scanner.root)
+    init(scanner: esclScanner, scanning: Binding<Bool>) {
+        self.scanner = scanner
         self.capabilities = self.scanner.scanner
         self._scanning = scanning
         self.selectedSource = capabilities.sourceCapabilities.keys.first ?? "Error fetching sources"
