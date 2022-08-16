@@ -9,14 +9,15 @@
 /* Begin PBXBuildFile section */
 		4A645D63289AB4D900BE11CB /* SelectSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A645D62289AB4D900BE11CB /* SelectSettings.swift */; };
 		4A645D67289ABCD500BE11CB /* DiscoverDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A645D66289ABCD500BE11CB /* DiscoverDevices.swift */; };
+		4A6F6E8028AB9207004C71B2 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A6F6E7F28AB9207004C71B2 /* 2.png */; };
 		4A74B119289E5A8200BCB17F /* DocumentBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B118289E5A8200BCB17F /* DocumentBrowser.swift */; };
 		4A74B11B289E5FBC00BCB17F /* DocumentPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B11A289E5FBC00BCB17F /* DocumentPreview.swift */; };
 		4A74B11D289E602800BCB17F /* PDFKitRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B11C289E602800BCB17F /* PDFKitRepresentedView.swift */; };
 		4A74B11F289E81ED00BCB17F /* ActivityViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B11E289E81ED00BCB17F /* ActivityViewHandler.swift */; };
 		4A74B121289E94F500BCB17F /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A74B120289E94F500BCB17F /* LoadingOverlay.swift */; };
 		4AB17CCC28A015C100CBBF73 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CC928A015C100CBBF73 /* 1.png */; };
-		4AB17CCD28A015C100CBBF73 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCA28A015C100CBBF73 /* 3.png */; };
-		4AB17CCE28A015C100CBBF73 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCB28A015C100CBBF73 /* 2.png */; };
+		4AB17CCD28A015C100CBBF73 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCA28A015C100CBBF73 /* 4.png */; };
+		4AB17CCE28A015C100CBBF73 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCB28A015C100CBBF73 /* 3.png */; };
 		4AB17CD028A0191C00CBBF73 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCF28A0191C00CBBF73 /* LICENSE */; };
 		4AB7BB9128A539A30051A291 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4AB7BB9028A539A30051A291 /* SwiftESCL */; };
 		4AB7BB9328A6357D0051A291 /* QuickScan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7BB9228A6357D0051A291 /* QuickScan.swift */; };
@@ -31,6 +32,7 @@
 		4A645D62289AB4D900BE11CB /* SelectSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSettings.swift; sourceTree = "<group>"; };
 		4A645D66289ABCD500BE11CB /* DiscoverDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverDevices.swift; sourceTree = "<group>"; };
 		4A645D68289AC05400BE11CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4A6F6E7F28AB9207004C71B2 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		4A74B118289E5A8200BCB17F /* DocumentBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentBrowser.swift; sourceTree = "<group>"; };
 		4A74B11A289E5FBC00BCB17F /* DocumentPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPreview.swift; sourceTree = "<group>"; };
 		4A74B11C289E602800BCB17F /* PDFKitRepresentedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFKitRepresentedView.swift; sourceTree = "<group>"; };
@@ -38,8 +40,8 @@
 		4A74B120289E94F500BCB17F /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		4AB17CB928A0011800CBBF73 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4AB17CC928A015C100CBBF73 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
-		4AB17CCA28A015C100CBBF73 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
-		4AB17CCB28A015C100CBBF73 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		4AB17CCA28A015C100CBBF73 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		4AB17CCB28A015C100CBBF73 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 		4AB17CCF28A0191C00CBBF73 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4AB7BB9228A6357D0051A291 /* QuickScan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickScan.swift; sourceTree = "<group>"; };
 		4AF0F6802880011C00088399 /* OpenAirScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAirScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,8 +100,9 @@
 			isa = PBXGroup;
 			children = (
 				4AB17CC928A015C100CBBF73 /* 1.png */,
-				4AB17CCB28A015C100CBBF73 /* 2.png */,
-				4AB17CCA28A015C100CBBF73 /* 3.png */,
+				4A6F6E7F28AB9207004C71B2 /* 2.png */,
+				4AB17CCB28A015C100CBBF73 /* 3.png */,
+				4AB17CCA28A015C100CBBF73 /* 4.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -211,10 +214,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AB17CD028A0191C00CBBF73 /* LICENSE in Resources */,
-				4AB17CCE28A015C100CBBF73 /* 2.png in Resources */,
+				4AB17CCE28A015C100CBBF73 /* 3.png in Resources */,
+				4A6F6E8028AB9207004C71B2 /* 2.png in Resources */,
 				4AF0F68C2880011C00088399 /* Preview Assets.xcassets in Resources */,
 				4AB17CCC28A015C100CBBF73 /* 1.png in Resources */,
-				4AB17CCD28A015C100CBBF73 /* 3.png in Resources */,
+				4AB17CCD28A015C100CBBF73 /* 4.png in Resources */,
 				4AF0F6882880011C00088399 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
