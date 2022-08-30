@@ -20,8 +20,6 @@ struct DiscoverDevices: View {
     
     @State var customHostname: String = ""
     @State var customRoot: String = "eSCL"
-    
-    @Binding var scanning: Bool
     let browser = Browser()
     
     private func delayText() async {
@@ -30,10 +28,6 @@ struct DiscoverDevices: View {
         if scannerDict.count == 0 {
             print("loading took too long, displaying help text")
         }
-    }
-    
-    init(scanning: Binding<Bool>) {
-        self._scanning = scanning
     }
     
     var body: some View {
@@ -80,7 +74,7 @@ struct DiscoverDevices: View {
                             //NavigationLink(destination: SelectSettings(scanner: esclScanner(ip: scanner.hostname, root: scanner.root), scanning: $scanning)) {
                             //    ScannerListItem(scanners: scanner)
                             //}
-                            NavigationLink(destination: QuickScan(scanner: esclScanner(ip: scanner.hostname, root: scanner.root), scanning: $scanning)) {
+                            NavigationLink(destination: QuickScan(scanner: esclScanner(ip: scanner.hostname, root: scanner.root))) {
                                 ScannerListItem(scanners: scanner)
                             }
                         }

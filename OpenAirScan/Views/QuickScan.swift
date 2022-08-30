@@ -11,7 +11,7 @@ import class SwiftESCL.esclScanner
 struct QuickScan: View {
     
     let scanner: esclScanner
-    @Binding var scanning: Bool
+    @State var scanning: Bool = false
     @State var selectedSource: String
     @State var customNavigationActive: Bool = false
     let queue = DispatchQueue(label: "scanqueue", qos: .userInitiated)
@@ -25,14 +25,13 @@ struct QuickScan: View {
         "textandgraphic":   "Text and Graphics"
     ]
     
-    init(scanner: esclScanner, scanning: Binding<Bool>) {
+    init(scanner: esclScanner) {
         self.scanner = scanner
         self.selectedSource = scanner.scanner.sourceCapabilities.keys.first ?? "No sources found"
-        self._scanning = scanning
     }
     
     var body: some View {
-        NavigationView {
+        ZStack {
             VStack {
                 HStack {
                     Text("Source:")
@@ -54,21 +53,17 @@ struct QuickScan: View {
                             }
                         }
                     }
-                    Button("Custom scan") {
-                        self.customNavigationActive.toggle()
-                    }
+                    NavigationLink(
+                        "Custom Scan", destination: SelectSettings(scanner: scanner, scanning: $scanning)
+                    )
                 }
             }
+        if scanning {
+            LoadingOverlay()
+        }
         }
         .disabled(scanning)
         .navigationTitle(scanner.scanner.makeAndModel)
         .navigationBarTitleDisplayMode(.inline)
-        .background(
-            NavigationLink(
-                destination: SelectSettings(scanner: scanner, scanning: $scanning),
-                isActive: $customNavigationActive,
-                label: { EmptyView() }
-            )
-        )
     }
 }

@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-//import class SwiftESCL.ScannerRepresentation
+import PDFKit
 import struct SwiftESCL.Scanner
 import class SwiftESCL.esclScanner
 
@@ -27,13 +27,13 @@ struct SelectSettings: View {
     @State var selectedPaperFormat: String
     @State var paperHeight: Int
     @State var paperWidth: Int
-    @State var selectedIntent: String
     // State variables for messages
     @State var showMessage: Bool = false
     @State var responseCode: Int = 0
     // This is used to block UI interaction while scanning
     @Binding var scanning: Bool
-    
+    @State var showNextPageDialog: Bool = false
+    @State var multiPageScanFirstPage: PDFDocument = PDFDocument()
     // These are used to make the selections easier to understand
     // There's probably a much better way to do this but I won't spend too much time on this
     let humanReadableSource: [String:String] = [
@@ -76,7 +76,6 @@ struct SelectSettings: View {
         self.selectedColorMode = capabilities.sourceCapabilities[temp]?.colorModes.first ?? "Error fetching color modes"
         self.selectedResolution = capabilities.sourceCapabilities[temp]?.supportedResolutions.first ?? 0
         self.selectedFileFormat = capabilities.sourceCapabilities[temp]?.documentFormats.first ?? "Error fetching formats"
-        self.selectedIntent = capabilities.sourceCapabilities[temp]?.supportedIntents.first ?? "Error fetching intents"
         self.selectedPaperFormat = "DIN A4"
         self.paperWidth = 2480
         self.paperHeight = 3508
@@ -178,25 +177,35 @@ struct SelectSettings: View {
                                 .keyboardType(.numberPad)
                         }.padding(.horizontal)
                     }
-                    HStack {
-                        Text("Intent:")
-                        Spacer()
-                        Picker("Please choose an intent", selection: $selectedIntent) {
-                            ForEach(capabilities.sourceCapabilities[selectedSource]?.supportedIntents ?? [], id: \.self) {
-                                Text(humanReadableIntent[$0.lowercased()] ?? $0)
-                            }
-                        }
-                    }.padding(.horizontal)
                     
                     Spacer()
+                    
+                    /*Button("Start scan!") {
+                        scanning = true
+                        queue.async {
+                            (_, self.responseCode) = self.scanner.scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
+                            
+                            scanning = false
+                            showMessage = true
+                        }
+                    }.padding()
+                        .foregroundColor(.white)
+                        .background(Color.accentColor)
+                        .clipShape(Capsule())*/
                     
                     Button("Start scan!") {
                         scanning = true
                         queue.async {
-                            (_, self.responseCode) = self.scanner.scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight, intent: selectedIntent)
+                            var pdfData: Data
+                            (pdfData, self.responseCode) = self.scanner.scanDocument(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
                             
                             scanning = false
-                            showMessage = true
+                            if self.responseCode != 200 {
+                                showMessage = true
+                            } else {
+                                self.multiPageScanFirstPage = PDFDocument(data: pdfData)!
+                                showNextPageDialog = true
+                            }
                         }
                     }.padding()
                         .foregroundColor(.white)
@@ -212,5 +221,42 @@ struct SelectSettings: View {
         .disabled(scanning)
         .navigationTitle(capabilities.makeAndModel)
         .navigationBarTitleDisplayMode(.inline)
+        
+        .confirmationDialog("Scan more pages?", isPresented: $showNextPageDialog) {
+            Button("Yes (put the next page in the scanner before tapping)") {
+                scanning = true
+                queue.async {
+                    var nextPageData: Data
+                    (nextPageData, self.responseCode) = self.scanner.scanDocument(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
+                    
+                    scanning = false
+                    if self.responseCode != 200 {
+                        showMessage = true
+                    } else {
+                        self.multiPageScanFirstPage.addPages(from: PDFDocument(data: nextPageData)!)
+                        showNextPageDialog = true
+                    }
+                }
+            }
+            Button("No (Save Scan)") {
+                var path: URL
+                
+                let fileExtension = ".pdf"
+
+                // This is just used for determinining a file name
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "YY-MM-dd-HH-mm-ss"
+                let filename = "scan-" + dateFormatter.string(from: Date()) + fileExtension
+                
+                path = FileManager.default.urls(for: .documentDirectory,
+                                                        in: .userDomainMask)[0].appendingPathComponent(filename)
+                self.multiPageScanFirstPage.write(to: path)
+                self.multiPageScanFirstPage = PDFDocument()
+                self.showMessage = true
+            }
+            Button("Cancel", role: .cancel) { self.multiPageScanFirstPage = PDFDocument() }
+        } message: {
+            Text("Scan another page of this document?")
+        }
     }
 }
