@@ -20,7 +20,7 @@ If you want more granular control, you can tap "Custom scan". This will take you
 
 ![View of the settings page for a device](images/3.png)
 
-Pressing "Start scan!" will... start the scan. When the scanner is finished, a success message is displayed and the scanned image is available in the "Documents" tab:
+Pressing "Start scan!" will... start the scan. When the scanner is finished, you will be asked whether you want to scan more pages. This lets you scan documents with multiple pages even if your scanner doesn't support that natively. If you tap "Yes", the scanner will start scanning the next page right away. Pressing "No" will save all pages in a single PDF. "Cancel" discards all pages scanned. The scanned file is available in the "Documents" tab.
 
 ![View of the documents tab](images/4.png)
 
