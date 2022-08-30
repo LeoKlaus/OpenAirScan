@@ -180,31 +180,26 @@ struct SelectSettings: View {
                     
                     Spacer()
                     
-                    /*Button("Start scan!") {
-                        scanning = true
-                        queue.async {
-                            (_, self.responseCode) = self.scanner.scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
-                            
-                            scanning = false
-                            showMessage = true
-                        }
-                    }.padding()
-                        .foregroundColor(.white)
-                        .background(Color.accentColor)
-                        .clipShape(Capsule())*/
-                    
                     Button("Start scan!") {
                         scanning = true
                         queue.async {
-                            var pdfData: Data
-                            (pdfData, self.responseCode) = self.scanner.scanDocument(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
-                            
-                            scanning = false
-                            if self.responseCode != 200 {
+                            if selectedFileFormat != "application/pdf" {
+                                (_, self.responseCode) = self.scanner.scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
+                                
+                                scanning = false
                                 showMessage = true
-                            } else {
-                                self.multiPageScanFirstPage = PDFDocument(data: pdfData)!
-                                showNextPageDialog = true
+                            }
+                            else {
+                                var pdfData: Data
+                                (pdfData, self.responseCode) = self.scanner.scanDocument(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
+                                
+                                scanning = false
+                                if self.responseCode != 200 {
+                                    showMessage = true
+                                } else {
+                                    self.multiPageScanFirstPage = PDFDocument(data: pdfData)!
+                                    showNextPageDialog = true
+                                }
                             }
                         }
                     }.padding()
