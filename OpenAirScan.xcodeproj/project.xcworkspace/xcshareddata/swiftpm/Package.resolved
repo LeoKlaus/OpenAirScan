@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "swiftescl",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/LeoKlaus/SwiftESCL",
+      "state" : {
+        "revision" : "9db31b1b43469c70a769c5e948d14fbbb59dfcf9",
+        "version" : "1.5.2"
+      }
+    }
+  ],
+  "version" : 2
+}
