@@ -69,6 +69,11 @@ struct DocumentBrowser: View {
             }
                 .navigationTitle("Documents")
                 .navigationBarTitleDisplayMode(.inline)
+            if documents.count > 0, let document = documents[0] {
+                DocumentPreview(docUrl: document)
+            } else {
+                Text("Scan a document first")
+            }
         }
     }
 }

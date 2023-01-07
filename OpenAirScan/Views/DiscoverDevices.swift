@@ -64,6 +64,7 @@ struct DiscoverDevices: View {
                                     self.scannerDict[customHostname] = ScannerRepresentation(hostname: customHostname, root: customRoot)
                                 }
                             }.padding()
+                                .frame(maxWidth: 600)
                         }
                     } else {
                         ProgressView()
@@ -79,11 +80,7 @@ struct DiscoverDevices: View {
                             }
                         }
                     }
-                    // This shouldn't need to be refreshable as the browser keeps scanning
-                    //.refreshable {
-                    //    let browser = Browser(printers: $printerDict)
-                    //    browser.start()
-                    //}
+                    .frame(maxWidth: 600)
                 }
             }
             .onAppear(perform: {
@@ -96,6 +93,7 @@ struct DiscoverDevices: View {
             .navigationTitle("Scanners")
             .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationViewStyle(.stack)
     }
 }
 
