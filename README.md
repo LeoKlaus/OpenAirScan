@@ -5,7 +5,8 @@ If you're only interested in the actual API, I've created an XCode package (also
 
 ## Using the example application
 
-I plan to submit this to the AppStore at some point, but currently you need to have a Mac with XCode and a developer account (free is sufficient) to use the example app.
+The app is now available to test via TestFlight:
+https://TestFlight.apple.com/join/EIbjGkNg
 
 You should be able to just clone and compile the project to any modern iOS device (with some minor changes, the app should also work on Macs).
 After opening the App, it will automatically start searching for devices supporting eSCL via Bonjour (it does need the local network permission for that) and display a list of results:
