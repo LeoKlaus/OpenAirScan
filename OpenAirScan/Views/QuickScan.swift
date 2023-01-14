@@ -14,6 +14,10 @@ struct QuickScan: View {
     @State var scanning: Bool = false
     @State var selectedSource: String
     @State var customNavigationActive: Bool = false
+    // State variables for messages
+    @State var showMessage: Bool = false
+    @State var responseCode: Int = 0
+    
     let queue = DispatchQueue(label: "scanqueue", qos: .userInitiated)
     
     let humanReadableSource: [String:String] = [
@@ -30,7 +34,41 @@ struct QuickScan: View {
         self.selectedSource = scanner.scanner.sourceCapabilities.keys.first ?? "No sources found"
     }
     
+    func generateMessage() -> String {
+        if self.responseCode == 200 {
+            return "Scan saved!"
+        }
+        else if self.responseCode == 408 {
+            return "Scan failed: Timed out while waiting for the document"
+        }
+        else if self.responseCode == 409 {
+            return "Scan failed: Malformed request!\nYou likely tried to mix parameters that can't be mixed."
+        }
+        else if self.responseCode == 503 {
+            return "Scan failed: The scanner is busy!"
+        }
+        return "Encountered an unknown error! \(self.responseCode)"
+    }
+    
+    // This is only used to delay the dismissal of messages
+    @Sendable private func delayText() async {
+            try? await Task.sleep(nanoseconds: 5_000_000_000)
+            withAnimation {
+                showMessage = false
+            }
+        }
+    
     var body: some View {
+        if showMessage {
+            Text(self.generateMessage())
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(self.responseCode == 200 ? Color.green : Color.red)
+                .foregroundColor(Color.white)
+                .task(delayText)
+                .transition(.move(edge: .top))
+        }
+        
         ZStack {
             VStack {
                 HStack {
@@ -47,9 +85,9 @@ struct QuickScan: View {
                         Button(humanReadableIntent[intent.lowercased()] ?? intent) {
                             scanning = true
                             queue.async {
-                                self.scanner.scanDocumentAndSaveFile(intent: intent)
+                                (_, self.responseCode) = self.scanner.scanDocumentAndSaveFile(source: selectedSource, intent: intent)
                                 scanning = false
-                                //showMessage = true
+                                showMessage = true
                             }
                         }
                     }

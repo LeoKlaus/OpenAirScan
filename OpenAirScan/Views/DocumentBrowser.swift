@@ -31,7 +31,10 @@ struct DocumentBrowser: View {
                     at: documentDirectory,
                     includingPropertiesForKeys: nil,
                     options: .skipsHiddenFiles
-                )
+            )
+            if documents != nil {
+                documents = documents.sorted { $0.path > $1.path }
+            }
         } catch {
             print(error)
         }
@@ -60,20 +63,20 @@ struct DocumentBrowser: View {
                         })
                     }.onDelete(perform: deleteFile)
                 }
-                .onAppear {
-                    self.refresh()
-                }
                 .refreshable {
                     self.refresh()
                 }
             }
                 .navigationTitle("Documents")
                 .navigationBarTitleDisplayMode(.inline)
-            if documents.count > 0, let document = documents[0] {
+            if documents.count > 0, let document = documents.first {
                 DocumentPreview(docUrl: document)
             } else {
                 Text("Scan a document first")
             }
+        }
+        .onAppear {
+            self.refresh()
         }
     }
 }

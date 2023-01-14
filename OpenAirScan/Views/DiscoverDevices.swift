@@ -80,7 +80,6 @@ struct DiscoverDevices: View {
                             }
                         }
                     }
-                    .frame(maxWidth: 600)
                 }
             }
             .onAppear(perform: {
@@ -92,6 +91,7 @@ struct DiscoverDevices: View {
             })
             .navigationTitle("Scanners")
             .navigationBarTitleDisplayMode(.inline)
+            //.frame(maxWidth: 600)
         }
         .navigationViewStyle(.stack)
     }

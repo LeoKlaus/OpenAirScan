@@ -27,6 +27,8 @@ struct SelectSettings: View {
     @State var selectedPaperFormat: String
     @State var paperHeight: Int
     @State var paperWidth: Int
+    @State var xOffset: Int
+    @State var yOffset: Int
     // State variables for messages
     @State var showMessage: Bool = false
     @State var responseCode: Int = 0
@@ -79,6 +81,8 @@ struct SelectSettings: View {
         self.selectedPaperFormat = "DIN A4"
         self.paperWidth = 2480
         self.paperHeight = 3508
+        self.xOffset = 0
+        self.yOffset = 0
     }
     
     // This is only used to delay the dismissal of messages
@@ -176,6 +180,15 @@ struct SelectSettings: View {
                             TextField("custom height", value: $paperHeight, formatter: NumberFormatter())
                                 .keyboardType(.numberPad)
                         }.padding(.horizontal)
+                        
+                        HStack {
+                            Text("X-Offset:")
+                            TextField("custom x offset", value: $xOffset, formatter: NumberFormatter())
+                                .keyboardType(.numberPad)
+                            Text("Y-Offset:")
+                            TextField("custom y offset", value: $yOffset, formatter: NumberFormatter())
+                                .keyboardType(.numberPad)
+                        }.padding(.horizontal)
                     }
                     
                     Spacer()
@@ -184,14 +197,14 @@ struct SelectSettings: View {
                         scanning = true
                         queue.async {
                             if selectedFileFormat != "application/pdf" {
-                                (_, self.responseCode) = self.scanner.scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
+                                (_, self.responseCode) = self.scanner.scanDocumentAndSaveFile(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight, XOffset: xOffset, YOffset: yOffset)
                                 
                                 scanning = false
                                 showMessage = true
                             }
                             else {
                                 var pdfData: Data
-                                (pdfData, self.responseCode) = self.scanner.scanDocument(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
+                                (pdfData, self.responseCode) = self.scanner.scanDocument(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight, XOffset: xOffset, YOffset: yOffset)
                                 
                                 scanning = false
                                 if self.responseCode != 200 {
@@ -206,6 +219,42 @@ struct SelectSettings: View {
                         .foregroundColor(.white)
                         .background(Color.accentColor)
                         .clipShape(Capsule())
+                        .confirmationDialog("Scan more pages?", isPresented: $showNextPageDialog) {
+                            Button("Yes (put the next page in the scanner before tapping)") {
+                                scanning = true
+                                queue.async {
+                                    var nextPageData: Data
+                                    (nextPageData, self.responseCode) = self.scanner.scanDocument(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
+                                    
+                                    scanning = false
+                                    if self.responseCode != 200 {
+                                        showMessage = true
+                                    } else {
+                                        self.multiPageScanFirstPage.addPages(from: PDFDocument(data: nextPageData)!)
+                                        showNextPageDialog = true
+                                    }
+                                }
+                            }
+                            Button("No (Save Scan)") {
+                                var path: URL
+                                
+                                let fileExtension = ".pdf"
+
+                                // This is just used for determinining a file name
+                                let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "YY-MM-dd-HH-mm-ss"
+                                let filename = "scan-" + dateFormatter.string(from: Date()) + fileExtension
+                                
+                                path = FileManager.default.urls(for: .documentDirectory,
+                                                                        in: .userDomainMask)[0].appendingPathComponent(filename)
+                                self.multiPageScanFirstPage.write(to: path)
+                                self.multiPageScanFirstPage = PDFDocument()
+                                self.showMessage = true
+                            }
+                            Button("Cancel", role: .cancel) { self.multiPageScanFirstPage = PDFDocument() }
+                        } message: {
+                            Text("Scan another page of this document?")
+                        }
                 }
                 .frame(maxWidth: 400)
                 if scanning {
@@ -216,42 +265,5 @@ struct SelectSettings: View {
         .disabled(scanning)
         .navigationTitle(capabilities.makeAndModel)
         .navigationBarTitleDisplayMode(.inline)
-        
-        .confirmationDialog("Scan more pages?", isPresented: $showNextPageDialog) {
-            Button("Yes (put the next page in the scanner before tapping)") {
-                scanning = true
-                queue.async {
-                    var nextPageData: Data
-                    (nextPageData, self.responseCode) = self.scanner.scanDocument(resolution: selectedResolution, colorMode: selectedColorMode, format: selectedFileFormat, source: selectedSource, width: paperWidth, height: paperHeight)
-                    
-                    scanning = false
-                    if self.responseCode != 200 {
-                        showMessage = true
-                    } else {
-                        self.multiPageScanFirstPage.addPages(from: PDFDocument(data: nextPageData)!)
-                        showNextPageDialog = true
-                    }
-                }
-            }
-            Button("No (Save Scan)") {
-                var path: URL
-                
-                let fileExtension = ".pdf"
-
-                // This is just used for determinining a file name
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "YY-MM-dd-HH-mm-ss"
-                let filename = "scan-" + dateFormatter.string(from: Date()) + fileExtension
-                
-                path = FileManager.default.urls(for: .documentDirectory,
-                                                        in: .userDomainMask)[0].appendingPathComponent(filename)
-                self.multiPageScanFirstPage.write(to: path)
-                self.multiPageScanFirstPage = PDFDocument()
-                self.showMessage = true
-            }
-            Button("Cancel", role: .cancel) { self.multiPageScanFirstPage = PDFDocument() }
-        } message: {
-            Text("Scan another page of this document?")
-        }
     }
 }
