@@ -1,12 +1,13 @@
 #  OpenAirScan - An example App using my package SwiftESCL
 
+OpenAirScan is now available on the App Store:
+
+![App Store Logo](images/AppStoreBadge.svg)(https://apps.apple.com/us/app/openairscan/id1663611384)
+
 This repo contains an entire XCode project with a small example application using the protocol. 
 If you're only interested in the actual API, I've created an XCode package (also MIT), that you can check out [here](https://github.com/LeoKlaus/SwiftESCL).
 
 ## Using the example application
-
-The app is now available to test via TestFlight:
-https://TestFlight.apple.com/join/EIbjGkNg
 
 You should be able to just clone and compile the project to any modern iOS device (with some minor changes, the app should also work on Macs).
 After opening the App, it will automatically start searching for devices supporting eSCL via Bonjour (it does need the local network permission for that) and display a list of results:
