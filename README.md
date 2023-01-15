@@ -2,7 +2,7 @@
 
 OpenAirScan is now available on the App Store:
 
-<a href='https://apps.apple.com/us/app/openairscan/id1663611384'>
+<a target="_blank" href='https://apps.apple.com/us/app/openairscan/id1663611384'>
     <img alt='Get OpenAirScan on the App Store' src='images/AppStoreBadge.svg' height="60" />
 </a>
 
