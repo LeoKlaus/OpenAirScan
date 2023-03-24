@@ -5,6 +5,7 @@
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_uscan._tcp</string>
+		<string>_uscans._tcp</string>
 		<string>_bonjour._tcp</string>
 	</array>
 	<key>UIFileSharingEnabled</key>

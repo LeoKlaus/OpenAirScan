@@ -481,7 +481,7 @@
 			repositoryURL = "https://github.com/LeoKlaus/SwiftESCL";
 			requirement = {
 				kind = exactVersion;
-				version = 1.5.3;
+				version = 1.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

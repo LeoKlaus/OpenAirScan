@@ -20,7 +20,7 @@ struct DiscoverDevices: View {
     
     @State var customHostname: String = ""
     @State var customRoot: String = "eSCL"
-    let browser = Browser()
+    @State var browser = Browser()
     
     private func delayText() async {
         try? await Task.sleep(nanoseconds: 7_500_000_000)
@@ -42,8 +42,17 @@ struct DiscoverDevices: View {
                             Spacer()
                             Text("Troubleshooting steps:")
                                 .font(.headline)
-                            Text("- Confirm the scanner is turned on and connected to the same network as your device.\n- Confirm your scanner supports eSCL (often referred to as AirScan).\n- Your scanner has to support Bonjour and it has to be enabled.\n- You have to allow this app to discover devices on your local network.")
+                            Text("- Confirm the scanner is turned on and connected to the same network as your device.\n- Confirm your scanner supports eSCL (often referred to as AirScan).\n- Your scanner has to support Bonjour and it has to be enabled.\n- You have to allow this app to discover devices on your local network.\n-You may also retry using plain http")
                                 .padding(EdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 5))
+                            Button("Retry using plain http") {
+                                browser = Browser(usePlainText: true)
+                                loadingTooLong = false
+                                browser.setDevices(scanners: $scannerDict)
+                                browser.start()
+                                Task {
+                                    await delayText()
+                                }
+                            }
                             Spacer()
                             VStack {
                                 Text("You can also try to manually add your scanner:")
