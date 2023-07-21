@@ -11,6 +11,8 @@ import Network
 import class SwiftESCL.Browser
 import class SwiftESCL.ScannerRepresentation
 import class SwiftESCL.esclScanner
+import os
+import OSLog
 
 /// This view displays a list of all discovered devices. 
 struct DiscoverDevices: View {
@@ -22,11 +24,36 @@ struct DiscoverDevices: View {
     @State var customRoot: String = "eSCL"
     @State var browser = Browser()
     
+    @State private var showExport: Bool = false
+    @State private var isCollectingLogs: Bool = false
+    @State private var entries: [String] = []
+    
+    private static let logger = Logger(
+            subsystem: Bundle.main.bundleIdentifier!,
+            category: String(describing: DiscoverDevices.self)
+        )
+    
     private func delayText() async {
         try? await Task.sleep(nanoseconds: 7_500_000_000)
         loadingTooLong = true
         if scannerDict.count == 0 {
-            print("loading took too long, displaying help text")
+            DiscoverDevices.logger.info("loading took too long, displaying help text")
+        }
+    }
+    
+    private func exportLogs() {
+        do {
+            let store = try OSLogStore(scope: .currentProcessIdentifier)
+            let date = Date.now.addingTimeInterval(-24 * 3600)
+            let position = store.position(date: date)
+            
+            entries = try store
+                .getEntries(at: position)
+                .compactMap { $0 as? OSLogEntryLog }
+                .filter { $0.subsystem == Bundle.main.bundleIdentifier! }
+                .map { "[\($0.date.formatted())] [\($0.category)] \($0.composedMessage)" }
+        } catch {
+            Self.logger.warning("\(error.localizedDescription, privacy: .public)")
         }
     }
     
@@ -100,9 +127,30 @@ struct DiscoverDevices: View {
             })
             .navigationTitle("Scanners")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            isCollectingLogs = true
+                            exportLogs()
+                            isCollectingLogs = false
+                            showExport = true
+                        }
+                    } label: {
+                        if isCollectingLogs {
+                            ProgressView()
+                        } else {
+                            Label("Logs", systemImage: "doc.text.fill")
+                        }
+                    }
+                }
+            }
             //.frame(maxWidth: 600)
         }
         .navigationViewStyle(.stack)
+        .sheet(isPresented: $showExport) {
+            LogDisplay(entries: entries)
+        }
+        .disabled(isCollectingLogs)
     }
 }
-

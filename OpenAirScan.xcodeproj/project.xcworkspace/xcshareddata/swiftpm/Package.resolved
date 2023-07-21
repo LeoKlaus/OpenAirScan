@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/LeoKlaus/SwiftESCL",
       "state" : {
-        "revision" : "0b5bd67c1ed358d8f484f268fed635a0669482c1",
-        "version" : "1.6.1"
+        "revision" : "3e36d232ac042a31ac5b86d58ef66d68c949f4ce",
+        "version" : "1.7.1"
       }
     }
   ],

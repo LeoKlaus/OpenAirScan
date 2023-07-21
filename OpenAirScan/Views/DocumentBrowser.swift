@@ -7,12 +7,18 @@
 //
 
 import SwiftUI
+import os
 
 /// This view displays all documents stored in storage. It is not relevant for the eSCL implementation.
 struct DocumentBrowser: View {
     
     // List of documents on disk
     @State var documents: [URL]
+    
+    private static let logger = Logger(
+            subsystem: Bundle.main.bundleIdentifier!,
+            category: String(describing: DocumentBrowser.self)
+        )
     
     init() {
         self.documents = []
@@ -36,7 +42,7 @@ struct DocumentBrowser: View {
                 documents = documents.sorted { $0.path > $1.path }
             }
         } catch {
-            print(error)
+            DocumentBrowser.logger.error("DocumentBrowser: Encountered error while getting documents: \(error, privacy: .public)")
         }
     }
     
@@ -45,7 +51,7 @@ struct DocumentBrowser: View {
         do {
             try FileManager.default.removeItem(at: documents[offsets.first!])
         } catch let error as NSError {
-            print("Error: \(error.domain)")
+            DocumentBrowser.logger.error("DocumentBrowser: Error: \(error.domain, privacy: .public)")
         }
         self.documents.remove(at: offsets.first!)
     }
