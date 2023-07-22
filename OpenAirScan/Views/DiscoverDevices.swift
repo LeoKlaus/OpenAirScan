@@ -128,7 +128,7 @@ struct DiscoverDevices: View {
             .navigationTitle("Scanners")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         DispatchQueue.global(qos: .userInitiated).async {
                             isCollectingLogs = true

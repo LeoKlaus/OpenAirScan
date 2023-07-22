@@ -19,7 +19,7 @@ struct LogDisplay: View {
             .navigationTitle("Logs")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         UIPasteboard.general.string = entries.joined(separator: "\n")
                     } label: {
@@ -29,8 +29,4 @@ struct LogDisplay: View {
             }
         }
     }
-}
-
-#Preview {
-    LogDisplay(entries: ["A", "B", "C"])
 }
