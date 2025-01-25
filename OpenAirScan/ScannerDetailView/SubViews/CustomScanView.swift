@@ -22,13 +22,12 @@ struct CustomScanView: View {
     @State private var showAdvancedSettings: Bool = false
     
     @State private var progress: Double = 0
-    @State private var isScanning: Bool = false
+    @Binding var currentTask: Task<Sendable, Error>?
     
     @State private var showNextPageDialog: Bool = false
     @State private var lastSavedFileURL: URL? = nil
     
     func scanDocument() async {
-        self.isScanning = true
         do {
             self.lastSavedFileURL = try await self.scanner.performScanAndSaveFiles(self.scanSettings) { progress, _ in
                 self.progress = progress.fractionCompleted
@@ -39,10 +38,12 @@ struct CustomScanView: View {
                 tabStateHandler.currentTab = .documents
             }
         } catch {
-            errorHandler.handle(error, while: "scanning document")
+            if !Task.isCancelled {
+                errorHandler.handle(error, while: "scanning document")
+            }
         }
-        self.isScanning = false
         self.progress = 0
+        self.currentTask = nil
     }
     
     func scanAndAppendPages() async {
@@ -51,9 +52,6 @@ struct CustomScanView: View {
             return
         }
         
-        
-        
-        self.isScanning = true
         do {
             try await self.scanner.performScanAndAppendPages(to: url, scanSettings) { progress, _ in
                 self.progress = progress.fractionCompleted
@@ -61,18 +59,27 @@ struct CustomScanView: View {
             
             self.showNextPageDialog = true
         } catch {
-            errorHandler.handle(error, while: "scanning document")
+            if !Task.isCancelled {
+                errorHandler.handle(error, while: "scanning document")
+            }
         }
-        self.isScanning = false
+        
         self.progress = 0
+        self.currentTask = nil
     }
     
     var body: some View {
         List {
-            if isScanning {
+            if let currentTask {
                 VStack {
                     ProgressView("Scanning Document...", value: self.progress)
                         .padding(.vertical)
+                    Button(role: .destructive) {
+                        currentTask.cancel()
+                    } label: {
+                        Label("Cancel Scan", systemImage: "trash")
+                    }
+                    .foregroundStyle(.red)
                 }
             } else {
                 Section {
@@ -87,6 +94,7 @@ struct CustomScanView: View {
                         Text("Size and offset are measured in 300ths of an inch.")
                     }
                 }
+                .disabled(currentTask != nil)
                 if #available(iOS 17.0, *) {
                     Section("Advanced Settings", isExpanded: $showAdvancedSettings) {
                         OffsetInput(capabilities: capabilities, scanSettings: $scanSettings)
@@ -94,6 +102,7 @@ struct CustomScanView: View {
                         ContrastSlider(capabilities: capabilities, scanSettings: $scanSettings)
                         ThresholdSlider(capabilities: capabilities, scanSettings: $scanSettings)
                     }
+                    .disabled(currentTask != nil)
                 } else {
                     Section("Advanced Settings") {
                         OffsetInput(capabilities: capabilities, scanSettings: $scanSettings)
@@ -101,24 +110,24 @@ struct CustomScanView: View {
                         ContrastSlider(capabilities: capabilities, scanSettings: $scanSettings)
                         ThresholdSlider(capabilities: capabilities, scanSettings: $scanSettings)
                     }
+                    .disabled(currentTask != nil)
                 }
             }
         }
-        .disabled(isScanning)
         .listStyle(.sidebar)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Scan") {
                     self.scanSettings.calculateOffSet(for: self.scanner)
                     
-                    Task(operation: scanDocument)
+                    self.currentTask = Task(operation: scanDocument)
                 }
-                .disabled(isScanning)
+                .disabled(currentTask != nil)
             }
         }
         .confirmationDialog("Scan More Pages?", isPresented: $showNextPageDialog) {
             Button("Yes (Put the Next Page in the Scanner Before Tapping)") {
-                Task(operation: scanAndAppendPages)
+                self.currentTask = Task(operation: scanAndAppendPages)
             }
             Button("No (Save Scan)") {
                 self.lastSavedFileURL = nil
@@ -132,9 +141,10 @@ struct CustomScanView: View {
 @available(iOS 17.0, *)
 #Preview {
     @Previewable @State var scanSettings = ScanSettings(source: .adf, version: "2.0")
+    @Previewable @State var task: Task<Sendable, Error>?
     
     NavigationStack {
-        CustomScanView(scanner: .mock, capabilities: .mock, scanSettings: $scanSettings)
+        CustomScanView(scanner: .mock, capabilities: .mock, scanSettings: $scanSettings, currentTask: $task)
     }
 }
 #endif

@@ -17,7 +17,7 @@ struct ScannerDetailView: View {
     @State private var capabilities: EsclScannerCapabilities?
     
     @State private var scanSettings: ScanSettings
-    @State private var isScanning: Bool = false
+    @State var currentTask: Task<Sendable, Error>?
     
     init(_ scannerRep: EsclScanner) {
         self.scanner = scannerRep
@@ -39,20 +39,21 @@ struct ScannerDetailView: View {
             if let capabilities {
                 List {
                     SourcePicker(capabilities: capabilities, scanSettings: $scanSettings)
+                        .disabled(currentTask != nil)
                     
                     Section {
-                        IntentButtons(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, isScanning: $isScanning)
+                        IntentButtons(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, currentTask: $currentTask)
                     } header: {
                         Text("Quick Scan")
                     } footer: {
                         Text("Quick scan uses the optimized defaults for the selected content type.")
                     }
                     
-                    NavigationLink(destination: CustomScanView(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings)) {
+                    NavigationLink(destination: CustomScanView(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, currentTask: $currentTask)) {
                         Label("Custom Scan", systemImage: "slider.horizontal.3")
                     }
+                    .disabled(currentTask != nil)
                 }
-                .disabled(isScanning)
             } else {
                 Text("Getting scanner capabilities...")
                 ProgressView()

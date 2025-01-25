@@ -71,6 +71,16 @@
         }
       }
     },
+    "Cancel Scan" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan abbrechen"
+          }
+        }
+      }
+    },
     "Change Brightness" : {
       "localizations" : {
         "de" : {
@@ -341,6 +351,36 @@
         }
       }
     },
+    "Invalid admin URL" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültige Admin-URL"
+          }
+        }
+      }
+    },
+    "Invalid response" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültige Antwort"
+          }
+        }
+      }
+    },
+    "Invalid URL" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültige URL"
+          }
+        }
+      }
+    },
     "Left" : {
       "localizations" : {
         "de" : {
@@ -417,6 +457,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nein (Scan speichern)"
+          }
+        }
+      }
+    },
+    "No admin URL found" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Admin-URL gefunden"
+          }
+        }
+      }
+    },
+    "No root found" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ESCL-Root nicht gefunden"
+          }
+        }
+      }
+    },
+    "No UUID found" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine UUID gefunden"
           }
         }
       }
@@ -541,12 +611,108 @@
         }
       }
     },
+    "Scan job not found" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanauftrag nicht gefunden"
+          }
+        }
+      }
+    },
     "Scan More Pages?" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weitere Seiten scannen?"
+          }
+        }
+      }
+    },
+    "Scanner accepted the job but returned no job ID" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner hat den Auftrag angenommen aber keine ID zugewiesen"
+          }
+        }
+      }
+    },
+    "Scanner couldn't find the requested ressource" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner konnte die angeforderte Ressource nicht finden"
+          }
+        }
+      }
+    },
+    "Scanner didn't accept the job due to conflicting arguments" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner hat den Auftrag wegen widersprüchlichen Argumenten abgelehnt"
+          }
+        }
+      }
+    },
+    "Scanner is currently unavailable" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner ist nicht verfügbar"
+          }
+        }
+      }
+    },
+    "Scanner is not ready: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner ist nicht bereit: %@"
+          }
+        }
+      }
+    },
+    "Scanner is unavailable" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner ist nicht verfügbar"
+          }
+        }
+      }
+    },
+    "Scanner returned an unexpected status code %lld." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner hat einen unerwarteten Statuscode zurückgegeben: %lld"
+          }
+        }
+      }
+    },
+    "Scanner returned an unexpected status code %lld. Reponse body: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanner hat einen unerwarteten Statuscode zurückgegeben: %1$lld. Antwort: %2$@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Scanner returned an unexpected status code %1$lld. Reponse body: %2$@"
           }
         }
       }
@@ -611,6 +777,16 @@
         }
       }
     },
+    "The scan job was cancelled" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Scanauftrag wurde abgebrochen."
+          }
+        }
+      }
+    },
     "There are no scans yet." : {
       "localizations" : {
         "de" : {
@@ -637,6 +813,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oben:"
+          }
+        }
+      }
+    },
+    "Unexpected scan job state: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unerwarteter Auftragsstatus: %@"
           }
         }
       }
