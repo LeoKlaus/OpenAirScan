@@ -1,14 +1,14 @@
 {
+  "originHash" : "ed3cd6d4abaa38b9e5879a5dc7eec75a85dbc908187490307ed318042c65b330",
   "pins" : [
     {
       "identity" : "swiftescl",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/LeoKlaus/SwiftESCL",
       "state" : {
-        "revision" : "e8151f6a9320be1bda2e579204af25cb9f63adc0",
-        "version" : "1.8.0"
+        "revision" : "a94265ad82a8a3c51c931637dec390831a193219"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

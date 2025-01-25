@@ -1,24 +1,20 @@
 //
 //  DocumentBrowser.swift
-//  OpenAirScan
+//  OpenAirScan-next
 //
-//  Created by Leo Wehrfritz on 06.08.22.
-//  Licensed under the MIT License
+//  Created by Leo Wehrfritz on 24.01.25.
 //
 
+
 import SwiftUI
-import os
 
 /// This view displays all documents stored in storage. It is not relevant for the eSCL implementation.
 struct DocumentBrowser: View {
     
+    @EnvironmentObject var errorHandler: ErrorHandler
+    
     // List of documents on disk
     @State var documents: [URL]
-    
-    private static let logger = Logger(
-            subsystem: Bundle.main.bundleIdentifier!,
-            category: String(describing: DocumentBrowser.self)
-        )
     
     init() {
         self.documents = []
@@ -38,11 +34,10 @@ struct DocumentBrowser: View {
                     includingPropertiesForKeys: nil,
                     options: .skipsHiddenFiles
             )
-            if documents != nil {
-                documents = documents.sorted { $0.path > $1.path }
-            }
+            
+            documents = documents.sorted { $0.path > $1.path }
         } catch {
-            DocumentBrowser.logger.error("DocumentBrowser: Encountered error while getting documents: \(error, privacy: .public)")
+            errorHandler.handle(error, while: "fetching documents")
         }
     }
     
@@ -50,14 +45,14 @@ struct DocumentBrowser: View {
     func deleteFile(at offsets: IndexSet) {
         do {
             try FileManager.default.removeItem(at: documents[offsets.first!])
-        } catch let error as NSError {
-            DocumentBrowser.logger.error("DocumentBrowser: Error: \(error.domain, privacy: .public)")
+        } catch  {
+            errorHandler.handle(error, while: "deleting file")
         }
         self.documents.remove(at: offsets.first!)
     }
     
     var body: some View {
-        NavigationView {
+        NavigationSplitView {
             VStack {
                 List {
                     if self.documents.count == 0 {
@@ -73,8 +68,8 @@ struct DocumentBrowser: View {
                     self.refresh()
                 }
             }
-                .navigationTitle("Documents")
-                .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Documents")
+        } detail: {
             if documents.count > 0, let document = documents.first {
                 DocumentPreview(docUrl: document)
             } else {
@@ -84,11 +79,5 @@ struct DocumentBrowser: View {
         .onAppear {
             self.refresh()
         }
-    }
-}
-
-struct DocumentBrowser_Previews: PreviewProvider {
-    static var previews: some View {
-        DocumentBrowser()
     }
 }
