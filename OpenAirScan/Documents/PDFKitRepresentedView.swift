@@ -1,10 +1,10 @@
 //
 //  PDFKitRepresentedView.swift
-//  OpenAirScan
+//  OpenAirScan-next
 //
-//  Created by Leo Wehrfritz on 04.06.22.
-//  Licensed under the MIT License
+//  Created by Leo Wehrfritz on 24.01.25.
 //
+
 
 import PDFKit
 import SwiftUI
