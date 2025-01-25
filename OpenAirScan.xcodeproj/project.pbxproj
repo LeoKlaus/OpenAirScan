@@ -26,6 +26,7 @@
 		4A295D662D4506F400376127 /* ScannerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D422D4506F400376127 /* ScannerDetailView.swift */; };
 		4A295D692D4506F400376127 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A295D352D4506F400376127 /* Preview Assets.xcassets */; };
 		4A295DBA2D45071A00376127 /* OpenAirScanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295DB92D45071A00376127 /* OpenAirScanApp.swift */; };
+		4A3487002D452CF600E4F9D8 /* PDFDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3486FF2D452CF400E4F9D8 /* PDFDocument.swift */; };
 		4A6F6E8028AB9207004C71B2 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A6F6E7F28AB9207004C71B2 /* 2.png */; };
 		4AAEA7282D45148900ADE8E7 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4AAEA7272D45148900ADE8E7 /* SwiftESCL */; };
 		4AB17CCC28A015C100CBBF73 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CC928A015C100CBBF73 /* 1.png */; };
@@ -55,6 +56,7 @@
 		4A295D482D4506F400376127 /* ScannerListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerListItem.swift; sourceTree = "<group>"; };
 		4A295D4A2D4506F400376127 /* TabStateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabStateHandler.swift; sourceTree = "<group>"; };
 		4A295DB92D45071A00376127 /* OpenAirScanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAirScanApp.swift; sourceTree = "<group>"; };
+		4A3486FF2D452CF400E4F9D8 /* PDFDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDocument.swift; sourceTree = "<group>"; };
 		4A645D68289AC05400BE11CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4A6F6E7F28AB9207004C71B2 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		4AB17CB928A0011800CBBF73 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 		4A295D312D4506F400376127 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4A3486FF2D452CF400E4F9D8 /* PDFDocument.swift */,
 				4A295D302D4506F400376127 /* ESCLScanner.swift */,
 			);
 			path = Extensions;
@@ -290,6 +293,7 @@
 				4A295D4C2D4506F400376127 /* ScannerBrowser+Mock.swift in Sources */,
 				4A295D502D4506F400376127 /* DocumentBrowser.swift in Sources */,
 				4A295D512D4506F400376127 /* ESCLScanner.swift in Sources */,
+				4A3487002D452CF600E4F9D8 /* PDFDocument.swift in Sources */,
 				4A295D522D4506F400376127 /* HandleErrorsByShowingAlertViewModifier.swift in Sources */,
 				4A295D532D4506F400376127 /* LogDisplay.swift in Sources */,
 				4A295D542D4506F400376127 /* TabStateHandler.swift in Sources */,

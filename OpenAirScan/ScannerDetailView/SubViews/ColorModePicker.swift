@@ -35,6 +35,7 @@ struct ColorModePicker: View {
     }
 }
 
+#if DEBUG
 @available(iOS 17.0, *)
 #Preview {
     @Previewable @State var scanSettings = ScanSettings(source: .adf, version: "2.0")
@@ -43,3 +44,4 @@ struct ColorModePicker: View {
         ColorModePicker(capabilities: .mock, scanSettings: $scanSettings)
     }
 }
+#endif

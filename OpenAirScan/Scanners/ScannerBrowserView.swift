@@ -34,7 +34,9 @@ struct ScannerBrowserView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     ScannerBrowserView()
         .environmentObject(ScannerBrowser.mock)
 }
+#endif

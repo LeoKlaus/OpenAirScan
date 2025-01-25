@@ -7,21 +7,53 @@
 
 import Foundation
 import SwiftESCL
+import PDFKit
+
+enum NextPageScanError: Error {
+    case noValidPDFFound
+}
 
 extension EsclScanner {
-    public func performScanAndSaveFiles(_ scanSettings: ScanSettings, _ updateProgress: @escaping (Progress, NSKeyValueObservedChange<Double>) -> ()) async throws {
+    public func performScanAndSaveFiles(_ scanSettings: ScanSettings, _ updateProgress: @escaping (Progress, NSKeyValueObservedChange<Double>) -> ()) async throws -> URL {
         let imageData = try await self.performScan(scanSettings, updateProgress)
         
         let formatter = DateFormatter()
         formatter.dateFormat = "YY-MM-dd-HH-mm-ss"
         
+        var fileURL = URL(filePath: "")
+        
         for image in imageData {
             
-            let url = URL.documentsDirectory.appending(path: "\(formatter.string(from: .now)).\(scanSettings.mimeType?.preferredFilenameExtension ?? "pdf")")
+            fileURL = URL.documentsDirectory.appending(path: "\(formatter.string(from: .now)).\(scanSettings.mimeType?.preferredFilenameExtension ?? "pdf")")
             
-            try image.write(to: url)
+            try image.write(to: fileURL)
             
-            Self.logger.debug("Saved file \(url.lastPathComponent) to \(url)")
+            Self.logger.debug("Saved file \(fileURL.lastPathComponent) to \(fileURL)")
         }
+        
+        return fileURL
+    }
+    
+    public func performScanAndAppendPages(to fileURL: URL, _ scanSettings: ScanSettings, _ updateProgress: @escaping (Progress, NSKeyValueObservedChange<Double>) -> ()) async throws {
+        
+        guard let lastDocument = PDFDocument(url: fileURL) else {
+            throw NextPageScanError.noValidPDFFound
+        }
+        
+        let scanResults = try await self.performScan(scanSettings, updateProgress)
+        
+        
+        for result in scanResults {
+            guard let pdf = PDFDocument(data: result) else {
+                break
+            }
+            lastDocument.addPages(from: pdf)
+            
+            Self.logger.debug("Added page to \(fileURL)")
+        }
+        
+        lastDocument.write(to: fileURL)
+        
+        Self.logger.debug("Saved final pdf to \(fileURL)")
     }
 }

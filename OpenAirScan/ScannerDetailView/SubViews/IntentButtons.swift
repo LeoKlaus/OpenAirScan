@@ -35,7 +35,7 @@ struct IntentButtons: View {
                     Task {
                         self.isScanning = true
                         do {
-                            try await self.scanner.performScanAndSaveFiles(settings) { progress, _ in
+                            _ = try await self.scanner.performScanAndSaveFiles(settings) { progress, _ in
                                 self.progress = progress.fractionCompleted
                             }
                             tabStateHandler.currentTab = .documents
@@ -68,6 +68,7 @@ struct IntentButtons: View {
     }
 }
 
+#if DEBUG
 @available(iOS 17.0, *)
 #Preview {
     @Previewable @State var scanSettings = ScanSettings(source: .adf, version: "2.0")
@@ -77,3 +78,4 @@ struct IntentButtons: View {
         IntentButtons(scanner: .mock, capabilities: .mock, scanSettings: $scanSettings, isScanning: $isScanning)
     }
 }
+#endif

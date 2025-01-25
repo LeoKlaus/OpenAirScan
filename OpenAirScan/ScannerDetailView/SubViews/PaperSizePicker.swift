@@ -66,6 +66,7 @@ struct PaperSizePicker: View {
     }
 }
 
+#if DEBUG
 @available(iOS 17.0, *)
 #Preview {
     @Previewable @State var scanSettings = ScanSettings(source: .adf, version: "2.0")
@@ -74,3 +75,4 @@ struct PaperSizePicker: View {
         PaperSizePicker(capabilities: .mock, scanSettings: $scanSettings)
     }
 }
+#endif

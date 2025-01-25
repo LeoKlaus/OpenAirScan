@@ -62,6 +62,7 @@ struct ScannerDetailView: View {
     }
 }
 
+#if DEBUG
 @available(iOS 17.0, *)
 #Preview {
     NavigationStack {
@@ -69,3 +70,4 @@ struct ScannerDetailView: View {
     }
     .withErrorHandling()
 }
+#endif
