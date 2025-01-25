@@ -27,6 +27,7 @@
 		4A295D692D4506F400376127 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A295D352D4506F400376127 /* Preview Assets.xcassets */; };
 		4A295DBA2D45071A00376127 /* OpenAirScanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295DB92D45071A00376127 /* OpenAirScanApp.swift */; };
 		4A3487002D452CF600E4F9D8 /* PDFDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3486FF2D452CF400E4F9D8 /* PDFDocument.swift */; };
+		4A3487022D45391500E4F9D8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4A3487012D45391500E4F9D8 /* Localizable.xcstrings */; };
 		4A6F6E8028AB9207004C71B2 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A6F6E7F28AB9207004C71B2 /* 2.png */; };
 		4AAEA7282D45148900ADE8E7 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4AAEA7272D45148900ADE8E7 /* SwiftESCL */; };
 		4AB17CCC28A015C100CBBF73 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CC928A015C100CBBF73 /* 1.png */; };
@@ -57,6 +58,7 @@
 		4A295D4A2D4506F400376127 /* TabStateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabStateHandler.swift; sourceTree = "<group>"; };
 		4A295DB92D45071A00376127 /* OpenAirScanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAirScanApp.swift; sourceTree = "<group>"; };
 		4A3486FF2D452CF400E4F9D8 /* PDFDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFDocument.swift; sourceTree = "<group>"; };
+		4A3487012D45391500E4F9D8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		4A645D68289AC05400BE11CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4A6F6E7F28AB9207004C71B2 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		4AB17CB928A0011800CBBF73 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			children = (
 				4A645D68289AC05400BE11CB /* Info.plist */,
 				4A295D262D4506F400376127 /* ContentView.swift */,
+				4A3487012D45391500E4F9D8 /* Localizable.xcstrings */,
 				4A295DB92D45071A00376127 /* OpenAirScanApp.swift */,
 				4A295D2A2D4506F400376127 /* Documents */,
 				4A295D2F2D4506F400376127 /* ErrorHandler */,
@@ -253,6 +256,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 4AF0F6772880011C00088399;
 			packageReferences = (
@@ -275,6 +279,7 @@
 			files = (
 				4A295D692D4506F400376127 /* Preview Assets.xcassets in Resources */,
 				4AB17CD028A0191C00CBBF73 /* LICENSE in Resources */,
+				4A3487022D45391500E4F9D8 /* Localizable.xcstrings in Resources */,
 				4AB17CCE28A015C100CBBF73 /* 3.png in Resources */,
 				4A6F6E8028AB9207004C71B2 /* 2.png in Resources */,
 				4AB17CCC28A015C100CBBF73 /* 1.png in Resources */,
@@ -372,6 +377,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -426,6 +432,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
