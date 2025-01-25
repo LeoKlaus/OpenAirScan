@@ -65,8 +65,6 @@ struct CustomScanView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Scan") {
-                    // TODO: Implement scanning here
-                    
                     self.scanSettings.calculateOffSet(for: self.scanner)
                     
                     Task {
