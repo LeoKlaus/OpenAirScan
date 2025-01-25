@@ -23,7 +23,7 @@ struct PaperSizePicker: View {
                 Text("Letter").tag(PaperSize.letter)
                 Text("Legal").tag(PaperSize.legal)
                 
-                Text("Custom").tag(PaperSize.custom(1000, 1000))
+                Text("Custom").tag(PaperSize.custom(width: 1000, height: 1000))
             }
             .onAppear {
                 if self.scanSettings.size == nil {
@@ -41,7 +41,7 @@ struct PaperSizePicker: View {
                                 Int(self.scanSettings.size?.rawValue.width ?? 0)
                             },
                             set: { newValue in
-                                self.scanSettings.size = .custom(newValue, Int(self.scanSettings.size?.rawValue.height ?? 0))
+                                self.scanSettings.size = .custom(width: newValue, height: Int(self.scanSettings.size?.rawValue.height ?? 0))
                             }),
                         format: .number
                     )
@@ -55,7 +55,7 @@ struct PaperSizePicker: View {
                                 Int(self.scanSettings.size?.rawValue.height ?? 0)
                             },
                             set: { newValue in
-                                self.scanSettings.size = .custom(Int(self.scanSettings.size?.rawValue.width ?? 0), newValue)
+                                self.scanSettings.size = .custom(width: Int(self.scanSettings.size?.rawValue.width ?? 0), height: newValue)
                             }),
                         format: .number
                     )
