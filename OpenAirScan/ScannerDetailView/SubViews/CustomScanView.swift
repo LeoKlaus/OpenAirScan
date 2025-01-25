@@ -116,8 +116,8 @@ struct CustomScanView: View {
                 .disabled(isScanning)
             }
         }
-        .confirmationDialog("Scan more pages?", isPresented: $showNextPageDialog) {
-            Button("Yes (put the next page in the scanner before tapping)") {
+        .confirmationDialog("Scan More Pages?", isPresented: $showNextPageDialog) {
+            Button("Yes (Put the Next Page in the Scanner Before Tapping)") {
                 Task(operation: scanAndAppendPages)
             }
             Button("No (Save Scan)") {
