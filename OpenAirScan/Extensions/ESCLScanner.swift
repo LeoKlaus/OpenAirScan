@@ -24,7 +24,7 @@ extension EsclScanner {
         
         for image in imageData {
             
-            fileURL = URL.documentsDirectory.appending(path: "\(formatter.string(from: .now)).\(scanSettings.mimeType?.preferredFilenameExtension ?? "pdf")")
+            fileURL = URL.documentsDirectory.appending(path: "scan-\(formatter.string(from: .now)).\(scanSettings.mimeType?.preferredFilenameExtension ?? "pdf")")
             
             try image.write(to: fileURL)
             
