@@ -11,24 +11,31 @@ import SwiftESCL
 struct ScannerDetailView: View {
     
     @EnvironmentObject var errorHandler: ErrorHandler
-    
+    @EnvironmentObject var presetStore: PresetStore
+
     let scanner: EsclScanner
-    
+
     @State private var capabilities: EsclScannerCapabilities?
-    
+
     @State private var scanSettings: ScanSettings
     @State var currentTask: Task<Sendable, Error>?
-    
+
+    @State private var showCustomScan: Bool = false
+
     init(_ scannerRep: EsclScanner) {
         self.scanner = scannerRep
         self.scanSettings = ScanSettings(source: scannerRep.inputSources.first ?? .platen, version: scannerRep.esclVersion ?? "2.1")
     }
-    
+
     @Sendable
     func getCapabilities() async {
         do {
             let caps = try await scanner.getCapabilities()
             self.capabilities = caps
+
+            if let defaultPreset = presetStore.defaultPreset(for: scanner.id) {
+                defaultPreset.apply(to: &self.scanSettings, capabilities: caps)
+            }
         } catch {
             errorHandler.handle(error, while: "getting scanner capabilities")
         }
@@ -53,6 +60,14 @@ struct ScannerDetailView: View {
                         Label("Custom Scan", systemImage: "slider.horizontal.3")
                     }
                     .disabled(currentTask != nil)
+
+                    PresetsSection(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings) {
+                        self.showCustomScan = true
+                    }
+                    .disabled(currentTask != nil)
+                }
+                .navigationDestination(isPresented: $showCustomScan) {
+                    CustomScanView(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, currentTask: $currentTask)
                 }
             } else {
                 Text("Getting scanner capabilities...")
@@ -69,6 +84,7 @@ struct ScannerDetailView: View {
     NavigationStack {
         ScannerDetailView(.mock)
     }
+    .environmentObject(PresetStore())
     .withErrorHandling()
 }
 #endif
