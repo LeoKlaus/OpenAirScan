@@ -81,6 +81,11 @@
 			path = SubViews;
 			sourceTree = "<group>";
 		};
+		0FA5E5E12E55C00000000001 /* Presets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Presets;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +198,7 @@
 				4A295D2A2D4506F400376127 /* Documents */,
 				4A295D2F2D4506F400376127 /* ErrorHandler */,
 				4A295D312D4506F400376127 /* Extensions */,
+				0FA5E5E12E55C00000000001 /* Presets */,
 				4A295D462D4506F400376127 /* ScannerDetailView */,
 				4A295D492D4506F400376127 /* Scanners */,
 				4A295D4A2D4506F400376127 /* TabStateHandler.swift */,
@@ -232,6 +238,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				4AAEA7292D4514F600ADE8E7 /* SubViews */,
+				0FA5E5E12E55C00000000001 /* Presets */,
 			);
 			name = OpenAirScan;
 			packageProductDependencies = (
