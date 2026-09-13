@@ -73,13 +73,13 @@ struct ScannerDetailView: View {
                         Text("Quick scan uses the optimized defaults for the selected content type.")
                     }
                     
-                    NavigationLink(destination: CustomScanView(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, currentTask: $currentTask)) {
-                        Label("Custom Scan", systemImage: "slider.horizontal.3")
-                    }
-                    .disabled(currentTask != nil)
-
                     PresetsSection(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, progress: $progress, currentTask: $currentTask) {
                         self.showCustomScan = true
+                    }
+                    .disabled(currentTask != nil)
+                    
+                    NavigationLink(destination: CustomScanView(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, currentTask: $currentTask)) {
+                        Label("Custom Scan", systemImage: "slider.horizontal.3")
                     }
                     .disabled(currentTask != nil)
                 }
