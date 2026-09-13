@@ -34,7 +34,9 @@ struct CustomScanView: View {
     func scanDocument() async {
         do {
             self.lastSavedFileURL = try await self.scanner.performScanAndSaveFiles(self.scanSettings) { progress, _ in
-                self.progress = progress.fractionCompleted
+                Task { @MainActor in
+                    self.progress = progress.fractionCompleted
+                }
             }
             if self.scanSettings.mimeType == .pdf && self.scanSettings.source != .adf && self.scanSettings.source != .adfDuplex {
                 self.showNextPageDialog = true
@@ -58,7 +60,9 @@ struct CustomScanView: View {
         
         do {
             try await self.scanner.performScanAndAppendPages(to: url, scanSettings) { progress, _ in
-                self.progress = progress.fractionCompleted
+                Task { @MainActor in
+                    self.progress = progress.fractionCompleted
+                }
             }
             
             self.showNextPageDialog = true
@@ -99,23 +103,13 @@ struct CustomScanView: View {
                     }
                 }
                 .disabled(currentTask != nil)
-                if #available(iOS 17.0, *) {
-                    Section("Advanced Settings", isExpanded: $showAdvancedSettings) {
-                        OffsetInput(capabilities: capabilities, scanSettings: $scanSettings)
-                        BrightnessSlider(capabilities: capabilities, scanSettings: $scanSettings)
-                        ContrastSlider(capabilities: capabilities, scanSettings: $scanSettings)
-                        ThresholdSlider(capabilities: capabilities, scanSettings: $scanSettings)
-                    }
-                    .disabled(currentTask != nil)
-                } else {
-                    Section("Advanced Settings") {
-                        OffsetInput(capabilities: capabilities, scanSettings: $scanSettings)
-                        BrightnessSlider(capabilities: capabilities, scanSettings: $scanSettings)
-                        ContrastSlider(capabilities: capabilities, scanSettings: $scanSettings)
-                        ThresholdSlider(capabilities: capabilities, scanSettings: $scanSettings)
-                    }
-                    .disabled(currentTask != nil)
+                Section("Advanced Settings", isExpanded: $showAdvancedSettings) {
+                    OffsetInput(capabilities: capabilities, scanSettings: $scanSettings)
+                    BrightnessSlider(capabilities: capabilities, scanSettings: $scanSettings)
+                    ContrastSlider(capabilities: capabilities, scanSettings: $scanSettings)
+                    ThresholdSlider(capabilities: capabilities, scanSettings: $scanSettings)
                 }
+                .disabled(currentTask != nil)
                 Section {
                     Button {
                         self.presetName = ""

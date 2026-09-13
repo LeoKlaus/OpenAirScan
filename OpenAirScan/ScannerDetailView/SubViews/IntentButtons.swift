@@ -27,7 +27,9 @@ struct IntentButtons: View {
         
         do {
             _ = try await self.scanner.performScanAndSaveFiles(settings) { progress, _ in
-                self.progress = progress.fractionCompleted
+                Task { @MainActor in
+                    self.progress = progress.fractionCompleted
+                }
             }
             tabStateHandler.currentTab = .documents
         } catch {

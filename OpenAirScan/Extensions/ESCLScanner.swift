@@ -14,7 +14,7 @@ enum NextPageScanError: Error {
 }
 
 extension EsclScanner {
-    public func performScanAndSaveFiles(_ scanSettings: ScanSettings, _ updateProgress: @escaping (Progress, NSKeyValueObservedChange<Double>) -> ()) async throws -> URL {
+    public func performScanAndSaveFiles(_ scanSettings: ScanSettings, _ updateProgress: @Sendable @escaping (Progress, NSKeyValueObservedChange<Double>) -> ()) async throws -> URL {
         let imageData = try await self.performScan(scanSettings, updateProgress)
         
         let formatter = DateFormatter()
@@ -34,7 +34,7 @@ extension EsclScanner {
         return fileURL
     }
     
-    public func performScanAndAppendPages(to fileURL: URL, _ scanSettings: ScanSettings, _ updateProgress: @escaping (Progress, NSKeyValueObservedChange<Double>) -> ()) async throws {
+    public func performScanAndAppendPages(to fileURL: URL, _ scanSettings: ScanSettings, _ updateProgress: @Sendable @escaping (Progress, NSKeyValueObservedChange<Double>) -> ()) async throws {
         
         guard let lastDocument = PDFDocument(url: fileURL) else {
             throw NextPageScanError.noValidPDFFound

@@ -35,6 +35,8 @@
 		4A3487412D454ED100E4F9D8 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4A3487402D454ED100E4F9D8 /* SwiftESCL */; };
 		4A3487432D4557B800E4F9D8 /* ScanJobError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3487422D4557B100E4F9D8 /* ScanJobError+LocalizedError.swift */; };
 		4A3487452D455A1900E4F9D8 /* ScannerRepresentationError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3487442D455A1000E4F9D8 /* ScannerRepresentationError+LocalizedError.swift */; };
+		4A8A6FBE3056E90B006585A7 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4A8A6FBD3056E90B006585A7 /* SwiftESCL */; };
+		4A8A6FC03056E958006585A7 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 4A8A6FBF3056E958006585A7 /* AppIcon.icon */; };
 		4AB17CD028A0191C00CBBF73 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCF28A0191C00CBBF73 /* LICENSE */; };
 		4AF0F6882880011C00088399 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AF0F6872880011C00088399 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -68,6 +70,7 @@
 		4A3487422D4557B100E4F9D8 /* ScanJobError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScanJobError+LocalizedError.swift"; sourceTree = "<group>"; };
 		4A3487442D455A1000E4F9D8 /* ScannerRepresentationError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScannerRepresentationError+LocalizedError.swift"; sourceTree = "<group>"; };
 		4A645D68289AC05400BE11CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4A8A6FBF3056E958006585A7 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		4AB17CB928A0011800CBBF73 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4AB17CCF28A0191C00CBBF73 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4AF0F6802880011C00088399 /* OpenAirScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenAirScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +97,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A3487412D454ED100E4F9D8 /* SwiftESCL in Frameworks */,
+				4A8A6FBE3056E90B006585A7 /* SwiftESCL in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +195,7 @@
 		4AF0F6822880011C00088399 /* OpenAirScan */ = {
 			isa = PBXGroup;
 			children = (
+				4A8A6FBF3056E958006585A7 /* AppIcon.icon */,
 				4A645D68289AC05400BE11CB /* Info.plist */,
 				4A295D262D4506F400376127 /* ContentView.swift */,
 				4A3487012D45391500E4F9D8 /* Localizable.xcstrings */,
@@ -243,6 +248,7 @@
 			name = OpenAirScan;
 			packageProductDependencies = (
 				4A3487402D454ED100E4F9D8 /* SwiftESCL */,
+				4A8A6FBD3056E90B006585A7 /* SwiftESCL */,
 			);
 			productName = AirScanTest;
 			productReference = 4AF0F6802880011C00088399 /* OpenAirScan.app */;
@@ -273,7 +279,7 @@
 			);
 			mainGroup = 4AF0F6772880011C00088399;
 			packageReferences = (
-				4A34873F2D454ED100E4F9D8 /* XCLocalSwiftPackageReference "../SwiftESCL" */,
+				4A8A6FBC3056E90B006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4AF0F6812880011C00088399 /* Products */;
@@ -292,6 +298,7 @@
 			files = (
 				4A295D692D4506F400376127 /* Preview Assets.xcassets in Resources */,
 				4AB17CD028A0191C00CBBF73 /* LICENSE in Resources */,
+				4A8A6FC03056E958006585A7 /* AppIcon.icon in Resources */,
 				4A3487022D45391500E4F9D8 /* Localizable.xcstrings in Resources */,
 				4A3487212D454A5000E4F9D8 /* 2.png in Resources */,
 				4A3487222D454A5000E4F9D8 /* 1.png in Resources */,
@@ -475,6 +482,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpenAirScan/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OpenAirScan;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Access to your local network is required for scanner discovery.";
@@ -487,7 +495,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.wehrfritz.OpenAirScan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -517,6 +525,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpenAirScan/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = OpenAirScan;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Access to your local network is required for scanner discovery.";
@@ -529,7 +538,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.wehrfritz.OpenAirScan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -565,16 +574,25 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		4A34873F2D454ED100E4F9D8 /* XCLocalSwiftPackageReference "../SwiftESCL" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../SwiftESCL;
+/* Begin XCRemoteSwiftPackageReference section */
+		4A8A6FBC3056E90B006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LeoKlaus/SwiftESCL";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		4A3487402D454ED100E4F9D8 /* SwiftESCL */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = SwiftESCL;
+		};
+		4A8A6FBD3056E90B006585A7 /* SwiftESCL */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A8A6FBC3056E90B006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */;
 			productName = SwiftESCL;
 		};
 /* End XCSwiftPackageProductDependency section */

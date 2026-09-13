@@ -22,6 +22,7 @@ struct ScannerBrowserView: View {
                 }
             }
             .navigationTitle("Scanners")
+            .toolbarTitleDisplayMode(.inlineLarge)
             .task {
                 self.scannerBrowser.startDiscovery()
             }

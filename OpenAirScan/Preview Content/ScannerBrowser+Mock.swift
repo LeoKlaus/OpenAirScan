@@ -11,7 +11,7 @@ class MockScannerBrowser: ScannerBrowser {
     
     override func startDiscovery() {
         Task {
-            try await Task.sleep(for: .seconds(1))
+            try? await Task.sleep(for: .seconds(1))
             self.discovered.append(.mock)
         }
     }

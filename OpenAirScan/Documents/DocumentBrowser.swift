@@ -69,6 +69,7 @@ struct DocumentBrowser: View {
                 }
             }
             .navigationTitle("Documents")
+            .toolbarTitleDisplayMode(.inlineLarge)
         } detail: {
             if documents.count > 0, let document = documents.first {
                 DocumentPreview(docUrl: document)

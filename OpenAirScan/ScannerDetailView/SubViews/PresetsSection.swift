@@ -30,7 +30,9 @@ struct PresetsSection: View {
 
         do {
             _ = try await self.scanner.performScanAndSaveFiles(self.scanSettings) { progress, _ in
-                self.progress = progress.fractionCompleted
+                Task { @MainActor in
+                    self.progress = progress.fractionCompleted
+                }
             }
             tabStateHandler.currentTab = .documents
         } catch {
