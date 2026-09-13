@@ -18,7 +18,6 @@ class MockScannerRep: EsclScanner {
             iconUrl: "https://epson.local.:443/PRESENTATION/AIRPRINT/PRINTER_128.PNG",
             root: "eSCL",
             esclVersion: "2.9",
-            adminUrl: "http://epson.local.:80/PRESENTATION/BONJOUR",
             mimeTypes: [.pdf, .jpeg],
             colorSpaces: [.binary, .color, .grayscale],
             inputSources: [.adf, .platen],

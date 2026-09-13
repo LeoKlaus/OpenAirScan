@@ -11,10 +11,6 @@ import SwiftESCL
 extension ScannerRepresentationError: @retroactive LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .noAdminUrl:
-            String(localized: "No admin URL found")
-        case .invalidAdminUrl:
-            String(localized: "Invalid admin URL")
         case .noUuid:
             String(localized: "No UUID found")
         case .noRoot:

@@ -401,16 +401,6 @@
         }
       }
     },
-    "Invalid admin URL" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ungültige Admin-URL"
-          }
-        }
-      }
-    },
     "Invalid response" : {
       "localizations" : {
         "de" : {
@@ -519,16 +509,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nein (Scan speichern)"
-          }
-        }
-      }
-    },
-    "No admin URL found" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Admin-URL gefunden"
           }
         }
       }
