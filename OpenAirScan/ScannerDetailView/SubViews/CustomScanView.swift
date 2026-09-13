@@ -41,7 +41,9 @@ struct CustomScanView: View {
     func scanDocument() async {
         let finished = await scanFlow.scan(self.scanSettings, progress: $progress)
         if finished {
-            tabStateHandler.currentTab = .documents
+            withAnimation {
+                tabStateHandler.currentTab = .documents
+            }
         }
         self.progress = 0
         self.currentTask = nil
@@ -124,7 +126,9 @@ struct CustomScanView: View {
             self.currentTask = Task(operation: scanAndAppendPages)
         } onDone: {
             self.scanFlow.discardPendingScan()
-            self.tabStateHandler.currentTab = .documents
+            withAnimation {
+                self.tabStateHandler.currentTab = .documents
+            }
         }
     }
 }

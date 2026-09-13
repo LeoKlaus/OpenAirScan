@@ -37,7 +37,9 @@ struct IntentButtons: View {
 
         let finished = await scanFlow.scan(settings, progress: $progress)
         if finished {
-            tabStateHandler.currentTab = .documents
+            withAnimation {
+                tabStateHandler.currentTab = .documents
+            }
         }
 
         self.progress = 0
@@ -82,7 +84,9 @@ struct IntentButtons: View {
             }
         } onDone: {
             self.scanFlow.discardPendingScan()
-            self.tabStateHandler.currentTab = .documents
+            withAnimation {
+                self.tabStateHandler.currentTab = .documents
+            }
         }
     }
 }

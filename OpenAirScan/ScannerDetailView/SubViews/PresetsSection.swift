@@ -41,7 +41,9 @@ struct PresetsSection: View {
 
         let finished = await scanFlow.scan(self.scanSettings, progress: $progress)
         if finished {
-            tabStateHandler.currentTab = .documents
+            withAnimation {
+                tabStateHandler.currentTab = .documents
+            }
         }
 
         self.progress = 0
@@ -114,7 +116,9 @@ struct PresetsSection: View {
                 }
             } onDone: {
                 self.scanFlow.discardPendingScan()
-                self.tabStateHandler.currentTab = .documents
+                withAnimation {
+                    self.tabStateHandler.currentTab = .documents
+                }
             }
         }
     }
