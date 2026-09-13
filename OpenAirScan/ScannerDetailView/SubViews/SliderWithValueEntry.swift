@@ -48,9 +48,9 @@ struct SliderWithValueEntry: View {
                 step: Double(self.support.step)) {
                     Text(text)
                 } minimumValueLabel: {
-                    Text("\(self.support.min)")
+                    Text(self.support.min, format: .number)
                 } maximumValueLabel: {
-                    Text("\(self.support.max)")
+                    Text(self.support.max, format: .number)
                 }
         }
     }
