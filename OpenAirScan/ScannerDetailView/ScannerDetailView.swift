@@ -67,6 +67,7 @@ struct ScannerDetailView: View {
                     Section {
                         IntentButtons(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, progress: $progress, currentTask: $currentTask)
                             .disabled(currentTask != nil)
+                            .buttonStyle(.plain)
                     } header: {
                         Text("Quick Scan")
                     } footer: {

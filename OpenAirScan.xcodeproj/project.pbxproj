@@ -35,8 +35,9 @@
 		4A3487412D454ED100E4F9D8 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4A3487402D454ED100E4F9D8 /* SwiftESCL */; };
 		4A3487432D4557B800E4F9D8 /* ScanJobError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3487422D4557B100E4F9D8 /* ScanJobError+LocalizedError.swift */; };
 		4A3487452D455A1900E4F9D8 /* ScannerRepresentationError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3487442D455A1000E4F9D8 /* ScannerRepresentationError+LocalizedError.swift */; };
-		4A8A6FBE3056E90B006585A7 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4A8A6FBD3056E90B006585A7 /* SwiftESCL */; };
 		4A8A6FC03056E958006585A7 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 4A8A6FBF3056E958006585A7 /* AppIcon.icon */; };
+		4A8A758D3056FA94006585A7 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4A8A758C3056FA94006585A7 /* SwiftESCL */; };
+		4A8A75F030570C36006585A7 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4A8A75EF30570C36006585A7 /* SwiftESCL */; };
 		4AB17CD028A0191C00CBBF73 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCF28A0191C00CBBF73 /* LICENSE */; };
 		4AF0F6882880011C00088399 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AF0F6872880011C00088399 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -97,7 +98,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A3487412D454ED100E4F9D8 /* SwiftESCL in Frameworks */,
-				4A8A6FBE3056E90B006585A7 /* SwiftESCL in Frameworks */,
+				4A8A758D3056FA94006585A7 /* SwiftESCL in Frameworks */,
+				4A8A75F030570C36006585A7 /* SwiftESCL in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,7 +250,8 @@
 			name = OpenAirScan;
 			packageProductDependencies = (
 				4A3487402D454ED100E4F9D8 /* SwiftESCL */,
-				4A8A6FBD3056E90B006585A7 /* SwiftESCL */,
+				4A8A758C3056FA94006585A7 /* SwiftESCL */,
+				4A8A75EF30570C36006585A7 /* SwiftESCL */,
 			);
 			productName = AirScanTest;
 			productReference = 4AF0F6802880011C00088399 /* OpenAirScan.app */;
@@ -279,7 +282,7 @@
 			);
 			mainGroup = 4AF0F6772880011C00088399;
 			packageReferences = (
-				4A8A6FBC3056E90B006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */,
+				4A8A75EE30570C36006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4AF0F6812880011C00088399 /* Products */;
@@ -575,12 +578,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4A8A6FBC3056E90B006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */ = {
+		4A8A75EE30570C36006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/LeoKlaus/SwiftESCL";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
+				minimumVersion = 4.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -590,9 +593,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftESCL;
 		};
-		4A8A6FBD3056E90B006585A7 /* SwiftESCL */ = {
+		4A8A758C3056FA94006585A7 /* SwiftESCL */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4A8A6FBC3056E90B006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */;
+			productName = SwiftESCL;
+		};
+		4A8A75EF30570C36006585A7 /* SwiftESCL */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A8A75EE30570C36006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */;
 			productName = SwiftESCL;
 		};
 /* End XCSwiftPackageProductDependency section */

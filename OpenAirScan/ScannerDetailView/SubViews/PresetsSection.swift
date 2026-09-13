@@ -24,17 +24,48 @@ struct PresetsSection: View {
     /// Called to open the custom scan view with the preset applied
     let onEdit: () -> Void
 
+    @State private var showNextPageDialog: Bool = false
+    @State private var lastSavedFileURL: URL? = nil
+
     func scanDocument(_ preset: ScanPreset) async {
 
         preset.apply(to: &self.scanSettings, capabilities: capabilities)
 
         do {
-            _ = try await self.scanner.performScanAndSaveFiles(self.scanSettings) { progress, _ in
+            self.lastSavedFileURL = try await self.scanner.performScanAndSaveFiles(self.scanSettings) { progress, _ in
                 Task { @MainActor in
                     self.progress = progress.fractionCompleted
                 }
             }
-            tabStateHandler.currentTab = .documents
+            if self.scanSettings.mimeType == .pdf && self.scanSettings.source != .adf && self.scanSettings.source != .adfDuplex {
+                self.showNextPageDialog = true
+            } else {
+                tabStateHandler.currentTab = .documents
+            }
+        } catch {
+            if !Task.isCancelled {
+                errorHandler.handle(error, while: "scanning document")
+            }
+        }
+
+        self.progress = 0
+        self.currentTask = nil
+    }
+
+    func scanAndAppendPages() async {
+        guard let url = self.lastSavedFileURL else {
+            errorHandler.handle("Couldn't get the URL of the last saved file", while: "scanning next page")
+            return
+        }
+
+        do {
+            try await self.scanner.performScanAndAppendPages(to: url, self.scanSettings) { progress, _ in
+                Task { @MainActor in
+                    self.progress = progress.fractionCompleted
+                }
+            }
+
+            self.showNextPageDialog = true
         } catch {
             if !Task.isCancelled {
                 errorHandler.handle(error, while: "scanning document")
@@ -97,6 +128,17 @@ struct PresetsSection: View {
                 Text("Presets")
             } footer: {
                 Text("Tap a preset to scan with its settings. Swipe a preset to edit it in the custom scan view, delete it or make it the default for this scanner.")
+            }
+            .confirmationDialog("Scan More Pages?", isPresented: $showNextPageDialog) {
+                Button("Yes (put the next page in the scanner before tapping)") {
+                    self.currentTask = Task {
+                        await self.scanAndAppendPages()
+                    }
+                }
+                Button("No (save scan)") {
+                    self.lastSavedFileURL = nil
+                    self.tabStateHandler.currentTab = .documents
+                }
             }
         }
     }

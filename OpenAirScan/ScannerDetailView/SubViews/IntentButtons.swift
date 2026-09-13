@@ -17,31 +17,64 @@ struct IntentButtons: View {
     let capabilities: EsclScannerCapabilities
     
     @Binding var scanSettings: ScanSettings
-    
+
     @Binding var progress: Double
     @Binding var currentTask: Task<Sendable, Error>?
-    
+
+    @State private var showNextPageDialog: Bool = false
+    @State private var lastSavedFileURL: URL? = nil
+    @State private var lastUsedSettings: ScanSettings? = nil
+
     func scanDocument(_ intent: Intent) async {
-        
+
         let settings = ScanSettings(source: self.scanSettings.source, version: capabilities.version ?? scanner.esclVersion ?? "2.1", intent: intent)
-        
+        self.lastUsedSettings = settings
+
         do {
-            _ = try await self.scanner.performScanAndSaveFiles(settings) { progress, _ in
+            self.lastSavedFileURL = try await self.scanner.performScanAndSaveFiles(settings) { progress, _ in
                 Task { @MainActor in
                     self.progress = progress.fractionCompleted
                 }
             }
-            tabStateHandler.currentTab = .documents
+            if settings.mimeType == .pdf && settings.source != .adf && settings.source != .adfDuplex {
+                self.showNextPageDialog = true
+            } else {
+                tabStateHandler.currentTab = .documents
+            }
         } catch {
             if !Task.isCancelled {
                 errorHandler.handle(error, while: "scanning document")
             }
         }
-        
+
         self.progress = 0
         self.currentTask = nil
     }
-    
+
+    func scanAndAppendPages() async {
+        guard let url = self.lastSavedFileURL, let settings = self.lastUsedSettings else {
+            errorHandler.handle("Couldn't get the URL of the last saved file", while: "scanning next page")
+            return
+        }
+
+        do {
+            try await self.scanner.performScanAndAppendPages(to: url, settings) { progress, _ in
+                Task { @MainActor in
+                    self.progress = progress.fractionCompleted
+                }
+            }
+
+            self.showNextPageDialog = true
+        } catch {
+            if !Task.isCancelled {
+                errorHandler.handle(error, while: "scanning document")
+            }
+        }
+
+        self.progress = 0
+        self.currentTask = nil
+    }
+
     var body: some View {
         ForEach(capabilities.sourceCapabilities[scanSettings.source]?.supportedIntents ?? [], id: \.rawValue) { intent in
             Button {
@@ -65,6 +98,18 @@ struct IntentButtons: View {
                 case .unknown(let str):
                     Text(str)
                 }
+            }
+        }
+        .confirmationDialog("Scan more pages?", isPresented: $showNextPageDialog) {
+            Button("Yes (put the next page in the scanner before tapping)") {
+                self.currentTask = Task {
+                    await self.scanAndAppendPages()
+                }
+            }
+            Button("No (save scan)") {
+                self.lastSavedFileURL = nil
+                self.lastUsedSettings = nil
+                self.tabStateHandler.currentTab = .documents
             }
         }
     }

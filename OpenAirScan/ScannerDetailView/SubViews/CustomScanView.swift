@@ -80,12 +80,12 @@ struct CustomScanView: View {
         List {
             if let currentTask {
                 VStack {
-                    ProgressView("Scanning Document...", value: self.progress)
+                    ProgressView("Scanning document...", value: self.progress)
                         .padding(.vertical)
                     Button(role: .destructive) {
                         currentTask.cancel()
                     } label: {
-                        Label("Cancel Scan", systemImage: "trash")
+                        Label("Cancel scan", systemImage: "trash")
                     }
                     .foregroundStyle(.red)
                 }
@@ -115,7 +115,7 @@ struct CustomScanView: View {
                         self.presetName = ""
                         self.showSavePresetAlert = true
                     } label: {
-                        Label("Save as Preset", systemImage: "square.and.arrow.down")
+                        Label("Save as preset", systemImage: "square.and.arrow.down")
                     }
                 } footer: {
                     Text("Saves the current settings as a preset for this scanner.")
@@ -124,7 +124,7 @@ struct CustomScanView: View {
         }
         .listStyle(.sidebar)
         .alert("Save Preset", isPresented: $showSavePresetAlert) {
-            TextField("Preset Name", text: $presetName)
+            TextField("Preset name", text: $presetName)
             Button("Save") {
                 let name = self.presetName.trimmingCharacters(in: .whitespacesAndNewlines)
                 if !name.isEmpty {
@@ -143,11 +143,11 @@ struct CustomScanView: View {
                 .disabled(currentTask != nil)
             }
         }
-        .confirmationDialog("Scan More Pages?", isPresented: $showNextPageDialog) {
-            Button("Yes (Put the Next Page in the Scanner Before Tapping)") {
+        .confirmationDialog("Scan more pages?", isPresented: $showNextPageDialog) {
+            Button("Yes (put the next page in the scanner before tapping)") {
                 self.currentTask = Task(operation: scanAndAppendPages)
             }
-            Button("No (Save Scan)") {
+            Button("No (save scan)") {
                 self.lastSavedFileURL = nil
                 self.tabStateHandler.currentTab = .documents
             }
