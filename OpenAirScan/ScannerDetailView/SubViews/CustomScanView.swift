@@ -119,18 +119,18 @@ struct CustomScanView: View {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Scan") {
                     self.scanSettings.calculateOffSet(for: self.scanner)
-                    
+
                     self.currentTask = Task(operation: scanDocument)
                 }
                 .disabled(currentTask != nil)
-                .scanMorePagesDialog(isPresented: $scanFlow.showNextPageDialog) {
-                    self.currentTask = Task(operation: scanAndAppendPages)
-                } onDone: {
-                    self.scanFlow.discardPendingScan()
-                    withAnimation {
-                        self.tabStateHandler.currentTab = .documents
-                    }
-                }
+            }
+        }
+        .scanMorePagesDialog(isPresented: $scanFlow.showNextPageDialog) {
+            self.currentTask = Task(operation: scanAndAppendPages)
+        } onDone: {
+            self.scanFlow.discardPendingScan()
+            withAnimation {
+                self.tabStateHandler.currentTab = .documents
             }
         }
     }
