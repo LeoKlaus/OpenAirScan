@@ -10,15 +10,38 @@ import SwiftESCL
 
 struct PresetsSection: View {
 
+    @EnvironmentObject var errorHandler: ErrorHandler
+    @EnvironmentObject var tabStateHandler: TabStateHandler
     @EnvironmentObject var presetStore: PresetStore
 
     let scanner: EsclScanner
     let capabilities: EsclScannerCapabilities
 
     @Binding var scanSettings: ScanSettings
+    @Binding var progress: Double
+    @Binding var currentTask: Task<Sendable, Error>?
 
-    /// Called after a preset was applied to the scan settings
-    let onApply: () -> Void
+    /// Called to open the custom scan view with the preset applied
+    let onEdit: () -> Void
+
+    func scanDocument(_ preset: ScanPreset) async {
+
+        preset.apply(to: &self.scanSettings, capabilities: capabilities)
+
+        do {
+            _ = try await self.scanner.performScanAndSaveFiles(self.scanSettings) { progress, _ in
+                self.progress = progress.fractionCompleted
+            }
+            tabStateHandler.currentTab = .documents
+        } catch {
+            if !Task.isCancelled {
+                errorHandler.handle(error, while: "scanning document")
+            }
+        }
+
+        self.progress = 0
+        self.currentTask = nil
+    }
 
     var body: some View {
         let presets = presetStore.presets(for: scanner.id)
@@ -27,8 +50,9 @@ struct PresetsSection: View {
             Section {
                 ForEach(presets) { preset in
                     Button {
-                        preset.apply(to: &scanSettings, capabilities: capabilities)
-                        onApply()
+                        self.currentTask = Task {
+                            await self.scanDocument(preset)
+                        }
                     } label: {
                         HStack {
                             Label(preset.name, systemImage: "list.bullet.rectangle")
@@ -58,12 +82,19 @@ struct PresetsSection: View {
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
+                        Button {
+                            preset.apply(to: &scanSettings, capabilities: capabilities)
+                            onEdit()
+                        } label: {
+                            Label("Edit", systemImage: "slider.horizontal.3")
+                        }
+                        .tint(.blue)
                     }
                 }
             } header: {
                 Text("Presets")
             } footer: {
-                Text("Swipe a preset to delete it or make it the default for this scanner.")
+                Text("Tap a preset to scan with its settings. Swipe a preset to edit it in the custom scan view, delete it or make it the default for this scanner.")
             }
         }
     }
@@ -73,6 +104,8 @@ struct PresetsSection: View {
 @available(iOS 17.0, *)
 #Preview {
     @Previewable @State var scanSettings = ScanSettings(source: .adf, version: "2.0")
+    @Previewable @State var progress: Double = 0
+    @Previewable @State var task: Task<Sendable, Error>?
 
     let store = {
         let store = PresetStore(userDefaults: UserDefaults(suiteName: "preview")!)
@@ -81,8 +114,9 @@ struct PresetsSection: View {
     }()
 
     List {
-        PresetsSection(scanner: .mock, capabilities: .mock, scanSettings: $scanSettings) {}
+        PresetsSection(scanner: .mock, capabilities: .mock, scanSettings: $scanSettings, progress: $progress, currentTask: $task) {}
     }
     .environmentObject(store)
+    .withErrorHandling()
 }
 #endif

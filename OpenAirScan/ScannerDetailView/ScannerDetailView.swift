@@ -20,6 +20,7 @@ struct ScannerDetailView: View {
     @State private var scanSettings: ScanSettings
     @State var currentTask: Task<Sendable, Error>?
 
+    @State private var progress: Double = 0
     @State private var showCustomScan: Bool = false
 
     init(_ scannerRep: EsclScanner) {
@@ -45,11 +46,27 @@ struct ScannerDetailView: View {
         VStack {
             if let capabilities {
                 List {
+                    if let currentTask {
+                        Section {
+                            VStack {
+                                ProgressView("Scanning Document...", value: self.progress)
+                                    .padding(.horizontal)
+                                Button(role: .destructive) {
+                                    currentTask.cancel()
+                                } label: {
+                                    Label("Cancel Scan", systemImage: "trash")
+                                }
+                                .foregroundStyle(.red)
+                            }
+                        }
+                    }
+                    
                     SourcePicker(capabilities: capabilities, scanSettings: $scanSettings)
                         .disabled(currentTask != nil)
                     
                     Section {
-                        IntentButtons(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, currentTask: $currentTask)
+                        IntentButtons(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, progress: $progress, currentTask: $currentTask)
+                            .disabled(currentTask != nil)
                     } header: {
                         Text("Quick Scan")
                     } footer: {
@@ -61,7 +78,7 @@ struct ScannerDetailView: View {
                     }
                     .disabled(currentTask != nil)
 
-                    PresetsSection(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings) {
+                    PresetsSection(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, progress: $progress, currentTask: $currentTask) {
                         self.showCustomScan = true
                     }
                     .disabled(currentTask != nil)
