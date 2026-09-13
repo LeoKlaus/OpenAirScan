@@ -17,6 +17,7 @@ struct ContentView: View {
     
     @ObservedObject private var tabStateHandler = TabStateHandler()
     @ObservedObject var scannerBrowser = ScannerBrowser()
+    @StateObject private var presetStore = PresetStore()
     
     var body: some View {
         TabView(selection: $tabStateHandler.currentTab) {
@@ -33,6 +34,7 @@ struct ContentView: View {
                 }
         }
         .environmentObject(tabStateHandler)
+        .environmentObject(presetStore)
     }
 }
 

@@ -18,7 +18,7 @@ struct IntentButtons: View {
     
     @Binding var scanSettings: ScanSettings
     
-    @State private var progress: Double = 0
+    @Binding var progress: Double
     @Binding var currentTask: Task<Sendable, Error>?
     
     func scanDocument(_ intent: Intent) async {
@@ -41,40 +41,27 @@ struct IntentButtons: View {
     }
     
     var body: some View {
-        if let currentTask {
-            VStack {
-                ProgressView("Scanning Document...", value: self.progress)
-                    .padding(.horizontal)
-                Button(role: .destructive) {
-                    currentTask.cancel()
-                } label: {
-                    Label("Cancel Scan", systemImage: "trash")
+        ForEach(capabilities.sourceCapabilities[scanSettings.source]?.supportedIntents ?? [], id: \.rawValue) { intent in
+            Button {
+                self.currentTask = Task {
+                    await self.scanDocument(intent)
                 }
-                .foregroundStyle(.red)
-            }
-        } else {
-            ForEach(capabilities.sourceCapabilities[scanSettings.source]?.supportedIntents ?? [], id: \.rawValue) { intent in
-                Button {
-                    self.currentTask = Task {
-                        await self.scanDocument(intent)
-                    }
-                } label: {
-                    switch intent {
-                    case .businessCard:
-                        Label("Business Card", systemImage: "person.text.rectangle")
-                    case .document:
-                        Label("Document", systemImage: "doc")
-                    case .object:
-                        Label("Object", systemImage: "view.3d")
-                    case .photo:
-                        Label("Photo", systemImage: "photo")
-                    case .preview:
-                        Label("Preview", systemImage: "document.viewfinder")
-                    case .textAndGraphic:
-                        Label("Text and Photo", systemImage: "doc.richtext")
-                    case .unknown(let str):
-                        Text(str)
-                    }
+            } label: {
+                switch intent {
+                case .businessCard:
+                    Label("Business Card", systemImage: "person.text.rectangle")
+                case .document:
+                    Label("Document", systemImage: "doc")
+                case .object:
+                    Label("Object", systemImage: "view.3d")
+                case .photo:
+                    Label("Photo", systemImage: "photo")
+                case .preview:
+                    Label("Preview", systemImage: "document.viewfinder")
+                case .textAndGraphic:
+                    Label("Text and Photo", systemImage: "doc.richtext")
+                case .unknown(let str):
+                    Text(str)
                 }
             }
         }
@@ -86,9 +73,10 @@ struct IntentButtons: View {
 #Preview {
     @Previewable @State var scanSettings = ScanSettings(source: .adf, version: "2.0")
     @Previewable @State var task: Task<any Sendable, Error>?
+    @Previewable @State var progress: Double = 0
     
     List {
-        IntentButtons(scanner: .mock, capabilities: .mock, scanSettings: $scanSettings, currentTask: $task)
+        IntentButtons(scanner: .mock, capabilities: .mock, scanSettings: $scanSettings, progress: $progress, currentTask: $task)
     }
     .withErrorHandling()
 }
@@ -96,6 +84,7 @@ struct IntentButtons: View {
 @available(iOS 17.0, *)
 #Preview("While scanning") {
     @Previewable @State var scanSettings = ScanSettings(source: .adf, version: "2.0")
+    @Previewable @State var progress: Double = 0.4
     @Previewable @State var task: Task<Sendable, Error>? = Task {
         while true {
             try await Task.sleep(for: .seconds(1))
@@ -106,7 +95,8 @@ struct IntentButtons: View {
     }
     
     List {
-        IntentButtons(scanner: .mock, capabilities: .mock, scanSettings: $scanSettings, currentTask: $task)
+        IntentButtons(scanner: .mock, capabilities: .mock, scanSettings: $scanSettings, progress: $progress, currentTask: $task)
+            .disabled(task != nil)
     }
     .withErrorHandling()
 }

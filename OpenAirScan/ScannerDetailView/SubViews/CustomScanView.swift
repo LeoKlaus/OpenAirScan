@@ -13,13 +13,17 @@ struct CustomScanView: View {
     
     @EnvironmentObject var errorHandler: ErrorHandler
     @EnvironmentObject var tabStateHandler: TabStateHandler
-    
+    @EnvironmentObject var presetStore: PresetStore
+
     let scanner: EsclScanner
     let capabilities: EsclScannerCapabilities
-    
+
     @Binding var scanSettings: ScanSettings
-    
+
     @State private var showAdvancedSettings: Bool = false
+
+    @State private var showSavePresetAlert: Bool = false
+    @State private var presetName: String = ""
     
     @State private var progress: Double = 0
     @Binding var currentTask: Task<Sendable, Error>?
@@ -112,9 +116,29 @@ struct CustomScanView: View {
                     }
                     .disabled(currentTask != nil)
                 }
+                Section {
+                    Button {
+                        self.presetName = ""
+                        self.showSavePresetAlert = true
+                    } label: {
+                        Label("Save as Preset", systemImage: "square.and.arrow.down")
+                    }
+                } footer: {
+                    Text("Saves the current settings as a preset for this scanner.")
+                }
             }
         }
         .listStyle(.sidebar)
+        .alert("Save Preset", isPresented: $showSavePresetAlert) {
+            TextField("Preset Name", text: $presetName)
+            Button("Save") {
+                let name = self.presetName.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !name.isEmpty {
+                    self.presetStore.add(ScanPreset(scannerId: self.scanner.id, name: name, settings: self.scanSettings))
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Scan") {
@@ -146,5 +170,6 @@ struct CustomScanView: View {
     NavigationStack {
         CustomScanView(scanner: .mock, capabilities: .mock, scanSettings: $scanSettings, currentTask: $task)
     }
+    .environmentObject(PresetStore())
 }
 #endif
