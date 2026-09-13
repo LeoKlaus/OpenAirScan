@@ -77,15 +77,15 @@ struct IntentButtons: View {
                     Text(str)
                 }
             }
-        }
-        .scanMorePagesDialog(isPresented: $scanFlow.showNextPageDialog) {
-            self.currentTask = Task {
-                await self.scanAndAppendPages()
-            }
-        } onDone: {
-            self.scanFlow.discardPendingScan()
-            withAnimation {
-                self.tabStateHandler.currentTab = .documents
+            .scanMorePagesDialog(isPresented: $scanFlow.showNextPageDialog) {
+                self.currentTask = Task {
+                    await self.scanAndAppendPages()
+                }
+            } onDone: {
+                self.scanFlow.discardPendingScan()
+                withAnimation {
+                    self.tabStateHandler.currentTab = .documents
+                }
             }
         }
     }

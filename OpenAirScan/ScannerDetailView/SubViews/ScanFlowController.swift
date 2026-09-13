@@ -71,13 +71,14 @@ final class ScanFlowController: ObservableObject {
 extension View {
     /// Presents the "scan more pages?" confirmation dialog used after a scan that could still be appended to.
     func scanMorePagesDialog(isPresented: Binding<Bool>, onAppend: @escaping () -> Void, onDone: @escaping () -> Void) -> some View {
-        self.confirmationDialog("Scan more pages?", isPresented: isPresented) {
-            Button("Yes (put the next page in the scanner before tapping)") {
-                onAppend()
+        self
+            .confirmationDialog("Scan more pages?", isPresented: isPresented) {
+                Button("Yes (put the next page in the scanner before tapping)") {
+                    onAppend()
+                }
+                Button("No (save scan)") {
+                    onDone()
+                }
             }
-            Button("No (save scan)") {
-                onDone()
-            }
-        }
     }
 }

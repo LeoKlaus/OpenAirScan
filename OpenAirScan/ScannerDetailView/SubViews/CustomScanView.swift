@@ -12,6 +12,8 @@ import EasyErrorHandling
 
 struct CustomScanView: View {
     
+    @Environment(\.dismiss) var dismiss
+    
     @EnvironmentObject var tabStateHandler: TabStateHandler
     @EnvironmentObject var presetStore: PresetStore
 
@@ -58,9 +60,8 @@ struct CustomScanView: View {
     var body: some View {
         List {
             if let currentTask {
-                VStack {
+                Section {
                     ProgressView("Scanning document...", value: self.progress)
-                        .padding(.vertical)
                     Button(role: .destructive) {
                         currentTask.cancel()
                     } label: {
@@ -89,6 +90,7 @@ struct CustomScanView: View {
                     ThresholdSlider(capabilities: capabilities, scanSettings: $scanSettings)
                 }
                 .disabled(currentTask != nil)
+                
                 Section {
                     Button {
                         self.presetName = ""
@@ -108,9 +110,10 @@ struct CustomScanView: View {
                 let name = self.presetName.trimmingCharacters(in: .whitespacesAndNewlines)
                 if !name.isEmpty {
                     self.presetStore.add(ScanPreset(scannerId: self.scanner.id, name: name, settings: self.scanSettings))
+                    self.dismiss()
                 }
             }
-            Button("Cancel", role: .cancel) {}
+            Button("Cancel", role: .cancel) { }
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -120,14 +123,14 @@ struct CustomScanView: View {
                     self.currentTask = Task(operation: scanDocument)
                 }
                 .disabled(currentTask != nil)
-            }
-        }
-        .scanMorePagesDialog(isPresented: $scanFlow.showNextPageDialog) {
-            self.currentTask = Task(operation: scanAndAppendPages)
-        } onDone: {
-            self.scanFlow.discardPendingScan()
-            withAnimation {
-                self.tabStateHandler.currentTab = .documents
+                .scanMorePagesDialog(isPresented: $scanFlow.showNextPageDialog) {
+                    self.currentTask = Task(operation: scanAndAppendPages)
+                } onDone: {
+                    self.scanFlow.discardPendingScan()
+                    withAnimation {
+                        self.tabStateHandler.currentTab = .documents
+                    }
+                }
             }
         }
     }

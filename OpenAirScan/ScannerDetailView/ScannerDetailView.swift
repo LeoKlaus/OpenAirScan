@@ -33,10 +33,6 @@ struct ScannerDetailView: View {
         do {
             let caps = try await scanner.getCapabilities()
             self.capabilities = caps
-
-            if let defaultPreset = presetStore.defaultPreset(for: scanner.id) {
-                defaultPreset.apply(to: &self.scanSettings, capabilities: caps)
-            }
         } catch {
             ErrorHandler.shared.handle(error, while: "getting scanner capabilities")
         }
@@ -48,16 +44,13 @@ struct ScannerDetailView: View {
                 List {
                     if let currentTask {
                         Section {
-                            VStack {
-                                ProgressView("Scanning document...", value: self.progress)
-                                    .padding(.horizontal)
-                                Button(role: .destructive) {
-                                    currentTask.cancel()
-                                } label: {
-                                    Label("Cancel scan", systemImage: "trash")
-                                }
-                                .foregroundStyle(.red)
+                            ProgressView("Scanning document...", value: self.progress)
+                            Button(role: .destructive) {
+                                currentTask.cancel()
+                            } label: {
+                                Label("Cancel scan", systemImage: "trash")
                             }
+                            .foregroundStyle(.red)
                         }
                     }
                     
@@ -77,6 +70,7 @@ struct ScannerDetailView: View {
                     PresetsSection(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, progress: $progress, currentTask: $currentTask) {
                         self.showCustomScan = true
                     }
+                    .buttonStyle(.plain)
                     .disabled(currentTask != nil)
                     
                     NavigationLink(destination: CustomScanView(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, currentTask: $currentTask)) {

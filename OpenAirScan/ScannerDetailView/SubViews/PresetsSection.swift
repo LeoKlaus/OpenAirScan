@@ -63,52 +63,24 @@ struct PresetsSection: View {
         if !presets.isEmpty {
             Section {
                 ForEach(presets) { preset in
-                    Button {
+                    Button(preset.name, systemImage: "list.bullet.rectangle") {
                         self.currentTask = Task {
                             await self.scanDocument(preset)
                         }
-                    } label: {
-                        HStack {
-                            Label(preset.name, systemImage: "list.bullet.rectangle")
-                            if presetStore.isDefault(preset) {
-                                Spacer()
-                                Text("Default")
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
                     }
-                    .tint(.primary)
-                    .swipeActions(edge: .leading) {
-                        Button {
-                            presetStore.toggleDefault(preset)
-                        } label: {
-                            if presetStore.isDefault(preset) {
-                                Label("Clear Default", systemImage: "star.slash")
-                            } else {
-                                Label("Make Default", systemImage: "star")
-                            }
-                        }
-                        .tint(.orange)
-                    }
+                    
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
                             presetStore.delete(preset)
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
-                        Button {
-                            preset.apply(to: &scanSettings, capabilities: capabilities)
-                            onEdit()
-                        } label: {
-                            Label("Edit", systemImage: "slider.horizontal.3")
-                        }
-                        .tint(.blue)
                     }
                 }
             } header: {
                 Text("Presets")
             } footer: {
-                Text("Tap a preset to scan with its settings. Swipe a preset to edit it in the custom scan view, delete it or make it the default for this scanner.")
+                Text("Tap a preset to scan with its settings. Swipe left to delete it.")
             }
             .scanMorePagesDialog(isPresented: $scanFlow.showNextPageDialog) {
                 self.currentTask = Task {
