@@ -7,10 +7,10 @@
 
 import SwiftUI
 import SwiftESCL
+import EasyErrorHandling
 
 struct ScannerDetailView: View {
     
-    @EnvironmentObject var errorHandler: ErrorHandler
     @EnvironmentObject var presetStore: PresetStore
 
     let scanner: EsclScanner
@@ -38,7 +38,7 @@ struct ScannerDetailView: View {
                 defaultPreset.apply(to: &self.scanSettings, capabilities: caps)
             }
         } catch {
-            errorHandler.handle(error, while: "getting scanner capabilities")
+            ErrorHandler.shared.handle(error, while: "getting scanner capabilities")
         }
     }
     
@@ -49,12 +49,12 @@ struct ScannerDetailView: View {
                     if let currentTask {
                         Section {
                             VStack {
-                                ProgressView("Scanning Document...", value: self.progress)
+                                ProgressView("Scanning document...", value: self.progress)
                                     .padding(.horizontal)
                                 Button(role: .destructive) {
                                     currentTask.cancel()
                                 } label: {
-                                    Label("Cancel Scan", systemImage: "trash")
+                                    Label("Cancel scan", systemImage: "trash")
                                 }
                                 .foregroundStyle(.red)
                             }

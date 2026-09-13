@@ -7,10 +7,9 @@
 
 import SwiftUI
 import SwiftESCL
+import EasyErrorHandling
 
 struct IntentButtons: View {
-    
-    @EnvironmentObject var errorHandler: ErrorHandler
     @EnvironmentObject var tabStateHandler: TabStateHandler
     
     let scanner: EsclScanner
@@ -21,30 +20,24 @@ struct IntentButtons: View {
     @Binding var progress: Double
     @Binding var currentTask: Task<Sendable, Error>?
 
-    @State private var showNextPageDialog: Bool = false
-    @State private var lastSavedFileURL: URL? = nil
-    @State private var lastUsedSettings: ScanSettings? = nil
+    @StateObject private var scanFlow: ScanFlowController
+
+    init(scanner: EsclScanner, capabilities: EsclScannerCapabilities, scanSettings: Binding<ScanSettings>, progress: Binding<Double>, currentTask: Binding<Task<Sendable, Error>?>) {
+        self.scanner = scanner
+        self.capabilities = capabilities
+        self._scanSettings = scanSettings
+        self._progress = progress
+        self._currentTask = currentTask
+        self._scanFlow = StateObject(wrappedValue: ScanFlowController(scanner: scanner))
+    }
 
     func scanDocument(_ intent: Intent) async {
 
         let settings = ScanSettings(source: self.scanSettings.source, version: capabilities.version ?? scanner.esclVersion ?? "2.1", intent: intent)
-        self.lastUsedSettings = settings
 
-        do {
-            self.lastSavedFileURL = try await self.scanner.performScanAndSaveFiles(settings) { progress, _ in
-                Task { @MainActor in
-                    self.progress = progress.fractionCompleted
-                }
-            }
-            if settings.mimeType == .pdf && settings.source != .adf && settings.source != .adfDuplex {
-                self.showNextPageDialog = true
-            } else {
-                tabStateHandler.currentTab = .documents
-            }
-        } catch {
-            if !Task.isCancelled {
-                errorHandler.handle(error, while: "scanning document")
-            }
+        let finished = await scanFlow.scan(settings, progress: $progress)
+        if finished {
+            tabStateHandler.currentTab = .documents
         }
 
         self.progress = 0
@@ -52,24 +45,7 @@ struct IntentButtons: View {
     }
 
     func scanAndAppendPages() async {
-        guard let url = self.lastSavedFileURL, let settings = self.lastUsedSettings else {
-            errorHandler.handle("Couldn't get the URL of the last saved file", while: "scanning next page")
-            return
-        }
-
-        do {
-            try await self.scanner.performScanAndAppendPages(to: url, settings) { progress, _ in
-                Task { @MainActor in
-                    self.progress = progress.fractionCompleted
-                }
-            }
-
-            self.showNextPageDialog = true
-        } catch {
-            if !Task.isCancelled {
-                errorHandler.handle(error, while: "scanning document")
-            }
-        }
+        await scanFlow.appendPages(progress: $progress)
 
         self.progress = 0
         self.currentTask = nil
@@ -100,17 +76,13 @@ struct IntentButtons: View {
                 }
             }
         }
-        .confirmationDialog("Scan more pages?", isPresented: $showNextPageDialog) {
-            Button("Yes (put the next page in the scanner before tapping)") {
-                self.currentTask = Task {
-                    await self.scanAndAppendPages()
-                }
+        .scanMorePagesDialog(isPresented: $scanFlow.showNextPageDialog) {
+            self.currentTask = Task {
+                await self.scanAndAppendPages()
             }
-            Button("No (save scan)") {
-                self.lastSavedFileURL = nil
-                self.lastUsedSettings = nil
-                self.tabStateHandler.currentTab = .documents
-            }
+        } onDone: {
+            self.scanFlow.discardPendingScan()
+            self.tabStateHandler.currentTab = .documents
         }
     }
 }

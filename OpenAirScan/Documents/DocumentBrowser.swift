@@ -7,11 +7,10 @@
 
 
 import SwiftUI
+import EasyErrorHandling
 
 /// This view displays all documents stored in storage. It is not relevant for the eSCL implementation.
 struct DocumentBrowser: View {
-    
-    @EnvironmentObject var errorHandler: ErrorHandler
     
     // List of documents on disk
     @State var documents: [URL]
@@ -37,7 +36,7 @@ struct DocumentBrowser: View {
             
             documents = documents.sorted { $0.path > $1.path }
         } catch {
-            errorHandler.handle(error, while: "fetching documents")
+            ErrorHandler.shared.handle(error, while: "fetching documents")
         }
     }
     
@@ -46,7 +45,7 @@ struct DocumentBrowser: View {
         do {
             try FileManager.default.removeItem(at: documents[offsets.first!])
         } catch  {
-            errorHandler.handle(error, while: "deleting file")
+            ErrorHandler.shared.handle(error, while: "deleting file")
         }
         self.documents.remove(at: offsets.first!)
     }

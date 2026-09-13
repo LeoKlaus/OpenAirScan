@@ -6,13 +6,19 @@
 //
 
 import SwiftUI
+import EasyErrorHandling
 
 @main
 struct OpenAirScanApp: App {
+    
+    @State private var tappedError: ErrorToast?
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .withErrorHandling()
+                .withErrorHandling { tappedToast in
+                    self.tappedError = tappedToast
+                }
         }
     }
 }

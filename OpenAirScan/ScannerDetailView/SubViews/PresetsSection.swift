@@ -7,10 +7,9 @@
 
 import SwiftUI
 import SwiftESCL
+import EasyErrorHandling
 
 struct PresetsSection: View {
-
-    @EnvironmentObject var errorHandler: ErrorHandler
     @EnvironmentObject var tabStateHandler: TabStateHandler
     @EnvironmentObject var presetStore: PresetStore
 
@@ -24,28 +23,25 @@ struct PresetsSection: View {
     /// Called to open the custom scan view with the preset applied
     let onEdit: () -> Void
 
-    @State private var showNextPageDialog: Bool = false
-    @State private var lastSavedFileURL: URL? = nil
+    @StateObject private var scanFlow: ScanFlowController
+
+    init(scanner: EsclScanner, capabilities: EsclScannerCapabilities, scanSettings: Binding<ScanSettings>, progress: Binding<Double>, currentTask: Binding<Task<Sendable, Error>?>, onEdit: @escaping () -> Void) {
+        self.scanner = scanner
+        self.capabilities = capabilities
+        self._scanSettings = scanSettings
+        self._progress = progress
+        self._currentTask = currentTask
+        self.onEdit = onEdit
+        self._scanFlow = StateObject(wrappedValue: ScanFlowController(scanner: scanner))
+    }
 
     func scanDocument(_ preset: ScanPreset) async {
 
         preset.apply(to: &self.scanSettings, capabilities: capabilities)
 
-        do {
-            self.lastSavedFileURL = try await self.scanner.performScanAndSaveFiles(self.scanSettings) { progress, _ in
-                Task { @MainActor in
-                    self.progress = progress.fractionCompleted
-                }
-            }
-            if self.scanSettings.mimeType == .pdf && self.scanSettings.source != .adf && self.scanSettings.source != .adfDuplex {
-                self.showNextPageDialog = true
-            } else {
-                tabStateHandler.currentTab = .documents
-            }
-        } catch {
-            if !Task.isCancelled {
-                errorHandler.handle(error, while: "scanning document")
-            }
+        let finished = await scanFlow.scan(self.scanSettings, progress: $progress)
+        if finished {
+            tabStateHandler.currentTab = .documents
         }
 
         self.progress = 0
@@ -53,24 +49,7 @@ struct PresetsSection: View {
     }
 
     func scanAndAppendPages() async {
-        guard let url = self.lastSavedFileURL else {
-            errorHandler.handle("Couldn't get the URL of the last saved file", while: "scanning next page")
-            return
-        }
-
-        do {
-            try await self.scanner.performScanAndAppendPages(to: url, self.scanSettings) { progress, _ in
-                Task { @MainActor in
-                    self.progress = progress.fractionCompleted
-                }
-            }
-
-            self.showNextPageDialog = true
-        } catch {
-            if !Task.isCancelled {
-                errorHandler.handle(error, while: "scanning document")
-            }
-        }
+        await scanFlow.appendPages(progress: $progress)
 
         self.progress = 0
         self.currentTask = nil
@@ -129,16 +108,13 @@ struct PresetsSection: View {
             } footer: {
                 Text("Tap a preset to scan with its settings. Swipe a preset to edit it in the custom scan view, delete it or make it the default for this scanner.")
             }
-            .confirmationDialog("Scan More Pages?", isPresented: $showNextPageDialog) {
-                Button("Yes (put the next page in the scanner before tapping)") {
-                    self.currentTask = Task {
-                        await self.scanAndAppendPages()
-                    }
+            .scanMorePagesDialog(isPresented: $scanFlow.showNextPageDialog) {
+                self.currentTask = Task {
+                    await self.scanAndAppendPages()
                 }
-                Button("No (save scan)") {
-                    self.lastSavedFileURL = nil
-                    self.tabStateHandler.currentTab = .documents
-                }
+            } onDone: {
+                self.scanFlow.discardPendingScan()
+                self.tabStateHandler.currentTab = .documents
             }
         }
     }

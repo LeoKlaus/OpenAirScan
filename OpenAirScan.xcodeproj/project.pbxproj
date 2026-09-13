@@ -10,16 +10,12 @@
 		4A295D4C2D4506F400376127 /* ScannerBrowser+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D362D4506F400376127 /* ScannerBrowser+Mock.swift */; };
 		4A295D502D4506F400376127 /* DocumentBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D272D4506F400376127 /* DocumentBrowser.swift */; };
 		4A295D512D4506F400376127 /* ESCLScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D302D4506F400376127 /* ESCLScanner.swift */; };
-		4A295D522D4506F400376127 /* HandleErrorsByShowingAlertViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D2D2D4506F400376127 /* HandleErrorsByShowingAlertViewModifier.swift */; };
-		4A295D532D4506F400376127 /* LogDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D2E2D4506F400376127 /* LogDisplay.swift */; };
 		4A295D542D4506F400376127 /* TabStateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D4A2D4506F400376127 /* TabStateHandler.swift */; };
 		4A295D552D4506F400376127 /* ScannerListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D482D4506F400376127 /* ScannerListItem.swift */; };
 		4A295D572D4506F400376127 /* EsclScanner+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D332D4506F400376127 /* EsclScanner+Mock.swift */; };
 		4A295D582D4506F400376127 /* PDFKitRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D292D4506F400376127 /* PDFKitRepresentedView.swift */; };
-		4A295D5A2D4506F400376127 /* ErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D2B2D4506F400376127 /* ErrorAlert.swift */; };
 		4A295D5B2D4506F400376127 /* EsclScannerCapabilities+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D342D4506F400376127 /* EsclScannerCapabilities+Mock.swift */; };
 		4A295D5D2D4506F400376127 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D262D4506F400376127 /* ContentView.swift */; };
-		4A295D5F2D4506F400376127 /* ExportLogsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D2C2D4506F400376127 /* ExportLogsButton.swift */; };
 		4A295D612D4506F400376127 /* Capabilities+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D322D4506F400376127 /* Capabilities+Mock.swift */; };
 		4A295D642D4506F400376127 /* ScannerBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D472D4506F400376127 /* ScannerBrowserView.swift */; };
 		4A295D652D4506F400376127 /* DocumentPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A295D282D4506F400376127 /* DocumentPreview.swift */; };
@@ -38,6 +34,7 @@
 		4A8A6FC03056E958006585A7 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 4A8A6FBF3056E958006585A7 /* AppIcon.icon */; };
 		4A8A758D3056FA94006585A7 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4A8A758C3056FA94006585A7 /* SwiftESCL */; };
 		4A8A75F030570C36006585A7 /* SwiftESCL in Frameworks */ = {isa = PBXBuildFile; productRef = 4A8A75EF30570C36006585A7 /* SwiftESCL */; };
+		4A8A76153057319C006585A7 /* EasyErrorHandling in Frameworks */ = {isa = PBXBuildFile; productRef = 4A8A76143057319C006585A7 /* EasyErrorHandling */; };
 		4AB17CD028A0191C00CBBF73 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4AB17CCF28A0191C00CBBF73 /* LICENSE */; };
 		4AF0F6882880011C00088399 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AF0F6872880011C00088399 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -47,10 +44,6 @@
 		4A295D272D4506F400376127 /* DocumentBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentBrowser.swift; sourceTree = "<group>"; };
 		4A295D282D4506F400376127 /* DocumentPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPreview.swift; sourceTree = "<group>"; };
 		4A295D292D4506F400376127 /* PDFKitRepresentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitRepresentedView.swift; sourceTree = "<group>"; };
-		4A295D2B2D4506F400376127 /* ErrorAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlert.swift; sourceTree = "<group>"; };
-		4A295D2C2D4506F400376127 /* ExportLogsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportLogsButton.swift; sourceTree = "<group>"; };
-		4A295D2D2D4506F400376127 /* HandleErrorsByShowingAlertViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleErrorsByShowingAlertViewModifier.swift; sourceTree = "<group>"; };
-		4A295D2E2D4506F400376127 /* LogDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogDisplay.swift; sourceTree = "<group>"; };
 		4A295D302D4506F400376127 /* ESCLScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ESCLScanner.swift; sourceTree = "<group>"; };
 		4A295D322D4506F400376127 /* Capabilities+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Capabilities+Mock.swift"; sourceTree = "<group>"; };
 		4A295D332D4506F400376127 /* EsclScanner+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EsclScanner+Mock.swift"; sourceTree = "<group>"; };
@@ -99,6 +92,7 @@
 			files = (
 				4A3487412D454ED100E4F9D8 /* SwiftESCL in Frameworks */,
 				4A8A758D3056FA94006585A7 /* SwiftESCL in Frameworks */,
+				4A8A76153057319C006585A7 /* EasyErrorHandling in Frameworks */,
 				4A8A75F030570C36006585A7 /* SwiftESCL in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -114,17 +108,6 @@
 				4A295D292D4506F400376127 /* PDFKitRepresentedView.swift */,
 			);
 			path = Documents;
-			sourceTree = "<group>";
-		};
-		4A295D2F2D4506F400376127 /* ErrorHandler */ = {
-			isa = PBXGroup;
-			children = (
-				4A295D2B2D4506F400376127 /* ErrorAlert.swift */,
-				4A295D2C2D4506F400376127 /* ExportLogsButton.swift */,
-				4A295D2D2D4506F400376127 /* HandleErrorsByShowingAlertViewModifier.swift */,
-				4A295D2E2D4506F400376127 /* LogDisplay.swift */,
-			);
-			path = ErrorHandler;
 			sourceTree = "<group>";
 		};
 		4A295D312D4506F400376127 /* Extensions */ = {
@@ -203,7 +186,6 @@
 				4A3487012D45391500E4F9D8 /* Localizable.xcstrings */,
 				4A295DB92D45071A00376127 /* OpenAirScanApp.swift */,
 				4A295D2A2D4506F400376127 /* Documents */,
-				4A295D2F2D4506F400376127 /* ErrorHandler */,
 				4A295D312D4506F400376127 /* Extensions */,
 				0FA5E5E12E55C00000000001 /* Presets */,
 				4A295D462D4506F400376127 /* ScannerDetailView */,
@@ -252,6 +234,7 @@
 				4A3487402D454ED100E4F9D8 /* SwiftESCL */,
 				4A8A758C3056FA94006585A7 /* SwiftESCL */,
 				4A8A75EF30570C36006585A7 /* SwiftESCL */,
+				4A8A76143057319C006585A7 /* EasyErrorHandling */,
 			);
 			productName = AirScanTest;
 			productReference = 4AF0F6802880011C00088399 /* OpenAirScan.app */;
@@ -283,6 +266,7 @@
 			mainGroup = 4AF0F6772880011C00088399;
 			packageReferences = (
 				4A8A75EE30570C36006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */,
+				4A8A76133057319C006585A7 /* XCLocalSwiftPackageReference "../../Swift Packages/EasyErrorHandling/EasyErrorHandling" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4AF0F6812880011C00088399 /* Products */;
@@ -322,18 +306,14 @@
 				4A295D502D4506F400376127 /* DocumentBrowser.swift in Sources */,
 				4A295D512D4506F400376127 /* ESCLScanner.swift in Sources */,
 				4A3487002D452CF600E4F9D8 /* PDFDocument.swift in Sources */,
-				4A295D522D4506F400376127 /* HandleErrorsByShowingAlertViewModifier.swift in Sources */,
-				4A295D532D4506F400376127 /* LogDisplay.swift in Sources */,
 				4A3487432D4557B800E4F9D8 /* ScanJobError+LocalizedError.swift in Sources */,
 				4A3487452D455A1900E4F9D8 /* ScannerRepresentationError+LocalizedError.swift in Sources */,
 				4A295D542D4506F400376127 /* TabStateHandler.swift in Sources */,
 				4A295D552D4506F400376127 /* ScannerListItem.swift in Sources */,
 				4A295D572D4506F400376127 /* EsclScanner+Mock.swift in Sources */,
 				4A295D582D4506F400376127 /* PDFKitRepresentedView.swift in Sources */,
-				4A295D5A2D4506F400376127 /* ErrorAlert.swift in Sources */,
 				4A295D5B2D4506F400376127 /* EsclScannerCapabilities+Mock.swift in Sources */,
 				4A295D5D2D4506F400376127 /* ContentView.swift in Sources */,
-				4A295D5F2D4506F400376127 /* ExportLogsButton.swift in Sources */,
 				4A295D612D4506F400376127 /* Capabilities+Mock.swift in Sources */,
 				4A295D642D4506F400376127 /* ScannerBrowserView.swift in Sources */,
 				4A295DBA2D45071A00376127 /* OpenAirScanApp.swift in Sources */,
@@ -577,6 +557,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		4A8A76133057319C006585A7 /* XCLocalSwiftPackageReference "../../Swift Packages/EasyErrorHandling/EasyErrorHandling" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../Swift Packages/EasyErrorHandling/EasyErrorHandling";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		4A8A75EE30570C36006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -601,6 +588,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4A8A75EE30570C36006585A7 /* XCRemoteSwiftPackageReference "SwiftESCL" */;
 			productName = SwiftESCL;
+		};
+		4A8A76143057319C006585A7 /* EasyErrorHandling */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EasyErrorHandling;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

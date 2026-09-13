@@ -7,11 +7,10 @@
 
 import SwiftUI
 import UniformTypeIdentifiers
+import EasyErrorHandling
 
 /// This view displays a single document from a storage url. It is not relevant for the eSCL implementation.
 struct DocumentPreview: View {
-    
-    @EnvironmentObject var errorHandler: ErrorHandler
     
     @State private var data: Data?
     let type: UTType
@@ -28,7 +27,7 @@ struct DocumentPreview: View {
         do {
             self.data = try Data(contentsOf: docUrl)
         } catch {
-            errorHandler.handle(error, while: "loading file")
+            ErrorHandler.shared.handle(error, while: "loading file")
         }
     }
     

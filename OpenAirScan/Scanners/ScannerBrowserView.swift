@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftESCL
+import EasyErrorHandling
 
 struct ScannerBrowserView: View {
     
@@ -67,7 +68,7 @@ struct ScannerBrowserView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    ExportLogsButton()
+                    ExportLogsButton("Export logs")
                 }
             }
         }
