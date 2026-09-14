@@ -31,7 +31,8 @@ final class ScanFlowController: ObservableObject {
             self.lastSavedFileURL = url
             self.lastSettings = settings
 
-            if settings.mimeType == .pdf && settings.source != .adf && settings.source != .adfDuplex {
+            // `performScanAndSaveFiles` treats a `nil` mimeType as PDF (it defaults the saved file's extension to "pdf"), so mirror that here.
+            if (settings.mimeType ?? .pdf) == .pdf && settings.source != .adf && settings.source != .adfDuplex {
                 self.showNextPageDialog = true
                 return false
             }
