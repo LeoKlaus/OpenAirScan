@@ -68,7 +68,7 @@ struct PresetsSection: View {
                             await self.scanDocument(preset)
                         }
                     }
-                    
+                    .buttonStyle(.plain)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
                             presetStore.delete(preset)

@@ -70,7 +70,6 @@ struct ScannerDetailView: View {
                     PresetsSection(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, progress: $progress, currentTask: $currentTask) {
                         self.showCustomScan = true
                     }
-                    .buttonStyle(.plain)
                     .disabled(currentTask != nil)
                     
                     NavigationLink(destination: CustomScanView(scanner: scanner, capabilities: capabilities, scanSettings: $scanSettings, currentTask: $currentTask)) {
