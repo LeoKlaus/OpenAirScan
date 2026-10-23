@@ -262,6 +262,7 @@
 				en,
 				Base,
 				de,
+				fr,
 			);
 			mainGroup = 4AF0F6772880011C00088399;
 			packageReferences = (
